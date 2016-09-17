@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPerson xmlns="http://schemas.datacontract.org/2004/07/Cs5700Hw1.Model" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+  <Person i:type="Adult">
+    <ObjectId>133</ObjectId>
+    <StateFileNumber>1994 13427</StateFileNumber>
+    <FirstName>Fran</FirstName>
+    <MiddleName>Mary</MiddleName>
+    <LastName />
+    <BirthYear>1994</BirthYear>
+    <BirthMonth>2</BirthMonth>
+    <BirthDay>22</BirthDay>
+    <Gender>F</Gender>
+    <Phone1>801-174-0919</Phone1>
+  </Person>
+  <Person i:type="Adult">
+    <ObjectId>134</ObjectId>
+    <StateFileNumber>1977 01319</StateFileNumber>
+    <FirstName>Sue</FirstName>
+    <LastName>Peterson</LastName>
+    <BirthYear>1977</BirthYear>
+    <BirthMonth>10</BirthMonth>
+    <BirthDay>13</BirthDay>
+    <Gender>F</Gender>
+    <Phone2>435-296-5708</Phone2>
+  </Person>
+  <Person i:type="Child">
+    <ObjectId>135</ObjectId>
+    <StateFileNumber>2000 66717</StateFileNumber>
+    <FirstName />
+    <MiddleName>Ivan</MiddleName>
+    <LastName>Williamson</LastName>
+    <BirthYear>2000</BirthYear>
+    <BirthMonth>4</BirthMonth>
+    <BirthDay>12</BirthDay>
+    <Gender>M</Gender>
+    <IsPartOfMultipleBirth>F</IsPartOfMultipleBirth>
+    <BirthOrder>0</BirthOrder>
+    <BirthCounty>Emery</BirthCounty>
+    <MotherMiddleName>Cindy</MotherMiddleName>
+    <MotherLastName>Stevenson</MotherLastName>
+  </Person>
+  <Person i:type="Child">
+    <ObjectId>136</ObjectId>
+    <StateFileNumber>2006 10645</StateFileNumber>
+    <FirstName>Henry</FirstName>
+    <MiddleName>Otto</MiddleName>
+    <LastName>Isaacons</LastName>
+    <BirthYear>2006</BirthYear>
+    <BirthMonth>4</BirthMonth>
+    <BirthDay>14</BirthDay>
+    <Gender>M</Gender>
+    <IsPartOfMultipleBirth>T</IsPartOfMultipleBirth>
+    <BirthOrder>2</BirthOrder>
+    <BirthCounty>Utah</BirthCounty>
+    <MotherFirstName>Ester</MotherFirstName>
+    <MotherMiddleName>Kate</MotherMiddleName>
+    <MotherLastName>Edwards</MotherLastName>
+  </Person>
+  <Person i:type="Adult">
+    <ObjectId>137</ObjectId>
+    <FirstName>Fran</FirstName>
+    <MiddleName>Mary</MiddleName>
+    <LastName />
+    <BirthYear>1994</BirthYear>
+    <BirthMonth>12</BirthMonth>
+    <BirthDay>13</BirthDay>
+    <Gender>F</Gender>
+    <Phone1>801-174-0919</Phone1>
+  </Person>
+  <Person i:type="Adult">
+    <ObjectId>138</ObjectId>
+    <FirstName>Sue</FirstName>
+    <LastName>Peterson</LastName>
+    <BirthYear>1977</BirthYear>
+    <BirthMonth>10</BirthMonth>
+    <BirthDay>13</BirthDay>
+    <Gender>F</Gender>
+    <Phone2>435-296-5708</Phone2>
+  </Person>
+  <Person i:type="Adult">
+    <ObjectId>139</ObjectId>
+    <FirstName>Sue</FirstName>
+    <LastName>Peterson</LastName>
+    <BirthYear>1977</BirthYear>
+    <BirthMonth>4</BirthMonth>
+    <BirthDay>13</BirthDay>
+    <Gender>F</Gender>
+    <Phone1>385-165-7201</Phone1>
+    <Phone2>435-296-5708</Phone2>
+  </Person>
+  <Person i:type="Child">
+    <ObjectId>140</ObjectId>
+    <FirstName />
+    <MiddleName>Ivan</MiddleName>
+    <LastName>Williamson</LastName>
+    <BirthYear>2000</BirthYear>
+    <BirthMonth>4</BirthMonth>
+    <BirthDay>12</BirthDay>
+    <Gender>M</Gender>
+    <IsPartOfMultipleBirth>F</IsPartOfMultipleBirth>
+    <BirthOrder>0</BirthOrder>
+    <BirthCounty>Emery</BirthCounty>
+    <MotherMiddleName>Cindy</MotherMiddleName>
+    <MotherLastName>Stevenson</MotherLastName>
+  </Person>
+  <Person i:type="Adult">
+    <ObjectId>141</ObjectId>
+    <FirstName>Sue</FirstName>
+    <LastName>Peterson</LastName>
+    <BirthYear>1977</BirthYear>
+    <BirthMonth>9</BirthMonth>
+    <BirthDay>21</BirthDay>
+    <Gender>F</Gender>
+    <Phone2>435-296-5708</Phone2>
+  </Person>
+  <Person i:type="Child">
+    <ObjectId>142</ObjectId>
+    <FirstName />
+    <LastName>Johnson</LastName>
+    <BirthYear>2000</BirthYear>
+    <BirthMonth>4</BirthMonth>
+    <BirthDay>12</BirthDay>
+    <Gender>M</Gender>
+    <IsPartOfMultipleBirth>F</IsPartOfMultipleBirth>
+    <BirthOrder>0</BirthOrder>
+    <BirthCounty>Emery</BirthCounty>
+    <MotherMiddleName>Cindy</MotherMiddleName>
+    <MotherLastName>Stevenson</MotherLastName>
+  </Person>
+  <Person i:type="Child">
+    <ObjectId>143</ObjectId>
+    <FirstName>Henry</FirstName>
+    <MiddleName>Otto</MiddleName>
+    <LastName>Isaacons</LastName>
+    <BirthYear>2006</BirthYear>
+    <BirthMonth>4</BirthMonth>
+    <BirthDay>14</BirthDay>
+    <Gender>M</Gender>
+    <IsPartOfMultipleBirth>T</IsPartOfMultipleBirth>
+    <BirthOrder>2</BirthOrder>
+    <BirthCounty>Utah</BirthCounty>
+    <MotherFirstName>Ester</MotherFirstName>
+    <MotherMiddleName>Kate</MotherMiddleName>
+    <MotherLastName>Edwards</MotherLastName>
+  </Person>
+  <Person i:type="Adult">
+    <ObjectId>144</ObjectId>
+    <FirstName>\^8N7=</FirstName>
+    <MiddleName>Dianne</MiddleName>
+    <LastName>Larson</LastName>
+    <BirthYear>1994</BirthYear>
+    <BirthMonth>12</BirthMonth>
+    <BirthDay>13</BirthDay>
+    <Gender>F</Gender>
+    <Phone1>801-174-0919</Phone1>
+  </Person>
+  <Person i:type="Adult">
+    <ObjectId>145</ObjectId>
+    <FirstName>Nancy</FirstName>
+    <MiddleName>Hildaguard</MiddleName>
+    <BirthYear>1977</BirthYear>
+    <BirthMonth>10</BirthMonth>
+    <BirthDay>13</BirthDay>
+    <Gender>F</Gender>
+    <Phone1>435-376-6269</Phone1>
+    <Phone2>435-365-1835</Phone2>
+  </Person>
+</ArrayOfPerson>

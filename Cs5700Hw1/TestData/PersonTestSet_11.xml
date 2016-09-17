@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPerson xmlns="http://schemas.datacontract.org/2004/07/Cs5700Hw1.Model" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+  <Person i:type="Adult">
+    <ObjectId>124</ObjectId>
+    <StateFileNumber>1995 01598</StateFileNumber>
+    <SocialSecurityNumber>614485273</SocialSecurityNumber>
+    <FirstName>Jane</FirstName>
+    <MiddleName>Mary</MiddleName>
+    <LastName>Davis</LastName>
+    <BirthYear>1995</BirthYear>
+    <BirthMonth>3</BirthMonth>
+    <BirthDay>7</BirthDay>
+    <Gender>F</Gender>
+    <Phone1>435-700-8142</Phone1>
+    <Phone2>828-1786</Phone2>
+  </Person>
+  <Person i:type="Child">
+    <ObjectId>125</ObjectId>
+    <StateFileNumber>2016 53398</StateFileNumber>
+    <SocialSecurityNumber>865027992</SocialSecurityNumber>
+    <FirstName />
+    <LastName>Chatterton</LastName>
+    <BirthYear>2016</BirthYear>
+    <BirthMonth>9</BirthMonth>
+    <BirthDay>26</BirthDay>
+    <Gender>F</Gender>
+    <IsPartOfMultipleBirth>F</IsPartOfMultipleBirth>
+    <BirthOrder>0</BirthOrder>
+    <BirthCounty>Salt Lake</BirthCounty>
+    <MotherLastName>Peterson</MotherLastName>
+  </Person>
+  <Person i:type="Adult">
+    <ObjectId>126</ObjectId>
+    <SocialSecurityNumber>614485273</SocialSecurityNumber>
+    <FirstName>Jane</FirstName>
+    <MiddleName>Mary</MiddleName>
+    <LastName>Davis</LastName>
+    <BirthYear>1995</BirthYear>
+    <BirthMonth>6</BirthMonth>
+    <BirthDay>22</BirthDay>
+    <Gender>F</Gender>
+    <Phone1>435-700-8142</Phone1>
+    <Phone2>828-1786</Phone2>
+  </Person>
+  <Person i:type="Child">
+    <ObjectId>127</ObjectId>
+    <StateFileNumber>2016 53398</StateFileNumber>
+    <FirstName />
+    <LastName>Chatterton</LastName>
+    <BirthYear>2016</BirthYear>
+    <BirthMonth>5</BirthMonth>
+    <BirthDay>24</BirthDay>
+    <Gender>F</Gender>
+    <IsPartOfMultipleBirth>F</IsPartOfMultipleBirth>
+    <BirthOrder>0</BirthOrder>
+    <BirthCounty>Salt Lake</BirthCounty>
+    <MotherLastName>Peterson</MotherLastName>
+  </Person>
+  <Person i:type="Child">
+    <ObjectId>128</ObjectId>
+    <SocialSecurityNumber>865027992</SocialSecurityNumber>
+    <FirstName />
+    <LastName>Chatterton</LastName>
+    <BirthYear>2016</BirthYear>
+    <BirthMonth>9</BirthMonth>
+    <BirthDay>26</BirthDay>
+    <Gender>F</Gender>
+    <IsPartOfMultipleBirth>F</IsPartOfMultipleBirth>
+    <BirthOrder>0</BirthOrder>
+    <BirthCounty>Salt Lake</BirthCounty>
+    <MotherLastName>Peterson</MotherLastName>
+  </Person>
+  <Person i:type="Adult">
+    <ObjectId>129</ObjectId>
+    <StateFileNumber>1995 01598</StateFileNumber>
+    <FirstName>Jane</FirstName>
+    <MiddleName>Paula</MiddleName>
+    <LastName>Fitzer</LastName>
+    <BirthYear>1995</BirthYear>
+    <BirthMonth>3</BirthMonth>
+    <BirthDay>7</BirthDay>
+    <Gender>F</Gender>
+    <Phone1>435-700-8142</Phone1>
+    <Phone2>828-1786</Phone2>
+  </Person>
+  <Person i:type="Child">
+    <ObjectId>130</ObjectId>
+    <StateFileNumber>2016 53398</StateFileNumber>
+    <FirstName />
+    <LastName>Chatterton</LastName>
+    <BirthYear>2016</BirthYear>
+    <BirthMonth>9</BirthMonth>
+    <BirthDay>26</BirthDay>
+    <Gender>F</Gender>
+    <IsPartOfMultipleBirth>F</IsPartOfMultipleBirth>
+    <BirthOrder>0</BirthOrder>
+    <BirthCounty>Salt Lake</BirthCounty>
+    <MotherLastName>Peterson</MotherLastName>
+  </Person>
+  <Person i:type="Adult">
+    <ObjectId>131</ObjectId>
+    <FirstName>Jane</FirstName>
+    <MiddleName>Mary</MiddleName>
+    <LastName>Davis</LastName>
+    <BirthYear>1995</BirthYear>
+    <BirthMonth>6</BirthMonth>
+    <BirthDay>22</BirthDay>
+    <Gender>F</Gender>
+    <Phone1>435-442-8857</Phone1>
+    <Phone2>828-1786</Phone2>
+  </Person>
+  <Person i:type="Child">
+    <ObjectId>132</ObjectId>
+    <FirstName>Fran</FirstName>
+    <LastName>Stevenson</LastName>
+    <BirthYear>2016</BirthYear>
+    <BirthMonth>11</BirthMonth>
+    <BirthDay>8</BirthDay>
+    <Gender>F</Gender>
+    <IsPartOfMultipleBirth>F</IsPartOfMultipleBirth>
+    <BirthOrder>0</BirthOrder>
+    <BirthCounty>Salt Lake</BirthCounty>
+    <MotherLastName>Peterson</MotherLastName>
+  </Person>
+</ArrayOfPerson>
