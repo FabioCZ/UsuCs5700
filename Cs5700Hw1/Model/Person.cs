@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace Cs5700Hw1.Model
 {
     [DataContract]
-    internal abstract class Person
+    public abstract class Person
     {
         [DataMember]
         public int ObjectId { get; set; }
@@ -35,7 +30,7 @@ namespace Cs5700Hw1.Model
         public int? BirthMonth { get; set; }
 
         [DataMember]
-        public int? BrithDay { get; set; }
+        public int? BirthDay { get; set; }
 
         [DataMember]
         public string Gender { get; set; } //M/F
@@ -47,10 +42,7 @@ namespace Cs5700Hw1.Model
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((Person)obj);
+            return Equals((Person) obj);
         }
 
 

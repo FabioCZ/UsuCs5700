@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using CommandLine;
 using CommandLine.Text;
 using Cs5700Hw1.Serialization;
-using FileInfo = Cs5700Hw1.Serialization.FileInfo;
 
 namespace Cs5700Hw1
 {
-    internal class Options
+    public class Options
     {
         [Option('i', "input", Required = true,
              HelpText =
@@ -22,10 +20,10 @@ namespace Cs5700Hw1
 
         [HelpOption]
         public string GetUsage() => HelpText.AutoBuild(this,
-            (HelpText current) => HelpText.DefaultParsingErrorsHandler(this, current));
+            current => HelpText.DefaultParsingErrorsHandler(this, current));
     }
 
-    internal class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
@@ -50,11 +48,11 @@ namespace Cs5700Hw1
                         return;
                     }
                     var fileType = (FileType) Enum.Parse(typeof(FileType), fi[1]);
-                    fileInfos.Add(new FileInfo(fi[0],fileType));
+                    fileInfos.Add(new FileInfo(fi[0], fileType));
                 }
 
                 //Run matching
-                var matcherRunner = new MatcherRunner(fileInfos,outFileName);
+                var matcherRunner = new MatcherRunner(fileInfos, outFileName);
                 matcherRunner.Run();
             }
         }

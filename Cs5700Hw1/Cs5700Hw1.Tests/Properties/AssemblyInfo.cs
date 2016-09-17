@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Cs5700Hw1")]
+[assembly: AssemblyTitle("Cs5700Hw1.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Cs5700Hw1")]
+[assembly: AssemblyProduct("Cs5700Hw1.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
-[assembly: Guid("adf434cf-4c9a-4286-9f14-83e1a434addd")]
+[assembly: Guid("57e367d5-dca8-4b97-96e9-81243063a3f5")]
 
 // Version information for an assembly consists of the following four values:
 //

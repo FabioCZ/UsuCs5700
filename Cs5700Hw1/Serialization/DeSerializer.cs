@@ -5,7 +5,7 @@ using Cs5700Hw1.Model;
 
 namespace Cs5700Hw1.Serialization
 {
-    internal abstract class DeSerializer
+    public abstract class DeSerializer
     {
         protected FileInfo FileInfo;
 
@@ -13,14 +13,13 @@ namespace Cs5700Hw1.Serialization
         {
             FileInfo = fileInfo;
         }
+
         public abstract List<Person> DeSerialize();
 
         public static DeSerializer CreateFrom(FileInfo fileInfo)
         {
             if (!File.Exists(fileInfo.FileName))
-            {
                 throw new FileNotFoundException($"File: {fileInfo.FileName} not found");
-            }
 
             switch (fileInfo.FileType)
             {
@@ -29,7 +28,8 @@ namespace Cs5700Hw1.Serialization
                 case FileType.Xml:
                     return new XmlDeSerializer(fileInfo);
                 default:
-                    throw new InvalidEnumArgumentException($"Unexpected enum value {fileInfo.FileType}, valid values are: Json, Xml");
+                    throw new InvalidEnumArgumentException(
+                        $"Unexpected enum value {fileInfo.FileType}, valid values are: Json, Xml");
             }
         }
     }

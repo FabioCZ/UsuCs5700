@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfPerson xmlns="http://schemas.datacontract.org/2004/07/Cs5700Hw1.Model" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ArrayOfPerson xmlns="http://schemas.datacontract.org/2004/07/Cs5700Hw1.Model"
+               xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
   <Person i:type="Adult">
     <ObjectId>133</ObjectId>
     <StateFileNumber>1994 13427</StateFileNumber>

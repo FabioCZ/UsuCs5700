@@ -64,16 +64,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MatcherRunner.cs" />
-    <Compile Include="Matcher\ConsoleResultWriter.cs" />
-    <Compile Include="Matcher\FileResultWriter.cs" />
-    <Compile Include="Matcher\IMatchResultWriter.cs" />
-    <Compile Include="Matcher\Matchers\GenderAndYearPersonMatcher.cs" />
-    <Compile Include="Matcher\Matchers\MotherPersonMatcher.cs" />
-    <Compile Include="Matcher\Matchers\PhonePersonMatcher.cs" />
-    <Compile Include="Matcher\PersonMatcher.cs" />
-    <Compile Include="Matcher\Match.cs" />
-    <Compile Include="Matcher\Matchers\NamePersonMatcher.cs" />
-    <Compile Include="Matcher\Matchers\UniqueNumbersPersonsMatcher.cs" />
+    <Compile Include="Match\ConsoleResultWriter.cs" />
+    <Compile Include="Match\FileResultWriter.cs" />
+    <Compile Include="Match\IMatchResultWriter.cs" />
+    <Compile Include="Match\Matchers\GenderAndYearPersonMatcher.cs" />
+    <Compile Include="Match\Matchers\MotherPersonMatcher.cs" />
+    <Compile Include="Match\Matchers\PhonePersonMatcher.cs" />
+    <Compile Include="Match\Matchers\PersonMatcher.cs" />
+    <Compile Include="Match\Match.cs" />
+    <Compile Include="Match\Matchers\NamePersonMatcher.cs" />
+    <Compile Include="Match\Matchers\UniqueNumbersPersonMatcher.cs" />
     <Compile Include="Model\Adult.cs" />
     <Compile Include="Model\Child.cs" />
     <Compile Include="Model\Person.cs" />
