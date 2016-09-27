@@ -11,7 +11,7 @@ using Cs5700Hw2.Model;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace Cs5700Hw2
+namespace Cs5700Hw2.View
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -22,9 +22,11 @@ namespace Cs5700Hw2
         public FileOpenPicker openPortfolioPicker { get; private set;}
         public FileSavePicker savePortfolioPicker { get; private set;}
         public List<Company> Companies { get; private set; }
+        public PortfolioEditor PortfolioEditor { get; private set; }
         public MainPage()
         {
             this.InitializeComponent();
+
             ChooseCompanyList();
         }
 
@@ -37,6 +39,11 @@ namespace Cs5700Hw2
             companyListPicker.FileTypeFilter.Add(".csv");
             var file = await companyListPicker.PickSingleFileAsync();
             Companies = await CsvUtils.ParseCompanyList(file);
+            if (Companies == null || Companies.Count == 0)
+            {
+                await new MessageDialog("The supplied file is empty/invalid, please select a different one").ShowAsync();
+                ChooseCompanyList();
+            }
         }
 
 
@@ -55,9 +62,13 @@ namespace Cs5700Hw2
 
         }
 
-        private void EditPortfolioButton_Click(object sender, RoutedEventArgs e)
+        private async void EditPortfolioButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (PortfolioEditor == null)
+            {
+                PortfolioEditor = new PortfolioEditor(Companies);
+            }
+            await PortfolioEditor.ShowAsync();
         }
 
         private void AddPanelButton_Click(object sender, RoutedEventArgs e)

@@ -7,11 +7,39 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="Build your portfolio"
-    PrimaryButtonText="Button1"
-    SecondaryButtonText="Button2"
+    PrimaryButtonText="Clear All"
+    SecondaryButtonText="OK"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    MinWidth="450">
 
-    <Grid>
+    <Grid Height="400" Width="400">
+        <Grid.Resources>
+            <CollectionViewSource x:Name="AvailableCompaniesViewSource" IsSourceGrouped="True" Source="{Binding FilteredCompanies}"></CollectionViewSource>
+        </Grid.Resources>
+        <TextBox x:Name="searchBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" PlaceholderText="Search by company ticker or name" VerticalAlignment="Top" Width="380" TextChanged="searchBox_TextChanged"/>
+        <ListView x:Name="companyListView"
+                  SelectionMode="Multiple" 
+                  IsMultiSelectCheckBoxEnabled="True"
+                  HorizontalAlignment="Left" 
+                  Height="304" 
+                  Margin="10,47,0,0" 
+                  VerticalAlignment="Top"
+                  Width="380" 
+                  RenderTransformOrigin="0.17,0.01"
+                  ItemsSource="{Binding Source={StaticResource AvailableCompaniesViewSource}}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding TickerName}" Foreground="DarkBlue"></TextBlock>
+                        <TextBlock Text="{Binding LongName}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <TextBlock x:Name="portfolioSizeTextBlock" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="203,356,0,10" TextWrapping="Wrap" Text="Portfolio size: 0" Width="187" Height="34"/>
+        <Button x:Name="listSelectedButton" Content="See Selected Companies" HorizontalAlignment="Left" Margin="10,356,0,0" VerticalAlignment="Top" Height="34" Width="188"/>
     </Grid>
 </ContentDialog>
