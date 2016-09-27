@@ -1,0 +1,3 @@
+[submodule "cs5700f16-shared"]
+	path = cs5700f16-shared
+	url = https://bitbucket.org/stephenclyde/cs5700f16-shared.git

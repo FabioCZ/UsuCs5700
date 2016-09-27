@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="Cs5700Hw2.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Cs5700Hw2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"  >
+    <Page.TopAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton Icon="OpenFile" Label="Open Portfolio" Name="OpenFileButton" ClickMode="Press" Click="OpenFileButton_Click"/>
+            <AppBarButton Icon="Save" Label="Save Portfolio" Name="SaveFileButton" ClickMode="Press" Click="SaveFileButton_Click"/>
+            <AppBarButton Icon="Edit" Label="Edit Portfolio" Name="EditPortfolioButton" ClickMode="Press" Click="EditPortfolioButton_Click"/>
+            <AppBarButton Icon="Add" Label="Add Panel" Name="AddPanelButton" ClickMode="Press" Click="AddPanelButton_Click"/>
+            
+            
+        </CommandBar>
+    </Page.TopAppBar>
+
+    <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+
+    </Grid>
+</Page>
