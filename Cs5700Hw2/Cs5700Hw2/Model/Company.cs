@@ -10,13 +10,16 @@ namespace Cs5700Hw2.Model
     {
         public string TickerName { get; private set; }
         public double? SomeNumber { get; private set; }
-        public string LongName { get; private set; }
+        public string LongName { get;  private set; }
+
+        public bool Selected { get;  set; }
 
         public Company(string tickerName, double? someNumber, string longName)
         {
             TickerName = tickerName;
             SomeNumber = someNumber;
             LongName = longName;
+            Selected = false;
         }
     }
 }

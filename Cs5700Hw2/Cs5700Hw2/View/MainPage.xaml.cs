@@ -21,7 +21,8 @@ namespace Cs5700Hw2.View
         public FileOpenPicker companyListPicker { get; private set; }
         public FileOpenPicker openPortfolioPicker { get; private set;}
         public FileSavePicker savePortfolioPicker { get; private set;}
-        public List<Company> Companies { get; private set; }
+        public List<Company> AvailableCompanies { get; private set; }
+        public Portfolio Portfolio { get; private set; }
         public PortfolioEditor PortfolioEditor { get; private set; }
         public MainPage()
         {
@@ -38,8 +39,8 @@ namespace Cs5700Hw2.View
             companyListPicker = new FileOpenPicker {CommitButtonText = "Select Company list"};
             companyListPicker.FileTypeFilter.Add(".csv");
             var file = await companyListPicker.PickSingleFileAsync();
-            Companies = await CsvUtils.ParseCompanyList(file);
-            if (Companies == null || Companies.Count == 0)
+            AvailableCompanies = await CsvUtils.ParseCompanyList(file);
+            if (AvailableCompanies == null || AvailableCompanies.Count == 0)
             {
                 await new MessageDialog("The supplied file is empty/invalid, please select a different one").ShowAsync();
                 ChooseCompanyList();
@@ -66,9 +67,10 @@ namespace Cs5700Hw2.View
         {
             if (PortfolioEditor == null)
             {
-                PortfolioEditor = new PortfolioEditor(Companies);
+                PortfolioEditor = new PortfolioEditor(AvailableCompanies);
             }
             await PortfolioEditor.ShowAsync();
+            
         }
 
         private void AddPanelButton_Click(object sender, RoutedEventArgs e)

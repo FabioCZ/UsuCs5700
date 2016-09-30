@@ -16,30 +16,37 @@
     MinWidth="450">
 
     <Grid Height="400" Width="400">
-        <Grid.Resources>
-            <CollectionViewSource x:Name="AvailableCompaniesViewSource" IsSourceGrouped="True" Source="{Binding FilteredCompanies}"></CollectionViewSource>
-        </Grid.Resources>
-        <TextBox x:Name="searchBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" PlaceholderText="Search by company ticker or name" VerticalAlignment="Top" Width="380" TextChanged="searchBox_TextChanged"/>
+        <Border BorderBrush="{x:Null}" Width="187" Height="34" Margin="203,10,10,356">
+            <TextBlock x:Name="portfolioSizeTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Portfolio size: 0" Margin="0,10,0,0" />
+        </Border>
+        <ToggleSwitch x:Name="showSelectedToggleSwitch" Header="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="198" OffContent="Show all" OnContent="Show Selected" Toggled="showSelectedToggleSwitch_Toggled" />
+
+        <TextBox x:Name="searchBox" HorizontalAlignment="Left" Margin="10,55,0,0" TextWrapping="Wrap" PlaceholderText="Search by company ticker or name" VerticalAlignment="Top" Width="380" TextChanged="searchBox_TextChanged"/>
         <ListView x:Name="companyListView"
-                  SelectionMode="Multiple" 
-                  IsMultiSelectCheckBoxEnabled="True"
+                  SelectionMode="None" 
                   HorizontalAlignment="Left" 
-                  Height="304" 
-                  Margin="10,47,0,0" 
+                  Height="298" 
+                  Margin="10,92,0,0" 
                   VerticalAlignment="Top"
                   Width="380" 
                   RenderTransformOrigin="0.17,0.01"
-                  ItemsSource="{Binding Source={StaticResource AvailableCompaniesViewSource}}">
+                  ItemsSource="{x:Bind FilteredCompanies}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding TickerName}" Foreground="DarkBlue"></TextBlock>
-                        <TextBlock Text="{Binding LongName}"></TextBlock>
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+
+                        </Grid.ColumnDefinitions>
+                        <CheckBox IsChecked="{Binding Selected}" Click="CheckBox_Click"></CheckBox>
+                        <StackPanel Margin="37,0,-247,0" Grid.ColumnSpan="2">
+                            <TextBlock Text="{Binding TickerName}" Foreground="DarkBlue" ></TextBlock>
+                            <TextBlock Text="{Binding LongName}"></TextBlock>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TextBlock x:Name="portfolioSizeTextBlock" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="203,356,0,10" TextWrapping="Wrap" Text="Portfolio size: 0" Width="187" Height="34"/>
-        <Button x:Name="listSelectedButton" Content="See Selected Companies" HorizontalAlignment="Left" Margin="10,356,0,0" VerticalAlignment="Top" Height="34" Width="188"/>
     </Grid>
 </ContentDialog>

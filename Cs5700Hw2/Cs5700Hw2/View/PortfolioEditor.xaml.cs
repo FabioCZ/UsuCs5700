@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,16 +24,20 @@ namespace Cs5700Hw2.View
     public sealed partial class PortfolioEditor : ContentDialog
     {
         public List<Company> AvailableCompanies { get; set; }
-        public List<Company> FilteredCompanies { get; set; }
-        public List<Company> SelectedCompanies { get; private set; }
+        public ObservableCollection<Company> FilteredCompanies { get; set; }
+
+        public List<Company> SelectedCompanies
+        {
+            get { return AvailableCompanies.Where(c => c.Selected).ToList(); }
+        }
 
         public PortfolioEditor(List<Company>  availableCompanies)
         {
             AvailableCompanies = availableCompanies.OrderBy(e => e.TickerName).ToList();
-            FilteredCompanies = AvailableCompanies.ToList();    //copy
-            this.InitializeComponent();
-            this.MaxWidth = this.ActualWidth;
-
+            FilteredCompanies = new ObservableCollection<Company>(AvailableCompanies.ToList());    //copy
+            InitializeComponent();
+            companyListView.ItemsSource = FilteredCompanies;
+            MaxWidth = ActualWidth;
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -46,29 +51,33 @@ namespace Cs5700Hw2.View
 
         private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //var boxText = (sender as TextBox)?.Text.ToLower();
-            //var selected = companyListView.SelectedRanges;
-            //foreach (var c in FilteredCompanies.ToList())
-            //{
-            //    if (!c.LongName.ToLower().Contains(boxText) || !c.TickerName.ToLower().Contains(boxText))
-            //    {
-            //        FilteredCompanies.Remove(c);
-            //    }
-            //}
+            var boxText = searchBox.Text.ToLower();
+            var source = showSelectedToggleSwitch.IsOn ? FilteredCompanies.Where(c => c.Selected) : FilteredCompanies;
+            if (string.IsNullOrEmpty(boxText))
+            {
+                companyListView.ItemsSource = source;
+            }
+            companyListView.ItemsSource = source.Where((item) => item.LongName.ToLower().Contains(boxText) || item.TickerName.ToLower().Contains(boxText));
+        }
 
-            //foreach (var c in AvailableCompanies)
-            //{
-            //    if (!FilteredCompanies.Contains(c) &&
-            //        (c.LongName.Contains(boxText) || c.TickerName.Contains(boxText)))
-            //    {
-            //        FilteredCompanies.Add(c);
-            //    }
-            //}
-            //foreach(var r in selected)
-            //{
-            //    companyListView.SelectRange(r);
-            //}
+        private void showSelectedToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            searchBox_TextChanged(sender,null);
+        }
 
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = (sender as CheckBox).IsChecked;
+            for (var i = 0; i < AvailableCompanies.Count;i++)
+            {
+                if (AvailableCompanies[i] == (sender as CheckBox).DataContext)
+                {
+                    AvailableCompanies[i].Selected = selected.Value;
+
+                    break;
+                }
+            }
+            portfolioSizeTextBlock.Text = "Portfolio size: " + FilteredCompanies.Count(c => c.Selected);
 
         }
     }
