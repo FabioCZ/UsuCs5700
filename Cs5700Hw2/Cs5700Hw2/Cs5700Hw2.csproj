@@ -96,6 +96,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileIO\CsvUtils.cs" />
+    <Compile Include="Net\StreamStockMessage.cs" />
+    <Compile Include="Net\TickerMessage.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
