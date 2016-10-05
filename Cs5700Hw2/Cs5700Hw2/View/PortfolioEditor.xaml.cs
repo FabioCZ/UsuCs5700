@@ -23,18 +23,18 @@ namespace Cs5700Hw2.View
 {
     public sealed partial class PortfolioEditor : ContentDialog
     {
-        public List<Company> AvailableCompanies { get; set; }
-        public ObservableCollection<Company> FilteredCompanies { get; set; }
+        public List<SelectionCompany> AvailableCompanies { get; set; }
+        public ObservableCollection<SelectionCompany> FilteredCompanies { get; set; }
 
         public List<Company> SelectedCompanies
         {
-            get { return AvailableCompanies.Where(c => c.Selected).ToList(); }
+            get { return AvailableCompanies.Where(c => c.Selected).Select(c => c as Company).ToList(); }
         }
 
-        public PortfolioEditor(List<Company>  availableCompanies)
+        public PortfolioEditor(List<SelectionCompany>  availableCompanies)
         {
             AvailableCompanies = availableCompanies.OrderBy(e => e.TickerName).ToList();
-            FilteredCompanies = new ObservableCollection<Company>(AvailableCompanies.ToList());    //copy
+            FilteredCompanies = new ObservableCollection<SelectionCompany>(AvailableCompanies.ToList());    //copy
             InitializeComponent();
             companyListView.ItemsSource = FilteredCompanies;
             MaxWidth = ActualWidth;

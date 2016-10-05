@@ -96,15 +96,22 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileIO\CsvUtils.cs" />
+    <Compile Include="Model\SelectionCompany.cs" />
+    <Compile Include="Model\WatchedCompany.cs" />
+    <Compile Include="Net\ICommListener.cs" />
     <Compile Include="Net\StreamStockMessage.cs" />
     <Compile Include="Net\TickerMessage.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Company.cs" />
-    <Compile Include="Net\CommListener.cs" />
+    <Compile Include="Net\UdpCommListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Portfolio.cs" />
+    <Compile Include="View\Panel\IStockObserver.cs" />
+    <Compile Include="View\Panel\PortfolioStockPricesPanel.xaml.cs">
+      <DependentUpon>PortfolioStockPricesPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PortfolioEditor.xaml.cs">
       <DependentUpon>PortfolioEditor.xaml</DependentUpon>
     </Compile>
@@ -134,9 +141,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Panel\PortfolioStockPricesPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PortfolioEditor.xaml">
       <SubType>Designer</SubType>
@@ -146,6 +161,16 @@
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AwsDebug|x86'">
+    <OutputPath>bin\x86\AwsDebug\</OutputPath>
+    <DefineConstants>DEBUG;AWSDEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AwsDebug|ARM'">
+    <OutputPath>bin\ARM\AwsDebug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AwsDebug|x64'">
+    <OutputPath>bin\x64\AwsDebug\</OutputPath>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

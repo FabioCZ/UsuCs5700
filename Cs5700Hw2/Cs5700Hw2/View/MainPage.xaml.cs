@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -8,6 +10,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Cs5700Hw2.FileIO;
 using Cs5700Hw2.Model;
+using Cs5700Hw2.Net;
+using Cs5700Hw2.View.Panel;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -18,16 +22,20 @@ namespace Cs5700Hw2.View
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public readonly string PlayText = "Start Monitoring";
+        public readonly string PauseText = "Stop Monitoring";
         public FileOpenPicker companyListPicker { get; private set; }
         public FileOpenPicker openPortfolioPicker { get; private set;}
         public FileSavePicker savePortfolioPicker { get; private set;}
         public List<Company> AvailableCompanies { get; private set; }
         public Portfolio Portfolio { get; private set; }
         public PortfolioEditor PortfolioEditor { get; private set; }
+        public ICommListener UdpCommListener {get; private set; }
+        public ObservableCollection<IStockObserver> Panels { get; private set; }
         public MainPage()
         {
             this.InitializeComponent();
-
+            Panels = new ObservableCollection<IStockObserver>();
             ChooseCompanyList();
         }
 
@@ -67,10 +75,16 @@ namespace Cs5700Hw2.View
         {
             if (PortfolioEditor == null)
             {
-                PortfolioEditor = new PortfolioEditor(AvailableCompanies);
+                var selectionCompanies = AvailableCompanies.Select(c => new SelectionCompany(c)).ToList();
+                PortfolioEditor = new PortfolioEditor(selectionCompanies);
             }
             await PortfolioEditor.ShowAsync();
-            
+            Portfolio = new Portfolio(PortfolioEditor.SelectedCompanies);
+            if (UdpCommListener == null)
+            {
+                UdpCommListener = new UdpCommListener();
+            }
+            UdpCommListener.Portfolio = Portfolio;
         }
 
         private void AddPanelButton_Click(object sender, RoutedEventArgs e)
@@ -78,5 +92,34 @@ namespace Cs5700Hw2.View
 
         }
 
+        private async void StartPauseMonitoringButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (UdpCommListener == null || Portfolio == null)
+            {
+                await new MessageDialog("Please select the companies in your portfolio via the Edit Portfolio button")
+                        .ShowAsync();
+                return;
+            }
+            if (!UdpCommListener.IsRunning)
+            {
+                StartPauseMonitoringButton.Icon = new SymbolIcon(Symbol.Pause);
+                StartPauseMonitoringButton.Label = PauseText;
+                UdpCommListener.Init();
+            }
+            else //is running
+            {
+                StartPauseMonitoringButton.Icon = new SymbolIcon(Symbol.Play);
+                StartPauseMonitoringButton.Label = PlayText;
+                UdpCommListener.Destroy();
+
+            }
+            Panels.Add(new PortfolioStockPricesPanel());
+            UdpCommListener.OnDataReceived += Panels[0].OnMessageReceived;
+        }
+
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -15,7 +15,6 @@ namespace Cs5700Hw2.Net
         public string TickerName { get; private set; }
         public DateTime? Timestamp { get; private set; }
         public int OpeningPrice { get; private set; }
-        public int PrevOpeningPrice { get; private set; }
         public int PrevClosingPrice { get; private set; }
         public int CurrPrice { get; private set; }
         public int BidPrice { get; private set; }
@@ -33,10 +32,9 @@ namespace Cs5700Hw2.Net
             if (bytes == null || bytes.Length != 42) return;
 
             var reader = new BinaryReader(new MemoryStream(bytes));
-            TickerName = Encoding.ASCII.GetString(reader.ReadBytes(6));
+            TickerName = Encoding.ASCII.GetString(reader.ReadBytes(6)).Trim();
             Timestamp = new DateTime(NetworkToHostOrder(reader.ReadInt64()));
             OpeningPrice = NetworkToHostOrder(reader.ReadInt32());
-            PrevOpeningPrice = NetworkToHostOrder(reader.ReadInt32());
             PrevClosingPrice = NetworkToHostOrder(reader.ReadInt32());
             CurrPrice = NetworkToHostOrder(reader.ReadInt32());
             BidPrice = NetworkToHostOrder(reader.ReadInt32());
