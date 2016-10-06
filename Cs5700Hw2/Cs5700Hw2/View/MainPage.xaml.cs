@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.System.Threading;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -32,10 +35,21 @@ namespace Cs5700Hw2.View
         public PortfolioEditor PortfolioEditor { get; private set; }
         public ICommListener UdpCommListener {get; private set; }
         public ObservableCollection<IStockObserver> Panels { get; private set; }
+        public Dictionary<string,Type> AvailablePanels { get; private set; }
+        public MenuFlyout AddPanelFlyout;
+
+        public Timer TitleUpdateTimer;
         public MainPage()
         {
             this.InitializeComponent();
             Panels = new ObservableCollection<IStockObserver>();
+            StartTitleTimer();
+            AvailablePanels = new Dictionary<string,Type>(4)
+            {
+                {"Porfolio Stock Prices", typeof(PortfolioStockPricesPanel)},
+                {"Individual Stock Price Graph", typeof(IndividualStockGraphPanel) },
+                {"Individual Stock Volume", typeof(IndividualStockVolumePanel) }
+            };
             ChooseCompanyList();
         }
 
@@ -71,6 +85,20 @@ namespace Cs5700Hw2.View
 
         }
 
+        private void StartTitleTimer()
+        {
+            if (TitleUpdateTimer == null)
+            {
+                TitleUpdateTimer = new Timer(async state =>
+                {
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.High, () => AppBarTitle.Text = $"Portfolio Size: {Portfolio?.Size ?? 0} | Time: {DateTime.Now:HH:mm:ss} ");
+
+                }, null, 0, 16);
+
+
+            }
+        }
+
         private async void EditPortfolioButton_Click(object sender, RoutedEventArgs e)
         {
             if (PortfolioEditor == null)
@@ -89,14 +117,27 @@ namespace Cs5700Hw2.View
 
         private void AddPanelButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (AddPanelFlyout == null)
+            {
+                AddPanelFlyout = new MenuFlyout();
+                AddPanelFlyout.Items.Add(new MenuFlyoutItem() {Text = "Choose panel type:"});
+                AddPanelFlyout.Items.Add(new MenuFlyoutSeparator());
+                foreach (var p in AvailablePanels)
+                {
+                    var item = new MenuFlyoutItem();
+                    item.Text = p.Key;
+                    item.Tapped += (o, args) => { };
+                    AddPanelFlyout.Items.Add(item);
+                }
+            }
+            AddPanelFlyout.ShowAt(AddPanelButton);
         }
 
         private async void StartPauseMonitoringButton_Click(object sender, RoutedEventArgs e)
         {
             if (UdpCommListener == null || Portfolio == null)
             {
-                await new MessageDialog("Please select the companies in your portfolio via the Edit Portfolio button")
+                await new MessageDialog("Please select the companies in your portfolio via the Edit Portfolio button or import an existing one")
                         .ShowAsync();
                 return;
             }

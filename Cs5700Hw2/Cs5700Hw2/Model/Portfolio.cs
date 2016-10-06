@@ -6,6 +6,8 @@ namespace Cs5700Hw2.Model
     {
         public List<WatchedCompany> WatchedCompanies { get; private set; }
 
+        public int Size => WatchedCompanies?.Count ?? 0;
+
         public Portfolio(List<Company> companies)
         {
             WatchedCompanies = new List<WatchedCompany>(companies.Count);  //bit of optimization can't hurt

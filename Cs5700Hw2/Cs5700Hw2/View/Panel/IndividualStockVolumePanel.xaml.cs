@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -13,22 +12,16 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Cs5700Hw2.Net;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace Cs5700Hw2.View.Panel
 {
-    public sealed partial class PortfolioStockPricesPanel : UserControl, IStockObserver, IBasePanel
+    public sealed partial class IndividualStockVolumePanel : UserControl
     {
-        public PortfolioStockPricesPanel()
+        public IndividualStockVolumePanel()
         {
             this.InitializeComponent();
-        }
-
-        public void OnMessageReceived(object sender, TickerMessage message)
-        {
-            Debug.WriteLine(message.TickerName);
         }
     }
 }

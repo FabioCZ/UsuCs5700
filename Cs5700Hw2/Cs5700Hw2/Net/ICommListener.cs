@@ -7,6 +7,8 @@ using Cs5700Hw2.Model;
 
 namespace Cs5700Hw2.Net
 {
+    public delegate void CommEventArgs(object sender, TickerMessage message);
+
     public interface ICommListener
     {
         Portfolio Portfolio { get; set; }
@@ -15,6 +17,4 @@ namespace Cs5700Hw2.Net
         void Destroy();
         event CommEventArgs OnDataReceived;
     }
-
-    public delegate void CommEventArgs(object sender,TickerMessage message);
 }

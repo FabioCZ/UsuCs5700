@@ -42,8 +42,5 @@ namespace Cs5700Hw2.Net
             CurrVolume = NetworkToHostOrder(reader.ReadInt32());
             AvgTenDayVolume = NetworkToHostOrder(reader.ReadInt32());
         }
-
-
-
     }
 }

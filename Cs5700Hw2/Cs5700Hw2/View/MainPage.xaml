@@ -9,7 +9,9 @@
     <Page.TopAppBar>
         <CommandBar>
             <CommandBar.Content>
-                <Grid/>
+                <Grid Height="48" Padding="5">
+                    <TextBlock FontWeight="SemiLight" Name="AppBarTitle" FontSize="25" VerticalAlignment="Center"/>
+                </Grid>
             </CommandBar.Content>
             <AppBarButton Icon="Play" Label="{x:Bind PlayText}" Name="StartPauseMonitoringButton" ClickMode="Press" Click="StartPauseMonitoringButton_Click"/>
 

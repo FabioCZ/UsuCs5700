@@ -42,11 +42,19 @@ namespace Cs5700Hw2.View
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-       
+            args.Cancel = true;
+            foreach (var c in FilteredCompanies)
+            {
+                c.Selected = false;
+            }
+            searchBox_TextChanged(sender, null);
+            UpdatePortfolioSize();
+
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            //ok
         }
 
         private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -77,8 +85,13 @@ namespace Cs5700Hw2.View
                     break;
                 }
             }
-            portfolioSizeTextBlock.Text = "Portfolio size: " + FilteredCompanies.Count(c => c.Selected);
+            UpdatePortfolioSize();
 
+        }
+
+        private void UpdatePortfolioSize()
+        {
+            portfolioSizeTextBlock.Text = "Portfolio size: " + FilteredCompanies.Count(c => c.Selected);
         }
     }
 }
