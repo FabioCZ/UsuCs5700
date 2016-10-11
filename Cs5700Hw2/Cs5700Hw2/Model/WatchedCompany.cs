@@ -18,9 +18,17 @@ namespace Cs5700Hw2.Model
 
         public TickerMessage LatestMessage => Messages?.LastOrDefault() ?? TickerMessage.Empty;
 
-        public SymbolIcon Direction
+        public Symbol Direction
         {
-            get { return new SymbolIcon(Symbol.Up); }
+            get
+            {
+                //if(Messages == null || Messages.Count < 2) return new SymbolIcon(Symbol.Accept);
+                //else if (Messages.Last().CurrPrice > Messages[Messages.Count - 1].CurrPrice) return new SymbolIcon(Symbol.Up);
+                //else return new SymbolIcon(Symbol.Download);
+                if (Messages == null || Messages.Count < 2) return Symbol.Forward;
+                else if (Messages.Last().CurrPrice > Messages[Messages.Count - 1].CurrPrice) return Symbol.Up;
+                else return Symbol.Download;
+            }
         }
 
         public WatchedCompany(Company c) : base(c)

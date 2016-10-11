@@ -36,7 +36,7 @@ namespace Cs5700Hw2.View
         public Portfolio Portfolio { get; private set; }
         public PortfolioEditor PortfolioEditor { get; private set; }
         public ICommListener UdpCommListener {get; private set; }
-        public ObservableCollection<IStockObserverPanel> Panels { get; private set; }
+        //public ObservableCollection<IStockObserverPanel> Panels { get; private set; }
         public Dictionary<string,Type> AvailablePanels { get; private set; }
         public MenuFlyout AddPanelFlyout;
 
@@ -44,7 +44,7 @@ namespace Cs5700Hw2.View
         public MainPage()
         {
             this.InitializeComponent();
-            Panels = new ObservableCollection<IStockObserverPanel>();
+            //Panels = new ObservableCollection<IStockObserverPanel>();
             StartTitleTimer();
             AvailablePanels = new Dictionary<string,Type>(4)
             {
@@ -156,6 +156,7 @@ namespace Cs5700Hw2.View
                 return;
             }
             var panel = (IStockObserverPanel) Activator.CreateInstance(t);
+
             panel.PanelMarkedForRemoval += observerPanel => PanelLayout.Children.Remove((UIElement)panel);
             await panel.Initialize(Portfolio);
             PanelLayout.Children.Add((UIElement)panel);
@@ -173,7 +174,7 @@ namespace Cs5700Hw2.View
             {
                 StartPauseMonitoringButton.Icon = new SymbolIcon(Symbol.Pause);
                 StartPauseMonitoringButton.Label = PauseText;
-                UdpCommListener.Init(Dispatcher);
+                UdpCommListener.Init();
             }
             else //is running
             {
@@ -182,8 +183,6 @@ namespace Cs5700Hw2.View
                 UdpCommListener.Destroy();
 
             }
-            Panels.Add(new PortfolioStockPricesPanel());
-            UdpCommListener.OnDataReceived += Panels[0].OnMessageReceived;
         }
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)

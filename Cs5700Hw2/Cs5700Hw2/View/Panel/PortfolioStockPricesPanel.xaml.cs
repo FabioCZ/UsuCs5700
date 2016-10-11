@@ -31,11 +31,18 @@ namespace Cs5700Hw2.View.Panel
         {
             this.InitializeComponent();
             this.RightTapped += (o, args) => this.PanelMarkedForRemoval?.Invoke(this);
-            this.Holding += (sender, args) => this.PanelMarkedForRemoval?.Invoke(this);
         }
 
         public void OnMessageReceived(object sender, WatchedCompany company)
         {
+            if (companies == null) return;
+            for (var i = 0; i < companies?.Count; i++)
+            {
+                if (companies[i].TickerName == company.TickerName)
+                {
+                    companies[i] = company;
+                }
+            }
             this.companyListView.UpdateLayout();
         }
 
@@ -80,7 +87,7 @@ namespace Cs5700Hw2.View.Panel
             };
             var dialog = new ContentDialog
             {
-                Title = "Enter comma separated company tickers",
+                Title = "Enter up to 4 comma separated company names",
                 Content = new StackPanel()
                 {
                     Children =
@@ -97,9 +104,10 @@ namespace Cs5700Hw2.View.Panel
             }
             var split = suggest.Text.Split(',');
             companies = new ObservableCollection<WatchedCompany>();
-            foreach (var c in split)
+            for (var i = 0; i < 4 && i < split.Length;i++)
             {
-                companies.Add(portfolio.WatchedCompanies.First(e => e.TickerName == c));
+                if(split[i].Length > 0)
+                    companies.Add(portfolio.WatchedCompanies.First(e => e.TickerName == split[i]));
             }
         }
 

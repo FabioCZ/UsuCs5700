@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.System.Threading;
 using Windows.UI.Core;
@@ -25,8 +26,8 @@ namespace Cs5700Hw2.Net
         private CoreDispatcher mainThreadDispatcher;
 
 //#if AWSDEBUG
-        //private IPEndPoint simulatorEndpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"),12099);
-        private IPEndPoint simulatorEndpoint = new IPEndPoint(IPAddress.Parse("52.89.90.0"), 12099);
+        private IPEndPoint simulatorEndpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"),12099);
+        //private IPEndPoint simulatorEndpoint = new IPEndPoint(IPAddress.Parse("52.89.90.0"), 12099);
 
         //#else
         //        private IPEndPoint simulatorEndpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 12099);
@@ -35,9 +36,8 @@ namespace Cs5700Hw2.Net
         public bool IsRunning { get; private set; }
         public Portfolio Portfolio { get; set; }
 
-        public async void Init(CoreDispatcher dispatcher)
+        public async void Init()
         {
-            this.mainThreadDispatcher = dispatcher;
             udpClient = new UdpClient(LocalEP);
             var startMessage = new StreamStockMessage(Portfolio.WatchedCompanies.Cast<Company>().ToList());
             var startMessageBytes = startMessage.ToBytes();
@@ -77,7 +77,7 @@ namespace Cs5700Hw2.Net
                     var company = Portfolio.WatchedCompanies.FirstOrDefault(c => c.TickerName == message.TickerName);
                     company.AddMessage(message);
                     
-                    await mainThreadDispatcher.RunAsync(CoreDispatcherPriority.Normal, () => OnDataReceived?.Invoke(this, company));
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () => OnDataReceived?.Invoke(this, company));
                 }
                 catch (Exception e)
                 {

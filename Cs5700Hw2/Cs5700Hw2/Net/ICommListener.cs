@@ -14,7 +14,7 @@ namespace Cs5700Hw2.Net
     {
         Portfolio Portfolio { get; set; }
         bool IsRunning { get; }
-        void Init(CoreDispatcher dispatcher);
+        void Init();
         void Destroy();
         event CommEventArgs OnDataReceived;
     }

@@ -7,35 +7,37 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="200"
-    d:DesignWidth="200">
+    d:DesignWidth="300"
+    Background="{ThemeResource AppBarBackgroundThemeBrush}">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="19*"/>
-            <RowDefinition Height="181*"/>
-        </Grid.RowDefinitions>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Test" VerticalAlignment="Top" Width="180" Grid.RowSpan="2"/>
+    <StackPanel>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Name | Opening | Current | +/- | Bid | Ask" VerticalAlignment="Top" Width="280" Grid.RowSpan="2" Height="40"/>
         <ListView x:Name="companyListView"
                   SelectionMode="None" 
                   HorizontalAlignment="Left" 
                   Height="155" 
-                  Margin="10,16,0,0" 
+                  Margin="10,16,0,-4" 
                   VerticalAlignment="Top"
-                  Width="180" 
-                  RenderTransformOrigin="0.17,0.01"
+                  Width="280" 
                   ItemsSource="{x:Bind companies}" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding TickerName}" Foreground="DarkBlue" ></TextBlock>
-                        <TextBlock Text="{Binding LatestMessage.OpeningPrice}"></TextBlock>
-                        <TextBlock Text="{Binding LatestMessage.CurrPrice}"></TextBlock>
-                        <SymbolIcon Symbol="{Binding Direction}"></SymbolIcon>
-                        <TextBlock Text="{Binding LatestMessage.BidPrice}"></TextBlock>
+                    <StackPanel Orientation="Horizontal" Width="280">
+                        <TextBlock Text="{Binding TickerName}" Foreground="DarkBlue" Width="30" ></TextBlock>
+                        <TextBlock Text="|"></TextBlock>
+                        <TextBlock Text="{Binding LatestMessage.OpeningPrice}" Width="65"></TextBlock>
+                        <TextBlock Text="|" ></TextBlock>
+                        <TextBlock Text="{Binding LatestMessage.CurrPrice}" Width="58"></TextBlock>
+                        <TextBlock Text="|" ></TextBlock>
+                        <SymbolIcon Symbol="{Binding Direction}" Width="30"></SymbolIcon>
+                        <TextBlock Text="|" ></TextBlock>
+                        <TextBlock Text="{Binding LatestMessage.BidPrice}" Width="32"></TextBlock>
+                        <TextBlock Text="|" ></TextBlock>
                         <TextBlock Text="{Binding LatestMessage.AskPrice}"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </Grid>
+    </StackPanel>
 </UserControl>
+
