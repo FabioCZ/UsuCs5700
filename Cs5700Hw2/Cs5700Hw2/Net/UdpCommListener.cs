@@ -63,10 +63,11 @@ namespace Cs5700Hw2.Net
             {
                 try
                 {
-                    TickerMessage message;
                     var receivedBytes = await ReceiveBytes(TimeOutMS);
-                    message = new TickerMessage(receivedBytes.Buffer);
-                    OnDataReceived?.Invoke(this, message);
+                    var message = new TickerMessage(receivedBytes.Buffer);
+                    var company = Portfolio.WatchedCompanies.FirstOrDefault(c => c.TickerName == message.TickerName);
+                    company.AddMessage(message);
+                    OnDataReceived?.Invoke(this, company);
                 }
                 catch (Exception e)
                 {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using Windows.Foundation;
 using Windows.Storage;
@@ -34,7 +36,7 @@ namespace Cs5700Hw2.View
         public Portfolio Portfolio { get; private set; }
         public PortfolioEditor PortfolioEditor { get; private set; }
         public ICommListener UdpCommListener {get; private set; }
-        public ObservableCollection<IStockObserver> Panels { get; private set; }
+        public ObservableCollection<IStockObserverPanel> Panels { get; private set; }
         public Dictionary<string,Type> AvailablePanels { get; private set; }
         public MenuFlyout AddPanelFlyout;
 
@@ -42,7 +44,7 @@ namespace Cs5700Hw2.View
         public MainPage()
         {
             this.InitializeComponent();
-            Panels = new ObservableCollection<IStockObserver>();
+            Panels = new ObservableCollection<IStockObserverPanel>();
             StartTitleTimer();
             AvailablePanels = new Dictionary<string,Type>(4)
             {
@@ -115,29 +117,49 @@ namespace Cs5700Hw2.View
             UdpCommListener.Portfolio = Portfolio;
         }
 
-        private void AddPanelButton_Click(object sender, RoutedEventArgs e)
+        private async void AddPanelButton_Click(object sender, RoutedEventArgs e)
         {
+            if (UdpCommListener == null || Portfolio == null || Portfolio.Size == 0)
+            {
+                await new MessageDialog("Please select the companies in your portfolio via the Edit Portfolio button or import an existing one") { Title = "Error"}
+                        .ShowAsync();
+                return;
+            }
             if (AddPanelFlyout == null)
             {
                 AddPanelFlyout = new MenuFlyout();
-                AddPanelFlyout.Items.Add(new MenuFlyoutItem() {Text = "Choose panel type:"});
-                AddPanelFlyout.Items.Add(new MenuFlyoutSeparator());
+                AddPanelFlyout.Items?.Add(new MenuFlyoutItem() {Text = "Choose panel type:"});
+                AddPanelFlyout.Items?.Add(new MenuFlyoutSeparator());
                 foreach (var p in AvailablePanels)
                 {
-                    var item = new MenuFlyoutItem();
-                    item.Text = p.Key;
-                    item.Tapped += (o, args) => { };
-                    AddPanelFlyout.Items.Add(item);
+                    var item = new MenuFlyoutItem {Text = p.Key, DataContext =  p.Value};
+                    item.Tapped += (o, args) =>
+                    {
+                        AddPanel(((Control) o).DataContext as Type);
+                    };
+                    AddPanelFlyout.Items?.Add(item);
                 }
             }
             AddPanelFlyout.ShowAt(AddPanelButton);
         }
 
+        private async void AddPanel(Type t)
+        {
+            if (!t.GetInterfaces().Contains(typeof(IStockObserverPanel)))
+            {
+                //we screwed up
+                return;
+            }
+            var panel = (IStockObserverPanel) Activator.CreateInstance(t);
+            await panel.Initialize(Portfolio);
+            Panels.Add(panel);
+        }
+
         private async void StartPauseMonitoringButton_Click(object sender, RoutedEventArgs e)
         {
-            if (UdpCommListener == null || Portfolio == null)
+            if (UdpCommListener == null || Portfolio == null || Portfolio.Size == 0)
             {
-                await new MessageDialog("Please select the companies in your portfolio via the Edit Portfolio button or import an existing one")
+                await new MessageDialog("Please select the companies in your portfolio via the Edit Portfolio button or import an existing one") { Title = "Error" }
                         .ShowAsync();
                 return;
             }

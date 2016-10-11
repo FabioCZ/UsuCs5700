@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="Build your portfolio"
-    PrimaryButtonText="Clear All"
+    PrimaryButtonText="Clear Selection"
     SecondaryButtonText="OK"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick"

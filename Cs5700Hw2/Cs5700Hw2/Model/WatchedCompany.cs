@@ -7,11 +7,15 @@ using Cs5700Hw2.Net;
 
 namespace Cs5700Hw2.Model
 {
-    public class WatchedCompany : Company
+    public class WatchedCompany : CompanyDecorator
     {
         public List<TickerMessage> Messages { get; private set; }
 
-        public WatchedCompany(Company c) : base(c.TickerName,c.SomeNumber,c.LongName)
+        public override string TickerName => company.TickerName;
+        public override double? SomeNumber => company.SomeNumber;
+        public override string LongName => company.LongName;
+
+        public WatchedCompany(Company c) : base(c)
         {
         }
 

@@ -7,7 +7,7 @@ using Cs5700Hw2.Model;
 
 namespace Cs5700Hw2.Net
 {
-    public delegate void CommEventArgs(object sender, TickerMessage message);
+    public delegate void CommEventArgs(object sender, WatchedCompany message);
 
     public interface ICommListener
     {
