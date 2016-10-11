@@ -23,6 +23,7 @@ namespace Cs5700Hw2.View.Panel
 {
     public sealed partial class IndividualStockGraphPanel : UserControl, IStockObserverPanel
     {
+        public List<WatchedCompany> companies { get; private set; }
         public IndividualStockGraphPanel()
         {
             this.InitializeComponent();
@@ -79,13 +80,18 @@ namespace Cs5700Hw2.View.Panel
                 {
                     Children =
                     {
-                        //new TextBox() {DataContext = selectedCompanies},
                         suggest
                     }
                 },
                 PrimaryButtonText = "OK"
             };
             await dialog.ShowAsync();
+            var split = suggest.Text.Split(',');
+            companies = new List<WatchedCompany>(split.Length);
+            foreach (var c in split)
+            {
+                companies.Add(portfolio.WatchedCompanies.First(e => e.TickerName == c));
+            }
         }
     }
 }
