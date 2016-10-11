@@ -6,10 +6,36 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignHeight="200"
+    d:DesignWidth="200">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="181*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Test" VerticalAlignment="Top" Width="180" Grid.RowSpan="2"/>
+        <ListView x:Name="companyListView"
+                  SelectionMode="None" 
+                  HorizontalAlignment="Left" 
+                  Height="155" 
+                  Margin="10,16,0,0" 
+                  VerticalAlignment="Top"
+                  Width="180" 
+                  RenderTransformOrigin="0.17,0.01"
+                  ItemsSource="{x:Bind companies}" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding TickerName}" Foreground="DarkBlue" ></TextBlock>
+                        <TextBlock Text="{Binding LatestMessage.OpeningPrice}"></TextBlock>
+                        <TextBlock Text="{Binding LatestMessage.CurrPrice}"></TextBlock>
+                        <SymbolIcon Symbol="{Binding Direction}"></SymbolIcon>
+                        <TextBlock Text="{Binding LatestMessage.BidPrice}"></TextBlock>
+                        <TextBlock Text="{Binding LatestMessage.AskPrice}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

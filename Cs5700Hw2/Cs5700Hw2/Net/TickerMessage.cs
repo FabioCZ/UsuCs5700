@@ -42,5 +42,25 @@ namespace Cs5700Hw2.Net
             CurrVolume = NetworkToHostOrder(reader.ReadInt32());
             AvgTenDayVolume = NetworkToHostOrder(reader.ReadInt32());
         }
+
+        public static TickerMessage Empty
+        {
+            get
+            {
+                var msg = new TickerMessage(null)
+                {
+                    TickerName = "N/A",
+                    Timestamp = DateTime.FromFileTime(0),
+                    OpeningPrice = 0,
+                    PrevClosingPrice = 0,
+                    CurrPrice = 0,
+                    BidPrice = 0,
+                    AskPrice = 0,
+                    CurrVolume = 0,
+                    AvgTenDayVolume = 0
+                };
+                return msg;
+            }
+        }
     }
 }

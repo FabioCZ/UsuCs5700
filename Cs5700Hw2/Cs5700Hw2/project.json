@@ -1,6 +1,7 @@
 ﻿{
   "dependencies": {
     "CsvHelper": "2.16.3",
+    "InfragisticsUWP.Controls.Charts.XamDataChart": "2016.2.247",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2"
   },
   "frameworks": {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -23,19 +24,84 @@ namespace Cs5700Hw2.View.Panel
 {
     public sealed partial class PortfolioStockPricesPanel : UserControl, IStockObserverPanel
     {
+        public ObservableCollection<WatchedCompany> companies;
+
+        public event PanelRemovalArgs PanelMarkedForRemoval;
         public PortfolioStockPricesPanel()
         {
             this.InitializeComponent();
+            this.RightTapped += (o, args) => this.PanelMarkedForRemoval?.Invoke(this);
+            this.Holding += (sender, args) => this.PanelMarkedForRemoval?.Invoke(this);
         }
 
         public void OnMessageReceived(object sender, WatchedCompany company)
         {
-            throw new NotImplementedException();
+            this.companyListView.UpdateLayout();
         }
 
-        public Task Initialize(Portfolio portfolio)
+        public async Task Initialize(Portfolio portfolio)
         {
-            throw new NotImplementedException();
+            var selectedCompanies = string.Empty;
+            var suggest = new AutoSuggestBox();
+            suggest.ItemsSource = portfolio.WatchedCompanies.Select(e => e.TickerName);
+            suggest.AutoMaximizeSuggestionArea = false;
+            suggest.UpdateTextOnSelect = false;
+            suggest.IsSuggestionListOpen = false;
+            suggest.LostFocus += (sender, args) => suggest.IsSuggestionListOpen = false;
+            suggest.TextChanged += (sender, args) =>
+            {
+                if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+                {
+                    var curr = sender.Text.Split(',').Last() ?? sender.Text;
+                    sender.ItemsSource =
+                        portfolio.WatchedCompanies.Select(e => e.TickerName).Where(c => c.Contains(curr.ToUpper()));
+                    Debug.WriteLine("." + curr + ".");
+                    var open = !string.IsNullOrWhiteSpace(curr);
+                    Debug.WriteLine(open);
+                    sender.IsSuggestionListOpen = open;
+                }
+                else
+                {
+                    suggest.IsSuggestionListOpen = false;
+                }
+            };
+            suggest.SuggestionChosen += (sender, args) =>
+            {
+            };
+            suggest.QuerySubmitted += (sender, args) =>
+            {
+                var curr = sender.Text.Split(',').Last() ?? sender.Text;
+                if (curr.Length > 0)
+                {
+                    sender.Text = sender.Text.Remove(sender.Text.Length - curr.Length);
+                }
+                sender.IsSuggestionListOpen = false;
+                sender.Text += args.ChosenSuggestion.ToString() + ",";
+            };
+            var dialog = new ContentDialog
+            {
+                Title = "Enter comma separated company tickers",
+                Content = new StackPanel()
+                {
+                    Children =
+                    {
+                        suggest
+                    }
+                },
+                PrimaryButtonText = "OK"
+            };
+            await dialog.ShowAsync();
+            if (suggest.Text.Length == 0)
+            {
+                return;
+            }
+            var split = suggest.Text.Split(',');
+            companies = new ObservableCollection<WatchedCompany>();
+            foreach (var c in split)
+            {
+                companies.Add(portfolio.WatchedCompanies.First(e => e.TickerName == c));
+            }
         }
+
     }
 }

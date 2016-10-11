@@ -139,7 +139,12 @@ namespace Cs5700Hw2.View
                     };
                     AddPanelFlyout.Items?.Add(item);
                 }
+                AddPanelFlyout.Items?.Add(new MenuFlyoutSeparator());
+                AddPanelFlyout.Items?.Add(new MenuFlyoutItem() { Text = "Help:" });
+                AddPanelFlyout.Items?.Add(new MenuFlyoutItem() { Text = "Right click existing panel to remove" });
             }
+
+
             AddPanelFlyout.ShowAt(AddPanelButton);
         }
 
@@ -151,8 +156,9 @@ namespace Cs5700Hw2.View
                 return;
             }
             var panel = (IStockObserverPanel) Activator.CreateInstance(t);
+            panel.PanelMarkedForRemoval += observerPanel => PanelLayout.Children.Remove((UIElement)panel);
             await panel.Initialize(Portfolio);
-            Panels.Add(panel);
+            PanelLayout.Children.Add((UIElement)panel);
         }
 
         private async void StartPauseMonitoringButton_Click(object sender, RoutedEventArgs e)
@@ -167,7 +173,7 @@ namespace Cs5700Hw2.View
             {
                 StartPauseMonitoringButton.Icon = new SymbolIcon(Symbol.Pause);
                 StartPauseMonitoringButton.Label = PauseText;
-                UdpCommListener.Init();
+                UdpCommListener.Init(Dispatcher);
             }
             else //is running
             {

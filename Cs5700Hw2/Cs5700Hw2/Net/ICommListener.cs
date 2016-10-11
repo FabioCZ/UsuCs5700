@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 using Cs5700Hw2.Model;
 
 namespace Cs5700Hw2.Net
@@ -13,7 +14,7 @@ namespace Cs5700Hw2.Net
     {
         Portfolio Portfolio { get; set; }
         bool IsRunning { get; }
-        void Init();
+        void Init(CoreDispatcher dispatcher);
         void Destroy();
         event CommEventArgs OnDataReceived;
     }

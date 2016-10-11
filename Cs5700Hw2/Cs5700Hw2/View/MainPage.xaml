@@ -20,12 +20,10 @@
             <AppBarButton Icon="Edit" Label="Edit Portfolio" Name="EditPortfolioButton" ClickMode="Press" Click="EditPortfolioButton_Click"/>
             <AppBarButton Icon="Add" Label="Add Panel" Name="AddPanelButton" ClickMode="Press" Click="AddPanelButton_Click"/>
             <AppBarButton Icon="Help" Label="Help" Name="HelpButton" ClickMode="Press" Click="HelpButton_Click" />
-            
-            
+
+
         </CommandBar>
     </Page.TopAppBar>
 
-    <Grid Background="{ThemeResource SystemControlBackgroundBaseLowBrush}">
-
-    </Grid>
+    <RelativePanel x:Name="PanelLayout" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
 </Page>
