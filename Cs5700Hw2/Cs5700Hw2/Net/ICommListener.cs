@@ -16,6 +16,6 @@ namespace Cs5700Hw2.Net
         bool IsRunning { get; }
         void Init();
         void Destroy();
-        event CommEventArgs OnDataReceived;
+        event CommEventArgs DataReceived;
     }
 }

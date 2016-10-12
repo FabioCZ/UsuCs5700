@@ -6,34 +6,38 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="200"
-    d:DesignWidth="300"
-    Background="{ThemeResource AppBarBackgroundThemeBrush}">
+    d:DesignWidth="350"
+    Background="{ThemeResource AppBarBackgroundThemeBrush}" Height="250">
 
     <StackPanel>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Name | Opening | Current | +/- | Bid | Ask" VerticalAlignment="Top" Width="280" Grid.RowSpan="2" Height="40"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Name | Opening | Current | +/- |   Bid   |   Ask" VerticalAlignment="Top" Width="330" Grid.RowSpan="2" Height="25"/>
         <ListView x:Name="companyListView"
                   SelectionMode="None" 
                   HorizontalAlignment="Left" 
-                  Height="155" 
-                  Margin="10,16,0,-4" 
+                  Height="200"
                   VerticalAlignment="Top"
-                  Width="280" 
-                  ItemsSource="{x:Bind companies}" Grid.Row="1">
+                  Width="330" 
+                  ItemsSource="{x:Bind companies}" Margin="10,0,0,0">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value ="0,0,0,0"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <!--<ListViewItemPresenter ContentMargin="0,0,0,0"></ListViewItemPresenter>-->
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Width="280">
-                        <TextBlock Text="{Binding TickerName}" Foreground="DarkBlue" Width="30" ></TextBlock>
-                        <TextBlock Text="|"></TextBlock>
-                        <TextBlock Text="{Binding LatestMessage.OpeningPrice}" Width="65"></TextBlock>
-                        <TextBlock Text="|" ></TextBlock>
-                        <TextBlock Text="{Binding LatestMessage.CurrPrice}" Width="58"></TextBlock>
-                        <TextBlock Text="|" ></TextBlock>
-                        <SymbolIcon Symbol="{Binding Direction}" Width="30"></SymbolIcon>
-                        <TextBlock Text="|" ></TextBlock>
-                        <TextBlock Text="{Binding LatestMessage.BidPrice}" Width="32"></TextBlock>
-                        <TextBlock Text="|" ></TextBlock>
-                        <TextBlock Text="{Binding LatestMessage.AskPrice}"></TextBlock>
+                    <StackPanel Orientation="Horizontal" Width="330">
+                        <TextBlock Text="{Binding TickerName}" Foreground="DarkBlue" Width="33" />
+                        <TextBlock Text="|"/>
+                        <TextBlock Text="{Binding LatestMessage.DollarOpeningPrice}" Width="65"/>
+                        <TextBlock Text="|" />
+                        <TextBlock Text="{Binding LatestMessage.DollarCurrPrice}" Width="58"/>
+                        <TextBlock Text="|" />
+                        <SymbolIcon Symbol="{Binding Direction}" Width="29"/>
+                        <TextBlock Text="|" />
+                        <TextBlock Text="{Binding LatestMessage.DollarBidPrice}" Width="46"/>
+                        <TextBlock Text="|" />
+                        <TextBlock Text="{Binding LatestMessage.DollarAskPrice}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

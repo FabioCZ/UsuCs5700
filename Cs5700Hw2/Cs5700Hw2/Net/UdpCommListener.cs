@@ -61,7 +61,7 @@ namespace Cs5700Hw2.Net
             udpClient?.Dispose();
         }
 
-        public event CommEventArgs OnDataReceived;
+        public event CommEventArgs DataReceived;
 
         private async void Run(IAsyncAction operation)
         {
@@ -77,7 +77,7 @@ namespace Cs5700Hw2.Net
                     var company = Portfolio.WatchedCompanies.FirstOrDefault(c => c.TickerName == message.TickerName);
                     company.AddMessage(message);
                     
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () => OnDataReceived?.Invoke(this, company));
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () => DataReceived?.Invoke(this, company));
                 }
                 catch (Exception e)
                 {

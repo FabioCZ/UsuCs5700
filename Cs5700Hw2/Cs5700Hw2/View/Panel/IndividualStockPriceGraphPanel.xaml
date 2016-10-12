@@ -5,12 +5,35 @@
     xmlns:local="using:Cs5700Hw2.View.Panel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:charts="using:Infragistics.Controls.Charts"
     mc:Ignorable="d"
-    d:DesignHeight="200"
-    d:DesignWidth="200">
+    d:DesignHeight="250"
+    d:DesignWidth="350">
 
     <Grid>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="-15,10,0,0" TextWrapping="Wrap" Text="Test" VerticalAlignment="Top" Width="180"/>
-        <ListView></ListView>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37"></RowDefinition>
+            <RowDefinition/>
+
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Graph for: " VerticalAlignment="Top" Width="75" Height="20"/>
+        <TextBlock Grid.Row="0" x:Name="companyLabel" HorizontalAlignment="Left" Margin="90,10,0,0" TextWrapping="Wrap" Text="{x:Bind Company.TickerName}" VerticalAlignment="Top" Width="210" Height="20"/>
+
+        <charts:XamDataChart x:Name="Chart" Grid.Row="1">
+            <charts:XamDataChart.Axes>
+                <charts:CategoryDateTimeXAxis x:Name="xAxis" DateTimeMemberPath="Timestamp"></charts:CategoryDateTimeXAxis>
+                <charts:NumericYAxis x:Name="yAxis"></charts:NumericYAxis>
+            </charts:XamDataChart.Axes>
+            <charts:XamDataChart.Series>
+                        <charts:LineSeries ItemsSource="{x:Bind priceHistory}"
+                                                ValueMemberPath="Metric"  
+                                           XAxis="{Binding ElementName=xAxis}"
+                                           YAxis="{Binding ElementName=yAxis}">
+                        
+                        </charts:LineSeries>
+            </charts:XamDataChart.Series>
+        </charts:XamDataChart>
+
     </Grid>
 </UserControl>

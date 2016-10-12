@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -25,21 +26,49 @@ namespace Cs5700Hw2.View.Panel
     {
         public event PanelRemovalArgs PanelMarkedForRemoval;
 
-        public List<WatchedCompany> companies { get; private set; }
+        public WatchedCompany Company { get; private set; }
+
+        public ObservableCollection<TimestampedMetric<double>> priceHistory;
+
         public IndividualStockGraphPanel()
         {
             this.InitializeComponent();
             this.RightTapped += (o, args) => this.PanelMarkedForRemoval?.Invoke(this);
+            priceHistory = new ObservableCollection<TimestampedMetric<double>>();
         }
 
         public void OnMessageReceived(object sender, WatchedCompany company)
         {
-            throw new NotImplementedException();
+            if (priceHistory.Count == 30)
+            {
+                priceHistory.RemoveAt(0);
+            }
+
+            priceHistory.Add(new TimestampedMetric<double>(company.LatestMessage.Timestamp.Value, ((double)company.LatestMessage.OpeningPrice)/100));
         }
 
         public async Task Initialize(Portfolio portfolio)
         {
-          
+            var box = new TextBox();
+            var dialog = new ContentDialog
+            {
+                Title = "Enter Company ticker name",
+                Content = new StackPanel()
+                {
+                    Children =
+                    {
+                        box
+                    }
+                },
+                PrimaryButtonText = "OK"
+            };
+            await dialog.ShowAsync();
+            Company = portfolio.WatchedCompanies.FirstOrDefault(c => c.TickerName == box.Text);
+            if (Company == null)
+            {
+                PanelMarkedForRemoval?.Invoke(this);
+            }
+            //priceHistory.Add(new TimestampedMetric<double>(DateTime.Now, 0.0));;
         }
 
     }

@@ -22,6 +22,12 @@ namespace Cs5700Hw2.Net
         public int CurrVolume { get; private set; }
         public int AvgTenDayVolume { get; private set; }
 
+        public string DollarOpeningPrice => string.Format("{0:0.00}", (double) OpeningPrice/100);
+        public string DollarPrevClosingPrice => string.Format("{0:0.00}",(double)PrevClosingPrice / 100);
+        public string DollarCurrPrice => string.Format("{0:0.00}", (double)CurrPrice / 100);
+        public string DollarBidPrice => string.Format("{0:0.00}", (double)BidPrice / 100);
+        public string DollarAskPrice => string.Format("{0:0.00}", (double)AskPrice / 100);
+
         public TickerMessage(byte[] bytes)
         {
             Decode(bytes);

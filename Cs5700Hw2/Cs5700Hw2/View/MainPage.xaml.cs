@@ -156,7 +156,7 @@ namespace Cs5700Hw2.View
                 return;
             }
             var panel = (IStockObserverPanel) Activator.CreateInstance(t);
-
+            UdpCommListener.DataReceived += panel.OnMessageReceived;
             panel.PanelMarkedForRemoval += observerPanel => PanelLayout.Children.Remove((UIElement)panel);
             await panel.Initialize(Portfolio);
             PanelLayout.Children.Add((UIElement)panel);

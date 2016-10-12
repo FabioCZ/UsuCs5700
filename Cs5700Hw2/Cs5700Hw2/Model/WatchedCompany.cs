@@ -10,6 +10,7 @@ namespace Cs5700Hw2.Model
 {
     public class WatchedCompany : CompanyDecorator
     {
+        private Symbol lastSymbol = Symbol.Forward;
         public List<TickerMessage> Messages { get; private set; }
 
         public override string TickerName => company.TickerName;
@@ -22,12 +23,18 @@ namespace Cs5700Hw2.Model
         {
             get
             {
-                //if(Messages == null || Messages.Count < 2) return new SymbolIcon(Symbol.Accept);
-                //else if (Messages.Last().CurrPrice > Messages[Messages.Count - 1].CurrPrice) return new SymbolIcon(Symbol.Up);
-                //else return new SymbolIcon(Symbol.Download);
-                if (Messages == null || Messages.Count < 2) return Symbol.Forward;
-                else if (Messages.Last().CurrPrice > Messages[Messages.Count - 1].CurrPrice) return Symbol.Up;
-                else return Symbol.Download;
+                if (Messages == null || Messages.Count < 2)
+                {
+                    return lastSymbol;
+                }
+                if (Messages.Last().CurrPrice == Messages[Messages.Count - 1].CurrPrice)
+                {
+                    return lastSymbol;
+                }
+
+                lastSymbol = Messages.Last().CurrPrice > Messages[Messages.Count - 1].CurrPrice ? Symbol.Upload : Symbol.Download;
+                return lastSymbol;
+
             }
         }
 

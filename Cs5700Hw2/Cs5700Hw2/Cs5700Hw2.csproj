@@ -99,6 +99,7 @@
     <Compile Include="Model\CompanyDecorator.cs" />
     <Compile Include="Model\SelectionCompany.cs" />
     <Compile Include="Model\SimpleCompany.cs" />
+    <Compile Include="Model\TimestampedMetric.cs" />
     <Compile Include="Model\WatchedCompany.cs" />
     <Compile Include="Net\ICommListener.cs" />
     <Compile Include="Net\StreamStockMessage.cs" />
