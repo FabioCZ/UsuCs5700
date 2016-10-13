@@ -9,15 +9,21 @@
     d:DesignWidth="350"
     Background="{ThemeResource AppBarBackgroundThemeBrush}" Height="250">
 
-    <StackPanel>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Name | Opening | Current | +/- |   Bid   |   Ask" VerticalAlignment="Top" Width="330" Grid.RowSpan="2" Height="25"/>
-        <ListView x:Name="companyListView"
+    <Grid Margin="5,5,5,5" Padding="0,0,0,0" BorderBrush="{ThemeResource SystemControlHighlightAccentBrush}" BorderThickness="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Name | Opening | Current | +/- |   Bid   |   Ask" VerticalAlignment="Top" Width="315" Height="25"/>
+        <SymbolIcon Grid.Row="0" Symbol="Clear" Margin="315,0,0,0" Tapped="SymbolIcon_Tapped"></SymbolIcon>
+        <ListView Grid.Row="1"
+                  x:Name="companyListView"
                   SelectionMode="None" 
                   HorizontalAlignment="Left" 
-                  Height="200"
+                  Height="220"
                   VerticalAlignment="Top"
-                  Width="330" 
-                  ItemsSource="{x:Bind companies}" Margin="10,0,0,0">
+                  Width="340" 
+                  ItemsSource="{x:Bind companies}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Margin" Value ="0,0,0,0"></Setter>
@@ -42,6 +48,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackPanel>
+    </Grid>
 </UserControl>
 

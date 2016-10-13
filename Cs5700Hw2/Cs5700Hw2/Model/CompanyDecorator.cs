@@ -11,7 +11,7 @@ namespace Cs5700Hw2.Model
         protected Company company;
 
         public override string TickerName { get; protected set; }
-        public override double? SomeNumber { get; protected set; }
+        public override double? BasePrice { get; protected set; }
         public override string LongName { get; protected set; }
         protected CompanyDecorator(Company company)
         {

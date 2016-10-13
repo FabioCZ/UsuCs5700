@@ -10,16 +10,7 @@ namespace Cs5700Hw2.Model
     {
 
         public abstract string TickerName { get; protected set; }
-        public abstract double? SomeNumber { get; protected set; }
+        public abstract double? BasePrice { get; protected set; }
         public abstract string LongName { get; protected set; }
-
-
-
-        //public Company(string tickerName, double? someNumber, string longName)
-        //{
-        //    TickerName = tickerName;
-        //    SomeNumber = someNumber;
-        //    LongName = longName;
-        //}
     }
 }

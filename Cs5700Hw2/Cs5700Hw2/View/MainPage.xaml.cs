@@ -29,15 +29,15 @@ namespace Cs5700Hw2.View
     {
         public readonly string PlayText = "Start Monitoring";
         public readonly string PauseText = "Stop Monitoring";
-        public FileOpenPicker companyListPicker { get; private set; }
-        public FileOpenPicker openPortfolioPicker { get; private set;}
-        public FileSavePicker savePortfolioPicker { get; private set;}
+        public FileOpenPicker CompanyListPicker { get; private set; }
+        public FileOpenPicker OpenPortfolioPicker { get; private set; }
+        public FileSavePicker SavePortfolioPicker { get; private set; }
         public List<Company> AvailableCompanies { get; private set; }
         public Portfolio Portfolio { get; private set; }
         public PortfolioEditor PortfolioEditor { get; private set; }
-        public ICommListener UdpCommListener {get; private set; }
+        public ICommListener UdpCommListener { get; private set; }
         //public ObservableCollection<IStockObserverPanel> Panels { get; private set; }
-        public Dictionary<string,Type> AvailablePanels { get; private set; }
+        public Dictionary<string, Type> AvailablePanels { get; private set; }
         public MenuFlyout AddPanelFlyout;
 
         public Timer TitleUpdateTimer;
@@ -46,7 +46,7 @@ namespace Cs5700Hw2.View
             this.InitializeComponent();
             //Panels = new ObservableCollection<IStockObserverPanel>();
             StartTitleTimer();
-            AvailablePanels = new Dictionary<string,Type>(4)
+            AvailablePanels = new Dictionary<string, Type>(4)
             {
                 {"Porfolio Stock Prices", typeof(PortfolioStockPricesPanel)},
                 {"Individual Stock Price Graph", typeof(IndividualStockGraphPanel) },
@@ -55,14 +55,14 @@ namespace Cs5700Hw2.View
             ChooseCompanyList();
         }
 
-        public async void ChooseCompanyList()
+        private async void ChooseCompanyList()
         {
-            var introDialog = new MessageDialog("You will be now asked to select the company list csv") {DefaultCommandIndex = 0, Title =  "Welcome"};
-            introDialog.Commands.Add(new UICommand("OK") {Id = 0});
+            var introDialog = new MessageDialog("You will be now asked to select the company list csv") { DefaultCommandIndex = 0, Title = "Welcome" };
+            introDialog.Commands.Add(new UICommand("OK") { Id = 0 });
             await introDialog.ShowAsync();
-            companyListPicker = new FileOpenPicker {CommitButtonText = "Select Company list"};
-            companyListPicker.FileTypeFilter.Add(".csv");
-            var file = await companyListPicker.PickSingleFileAsync();
+            CompanyListPicker = new FileOpenPicker { CommitButtonText = "Select Company list" };
+            CompanyListPicker.FileTypeFilter.Add(".csv");
+            var file = await CompanyListPicker.PickSingleFileAsync();
             AvailableCompanies = await CsvUtils.ParseCompanyList(file);
             if (AvailableCompanies == null || AvailableCompanies.Count == 0)
             {
@@ -74,16 +74,41 @@ namespace Cs5700Hw2.View
 
         private async void OpenFileButton_Click(object sender, RoutedEventArgs e)
         {
-            openPortfolioPicker = new FileOpenPicker();
-            openPortfolioPicker.FileTypeFilter.Add(".csv");
-            var f = await openPortfolioPicker.PickSingleFileAsync();
-            if (f != null)
+            if (UdpCommListener != null && UdpCommListener.IsRunning)
             {
-                await new MessageDialog(f.Name).ShowAsync();
+                await new MessageDialog("Please pause monitoring before opening a new portfolio").ShowAsync();
+                return;
+            }
+            OpenPortfolioPicker = new FileOpenPicker();
+            OpenPortfolioPicker.FileTypeFilter.Add(".xml");
+            var file = await OpenPortfolioPicker.PickSingleFileAsync();
+            if (file != null)
+            {
+                var text = await Windows.Storage.FileIO.ReadTextAsync(file);
+                Portfolio = Portfolio.FromXml(text, AvailableCompanies);
+                if (Portfolio == null)
+                {
+                    await new MessageDialog("There was a problem parsing the provided file").ShowAsync();
+                    return;
+                }
+                if (UdpCommListener == null)
+                {
+                    UdpCommListener = new UdpCommListener();
+                }
+                UdpCommListener.Portfolio = Portfolio;
             }
         }
-        private void SaveFileButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveFileButton_Click(object sender, RoutedEventArgs e)
         {
+            SavePortfolioPicker = new FileSavePicker();
+            SavePortfolioPicker.FileTypeChoices.Add("Extensible Markup Language", new List<string>() { ".xml" });
+            SavePortfolioPicker.SuggestedFileName = "Portfolio";
+            var file = await SavePortfolioPicker.PickSaveFileAsync();
+            if (file != null && Portfolio != null)
+            {
+
+                await Windows.Storage.FileIO.WriteTextAsync(file, Portfolio.ToXml());
+            }
 
         }
 
@@ -103,11 +128,21 @@ namespace Cs5700Hw2.View
 
         private async void EditPortfolioButton_Click(object sender, RoutedEventArgs e)
         {
-            if (PortfolioEditor == null)
+            if (UdpCommListener != null && UdpCommListener.IsRunning)
             {
-                var selectionCompanies = AvailableCompanies.Select(c => new SelectionCompany(c)).ToList();
-                PortfolioEditor = new PortfolioEditor(selectionCompanies);
+                await new MessageDialog("Please pause monitoring before editing portfolio").ShowAsync();
+                return;
             }
+            var selectionCompanies = AvailableCompanies.Select(c => new SelectionCompany(c)).ToList();
+            if (Portfolio != null && Portfolio.Size > 0)
+            {
+                foreach (var c in Portfolio.WatchedCompanies)
+                {
+                    selectionCompanies.First(sc => sc.TickerName == c.TickerName).Selected = true;
+                }
+            }
+
+            PortfolioEditor = new PortfolioEditor(selectionCompanies);
             await PortfolioEditor.ShowAsync();
             Portfolio = new Portfolio(PortfolioEditor.SelectedCompanies);
             if (UdpCommListener == null)
@@ -121,27 +156,24 @@ namespace Cs5700Hw2.View
         {
             if (UdpCommListener == null || Portfolio == null || Portfolio.Size == 0)
             {
-                await new MessageDialog("Please select the companies in your portfolio via the Edit Portfolio button or import an existing one") { Title = "Error"}
+                await new MessageDialog("Please select the companies in your portfolio via the Edit Portfolio button or import an existing one") { Title = "Error" }
                         .ShowAsync();
                 return;
             }
             if (AddPanelFlyout == null)
             {
                 AddPanelFlyout = new MenuFlyout();
-                AddPanelFlyout.Items?.Add(new MenuFlyoutItem() {Text = "Choose panel type:"});
+                AddPanelFlyout.Items?.Add(new MenuFlyoutItem() { Text = "Choose panel type:" });
                 AddPanelFlyout.Items?.Add(new MenuFlyoutSeparator());
                 foreach (var p in AvailablePanels)
                 {
-                    var item = new MenuFlyoutItem {Text = p.Key, DataContext =  p.Value};
+                    var item = new MenuFlyoutItem { Text = p.Key, DataContext = p.Value };
                     item.Tapped += (o, args) =>
                     {
-                        AddPanel(((Control) o).DataContext as Type);
+                        AddPanel(((Control)o).DataContext as Type);
                     };
                     AddPanelFlyout.Items?.Add(item);
                 }
-                AddPanelFlyout.Items?.Add(new MenuFlyoutSeparator());
-                AddPanelFlyout.Items?.Add(new MenuFlyoutItem() { Text = "Help:" });
-                AddPanelFlyout.Items?.Add(new MenuFlyoutItem() { Text = "Right click existing panel to remove" });
             }
 
 
@@ -155,11 +187,11 @@ namespace Cs5700Hw2.View
                 //we screwed up
                 return;
             }
-            var panel = (IStockObserverPanel) Activator.CreateInstance(t);
-            UdpCommListener.DataReceived += panel.OnMessageReceived;
-            panel.PanelMarkedForRemoval += observerPanel => PanelLayout.Children.Remove((UIElement)panel);
+            var panel = (IStockObserverPanel)Activator.CreateInstance(t);
             await panel.Initialize(Portfolio);
-            PanelLayout.Children.Add((UIElement)panel);
+            UdpCommListener.DataReceived += panel.OnMessageReceived;
+            panel.PanelMarkedForRemoval += observerPanel => PanelGrid.Children.Remove((UIElement)panel);
+            PanelGrid.Children.Add((UIElement)panel);
         }
 
         private async void StartPauseMonitoringButton_Click(object sender, RoutedEventArgs e)
@@ -185,9 +217,11 @@ namespace Cs5700Hw2.View
             }
         }
 
-        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        private async void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-
+            await new MessageDialog(@"Stock Message Simulator
+Created by Fabio Gotlicher for CS5700 Fall 2016
+github.com/FabioCZ/UsuCs5700").ShowAsync();
         }
     }
 }

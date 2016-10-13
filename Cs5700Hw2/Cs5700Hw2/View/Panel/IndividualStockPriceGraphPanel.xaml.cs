@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Cs5700Hw2.Model;
 using Cs5700Hw2.Net;
+using WinRTXamlToolkit.Controls.DataVisualization.Charting;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -28,23 +29,27 @@ namespace Cs5700Hw2.View.Panel
 
         public WatchedCompany Company { get; private set; }
 
-        public ObservableCollection<TimestampedMetric<double>> priceHistory;
+        public ObservableCollection<TimestampedMetric<double>> PriceHistory;
 
         public IndividualStockGraphPanel()
         {
             this.InitializeComponent();
-            this.RightTapped += (o, args) => this.PanelMarkedForRemoval?.Invoke(this);
-            priceHistory = new ObservableCollection<TimestampedMetric<double>>();
+            PriceHistory = new ObservableCollection<TimestampedMetric<double>>();
+            //((UIElement) ((LineSeries)Chart.Series[0]).Title).Visibility = Visibility.Collapsed;
         }
 
         public void OnMessageReceived(object sender, WatchedCompany company)
         {
-            if (priceHistory.Count == 30)
+            if (company?.TickerName != Company?.TickerName) return;
+            if (PriceHistory.Count == 0)
             {
-                priceHistory.RemoveAt(0);
+                for (var i = 0; i < 59; i++)
+                {
+                    PriceHistory.Add(new TimestampedMetric<double>(DateTime.Now - TimeSpan.FromSeconds(60-i),0));
+                }
             }
-
-            priceHistory.Add(new TimestampedMetric<double>(company.LatestMessage.Timestamp.Value, ((double)company.LatestMessage.OpeningPrice)/100));
+            PriceHistory.RemoveAt(0);
+            PriceHistory.Add(new TimestampedMetric<double>(company.LatestMessage.Timestamp.Value, ((double)company.LatestMessage.OpeningPrice) / 100));
         }
 
         public async Task Initialize(Portfolio portfolio)
@@ -68,8 +73,11 @@ namespace Cs5700Hw2.View.Panel
             {
                 PanelMarkedForRemoval?.Invoke(this);
             }
-            //priceHistory.Add(new TimestampedMetric<double>(DateTime.Now, 0.0));;
         }
 
+        private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            this.PanelMarkedForRemoval?.Invoke(this);
+        }
     }
 }

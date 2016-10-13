@@ -5,28 +5,21 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cs5700Hw2", "Cs5700Hw2\Cs5700Hw2.csproj", "{26FC68AD-299C-497B-AE51-5A343356AB4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cs5700Hw2.Test", "Cs5700Hw2.Test\Cs5700Hw2.Test.csproj", "{360BDD1F-5FB9-41DD-98BB-A89B693A957D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		AwsDebug|ARM = AwsDebug|ARM
-		AwsDebug|x64 = AwsDebug|x64
-		AwsDebug|x86 = AwsDebug|x86
+		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|ARM = Release|ARM
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{26FC68AD-299C-497B-AE51-5A343356AB4C}.AwsDebug|ARM.ActiveCfg = AwsDebug|ARM
-		{26FC68AD-299C-497B-AE51-5A343356AB4C}.AwsDebug|ARM.Build.0 = AwsDebug|ARM
-		{26FC68AD-299C-497B-AE51-5A343356AB4C}.AwsDebug|ARM.Deploy.0 = AwsDebug|ARM
-		{26FC68AD-299C-497B-AE51-5A343356AB4C}.AwsDebug|x64.ActiveCfg = AwsDebug|x64
-		{26FC68AD-299C-497B-AE51-5A343356AB4C}.AwsDebug|x64.Build.0 = AwsDebug|x64
-		{26FC68AD-299C-497B-AE51-5A343356AB4C}.AwsDebug|x64.Deploy.0 = AwsDebug|x64
-		{26FC68AD-299C-497B-AE51-5A343356AB4C}.AwsDebug|x86.ActiveCfg = AwsDebug|x86
-		{26FC68AD-299C-497B-AE51-5A343356AB4C}.AwsDebug|x86.Build.0 = AwsDebug|x86
-		{26FC68AD-299C-497B-AE51-5A343356AB4C}.AwsDebug|x86.Deploy.0 = AwsDebug|x86
+		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Debug|ARM.ActiveCfg = Debug|ARM
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Debug|ARM.Build.0 = Debug|ARM
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -36,6 +29,7 @@ Global
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Debug|x86.ActiveCfg = Debug|x86
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Debug|x86.Build.0 = Debug|x86
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Debug|x86.Deploy.0 = Debug|x86
+		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Release|Any CPU.ActiveCfg = Release|x86
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Release|ARM.ActiveCfg = Release|ARM
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Release|ARM.Build.0 = Release|ARM
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Release|ARM.Deploy.0 = Release|ARM
@@ -45,6 +39,26 @@ Global
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Release|x86.ActiveCfg = Release|x86
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Release|x86.Build.0 = Release|x86
 		{26FC68AD-299C-497B-AE51-5A343356AB4C}.Release|x86.Deploy.0 = Release|x86
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Debug|ARM.ActiveCfg = Debug|ARM
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Debug|ARM.Build.0 = Debug|ARM
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Debug|ARM.Deploy.0 = Debug|ARM
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Debug|x64.ActiveCfg = Debug|x64
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Debug|x64.Build.0 = Debug|x64
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Debug|x64.Deploy.0 = Debug|x64
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Debug|x86.ActiveCfg = Debug|x86
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Debug|x86.Build.0 = Debug|x86
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Debug|x86.Deploy.0 = Debug|x86
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Release|Any CPU.ActiveCfg = Release|x86
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Release|ARM.ActiveCfg = Release|ARM
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Release|ARM.Build.0 = Release|ARM
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Release|ARM.Deploy.0 = Release|ARM
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Release|x64.ActiveCfg = Release|x64
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Release|x64.Build.0 = Release|x64
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Release|x64.Deploy.0 = Release|x64
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Release|x86.ActiveCfg = Release|x86
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Release|x86.Build.0 = Release|x86
+		{360BDD1F-5FB9-41DD-98BB-A89B693A957D}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -49,11 +49,7 @@ namespace Cs5700Hw2.Net
             AvgTenDayVolume = NetworkToHostOrder(reader.ReadInt32());
         }
 
-        public static TickerMessage Empty
-        {
-            get
-            {
-                var msg = new TickerMessage(null)
+        public static readonly TickerMessage Empty = new TickerMessage(null)
                 {
                     TickerName = "N/A",
                     Timestamp = DateTime.FromFileTime(0),
@@ -65,8 +61,5 @@ namespace Cs5700Hw2.Net
                     CurrVolume = 0,
                     AvgTenDayVolume = 0
                 };
-                return msg;
-            }
-        }
     }
 }

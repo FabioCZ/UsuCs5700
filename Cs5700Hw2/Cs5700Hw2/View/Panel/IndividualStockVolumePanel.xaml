@@ -5,11 +5,42 @@
     xmlns:local="using:Cs5700Hw2.View.Panel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignHeight="250"
+    d:DesignWidth="350">
 
-    <Grid>
+    <Grid Margin="5,5,5,5" Padding="0,0,0,0" BorderBrush="{ThemeResource SystemControlHighlightAccentBrush}" BorderThickness="1">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37"></RowDefinition>
+            <RowDefinition Height="37"></RowDefinition>
+
+            <RowDefinition/>
+
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Graph for: " VerticalAlignment="Top" Width="75" Height="20"/>
+        <TextBlock Grid.Row="0" x:Name="companyLabel" HorizontalAlignment="Left" Margin="90,10,0,0" TextWrapping="Wrap" Text="{x:Bind Company.TickerName}" VerticalAlignment="Top" Width="218" Height="20"/>
+        <SymbolIcon Grid.Row="0" Symbol="Clear" Margin="313,0,0,0" Tapped="SymbolIcon_Tapped"></SymbolIcon>
+
+        <TextBlock Grid.Row="1" x:Name="prevLabel" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Prev. Close: " VerticalAlignment="Top" Width="80" Height="20"/>
+        <TextBlock Grid.Row="1" x:Name="prevLabelValue" HorizontalAlignment="Left" Margin="90,10,0,0" TextWrapping="Wrap" Text="{x:Bind Company.LatestMessage.DollarPrevClosingPrice}" VerticalAlignment="Top" Width="51" Height="20"/>
+
+        <TextBlock Grid.Row="1" x:Name="prevLabel_Copy" HorizontalAlignment="Left" Margin="177,10,0,0" TextWrapping="Wrap" Text="Open: " VerticalAlignment="Top" Width="80" Height="20"/>
+        <TextBlock Grid.Row="1" x:Name="prevLabelValue_Copy" HorizontalAlignment="Left" Margin="257,10,0,0" TextWrapping="Wrap" Text="{x:Bind Company.LatestMessage.DollarOpeningPrice}" VerticalAlignment="Top" Width="51" Height="20"/>
+
+
+        <charting:Chart Grid.Row="2" x:Name="Chart">
+            <charting:Chart.Series>
+                <charting:AreaSeries Title=""
+                   
+                                    ItemsSource="{x:Bind VolumeHistory}"
+                                    IndependentValueBinding="{Binding Timestamp}"
+                                    DependentValueBinding="{Binding Metric}">
+
+                </charting:AreaSeries>
+            </charting:Chart.Series>
+        </charting:Chart>
 
     </Grid>
 </UserControl>

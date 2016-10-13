@@ -26,5 +26,5 @@
         </CommandBar>
     </Page.TopAppBar>
 
-    <RelativePanel x:Name="PanelLayout" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" Margin="10,10,10,10"/>
+    <VariableSizedWrapGrid x:Name="PanelGrid" ItemHeight="250" ItemWidth="350" Margin="10,10,10,10" />
 </Page>

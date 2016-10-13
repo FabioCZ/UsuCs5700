@@ -30,7 +30,6 @@ namespace Cs5700Hw2.View.Panel
         public PortfolioStockPricesPanel()
         {
             this.InitializeComponent();
-            this.RightTapped += (o, args) => this.PanelMarkedForRemoval?.Invoke(this);
         }
 
         public void OnMessageReceived(object sender, WatchedCompany company)
@@ -87,7 +86,7 @@ namespace Cs5700Hw2.View.Panel
             };
             var dialog = new ContentDialog
             {
-                Title = "Enter up to 4 comma separated company names",
+                Title = "Enter up to 5 comma separated company names",
                 Content = new StackPanel()
                 {
                     Children =
@@ -104,12 +103,16 @@ namespace Cs5700Hw2.View.Panel
             }
             var split = suggest.Text.Split(',');
             companies = new ObservableCollection<WatchedCompany>();
-            for (var i = 0; i < 4 && i < split.Length;i++)
+            for (var i = 0; i < 5 && i < split.Length;i++)
             {
                 if(split[i].Length > 0)
                     companies.Add(portfolio.WatchedCompanies.First(e => e.TickerName == split[i]));
             }
         }
 
+        private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            PanelMarkedForRemoval?.Invoke(this);
+        }
     }
 }

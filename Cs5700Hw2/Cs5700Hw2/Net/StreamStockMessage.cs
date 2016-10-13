@@ -43,20 +43,5 @@ namespace Cs5700Hw2.Net
             bytes.AddRange(BitConverter.GetBytes(networkBytesCount));
             return bytes.ToArray();
         }
-
-        //public static StreamStockMessage FromBytes()
-        //{
-            
-        //}
-
-
-    }
-
-    public static class TickerMessageHelper
-    {
-        public static decimal PenniesToDollars(this int pennies)
-        {
-            return new decimal(pennies)/100;
-        }
     }
 }

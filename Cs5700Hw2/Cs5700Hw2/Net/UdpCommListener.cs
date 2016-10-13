@@ -18,32 +18,25 @@ namespace Cs5700Hw2.Net
 {
     public class UdpCommListener : ICommListener
     {
-        private readonly int TimeOutMS = 1000;
-        private readonly IPEndPoint LocalEP = new IPEndPoint(IPAddress.Any, 0);
+        public readonly int TimeOutMS = 1000;
+        private readonly IPEndPoint localEP = new IPEndPoint(IPAddress.Any, 0);
 
         private UdpClient udpClient;
 
-        private CoreDispatcher mainThreadDispatcher;
 
-//#if AWSDEBUG
-        private IPEndPoint simulatorEndpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"),12099);
-        //private IPEndPoint simulatorEndpoint = new IPEndPoint(IPAddress.Parse("52.89.90.0"), 12099);
-
-        //#else
-        //        private IPEndPoint simulatorEndpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 12099);
-
-        //#endif
+        private IPEndPoint simulatorEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"),12099);
+        //private IPEndPoint simulatorEP = new IPEndPoint(IPAddress.Parse("52.89.90.0"), 12099);
         public bool IsRunning { get; private set; }
         public Portfolio Portfolio { get; set; }
 
         public async void Init()
         {
-            udpClient = new UdpClient(LocalEP);
+            udpClient = new UdpClient(localEP);
             var startMessage = new StreamStockMessage(Portfolio.WatchedCompanies.Cast<Company>().ToList());
             var startMessageBytes = startMessage.ToBytes();
             try
             {
-                await udpClient.SendAsync(startMessageBytes, startMessageBytes.Length, simulatorEndpoint);
+                await udpClient.SendAsync(startMessageBytes, startMessageBytes.Length, simulatorEP);
             }
             catch (Exception e)
             {
@@ -76,13 +69,15 @@ namespace Cs5700Hw2.Net
                     Debug.WriteLine($"Received message {message.TickerName}");
                     var company = Portfolio.WatchedCompanies.FirstOrDefault(c => c.TickerName == message.TickerName);
                     company.AddMessage(message);
-                    
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, () => DataReceived?.Invoke(this, company));
+
+                    await
+                        CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
+                            () => DataReceived?.Invoke(this, company));
                 }
                 catch (Exception e)
                 {
+                    IsRunning = false;
                     Debug.WriteLine(e.Message);
-                    throw e;
                 }
             }
         }
