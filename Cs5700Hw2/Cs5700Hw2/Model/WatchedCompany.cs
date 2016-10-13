@@ -27,12 +27,12 @@ namespace Cs5700Hw2.Model
                 {
                     return lastSymbol;
                 }
-                if (Messages.Last().CurrPrice == Messages[Messages.Count - 1].CurrPrice)
+                if (Messages.Last().CurrPrice == Messages[Messages.Count - 2].CurrPrice)
                 {
                     return lastSymbol;
                 }
 
-                lastSymbol = Messages.Last().CurrPrice > Messages[Messages.Count - 1].CurrPrice ? Symbol.Upload : Symbol.Download;
+                lastSymbol = Messages.Last().CurrPrice > Messages[Messages.Count - 2].CurrPrice ? Symbol.Upload : Symbol.Download;
                 return lastSymbol;
 
             }

@@ -24,8 +24,8 @@ namespace Cs5700Hw2.Net
         private UdpClient udpClient;
 
 
-        private IPEndPoint simulatorEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"),12099);
-        //private IPEndPoint simulatorEP = new IPEndPoint(IPAddress.Parse("52.89.90.0"), 12099);
+        //private IPEndPoint simulatorEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"),12099);
+        private IPEndPoint simulatorEP = new IPEndPoint(IPAddress.Parse("52.89.90.0"), 12099);
         public bool IsRunning { get; private set; }
         public Portfolio Portfolio { get; set; }
 
