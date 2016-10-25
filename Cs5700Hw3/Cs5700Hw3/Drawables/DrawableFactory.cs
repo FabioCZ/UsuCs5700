@@ -13,6 +13,7 @@ namespace Cs5700Hw3.Drawables
             { typeof(Cat1Drawable), new Cat1Drawable()},
 
         };
+
         public static IDrawable GetDrawable(Type t)
         {
             return drawables.ContainsKey(t) ? drawables[t] : null;

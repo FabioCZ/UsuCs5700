@@ -73,6 +73,9 @@
   <ItemGroup>
     <Compile Include="DB\FireBaseDbo.cs" />
     <Compile Include="DB\PictureInfo.cs" />
+    <Compile Include="Drawables\Cat1Drawable.cs" />
+    <Compile Include="Drawables\DrawableFactory.cs" />
+    <Compile Include="Drawables\IDrawable.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +110,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

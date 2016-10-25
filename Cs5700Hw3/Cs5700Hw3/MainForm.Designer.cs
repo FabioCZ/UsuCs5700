@@ -189,7 +189,7 @@
             this.Controls.Add(this.commandGrpBox);
             this.Controls.Add(this.shapesGrpBox);
             this.Name = "MainForm";
-            this.Text = "Drawing Program";
+            this.Text = "MeowDraw";
             this.commandGrpBox.ResumeLayout(false);
             this.selectionGrpBox.ResumeLayout(false);
             this.selectionGrpBox.PerformLayout();
