@@ -73,18 +73,33 @@
   <ItemGroup>
     <Compile Include="DB\FireBaseDbo.cs" />
     <Compile Include="DB\PictureInfo.cs" />
-    <Compile Include="Drawables\Cat1Drawable.cs" />
+    <Compile Include="Drawables\IBackground.cs" />
+    <Compile Include="Drawables\ImageBackground.cs" />
+    <Compile Include="Drawables\SimpleDrawable.cs" />
     <Compile Include="Drawables\DrawableFactory.cs" />
     <Compile Include="Drawables\IDrawable.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Drawables\SolidBackground.cs" />
+    <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="View\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
+    <Compile Include="View\NewDrawingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\NewDrawingDialog.Designer.cs">
+      <DependentUpon>NewDrawingDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\OpenDrawingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\OpenDrawingDialog.Designer.cs">
+      <DependentUpon>OpenDrawingDialog.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -96,6 +111,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\NewDrawingDialog.resx">
+      <DependentUpon>NewDrawingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\OpenDrawingDialog.resx">
+      <DependentUpon>OpenDrawingDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -111,6 +132,26 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Assets\cat1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\cat2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\catBed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\catBowl.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\catMouse.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\catYarn.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

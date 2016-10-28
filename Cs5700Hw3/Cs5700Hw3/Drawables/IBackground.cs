@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace Cs5700Hw3.Drawables
 {
-    public interface IDrawable
+    public interface IBackground
     {
-        string FileName { get; }
-        string ReadableName { get; }
-
         void Draw(Graphics graphics);
-
     }
 }

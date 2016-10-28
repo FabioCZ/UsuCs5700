@@ -1,4 +1,4 @@
-﻿namespace Cs5700Hw3
+﻿namespace Cs5700Hw3.View
 {
     partial class MainForm
     {
@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.shapesGrpBox = new System.Windows.Forms.GroupBox();
             this.commandGrpBox = new System.Windows.Forms.GroupBox();
             this.undoButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.openButton = new System.Windows.Forms.Button();
             this.newButton = new System.Windows.Forms.Button();
-            this.drawingGrpBox = new System.Windows.Forms.GroupBox();
             this.selectionGrpBox = new System.Windows.Forms.GroupBox();
             this.colorPickerButton = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -42,19 +42,26 @@
             this.removeButton = new System.Windows.Forms.Button();
             this.duplButton = new System.Windows.Forms.Button();
             this.colorPicker = new System.Windows.Forms.ColorDialog();
+            this.refreshTimer = new System.Windows.Forms.Timer(this.components);
+            this.drawingPanel = new System.Windows.Forms.Panel();
+            this.noPictureLabel = new System.Windows.Forms.Label();
+            this.drawableListView = new System.Windows.Forms.ListView();
+            this.shapesGrpBox.SuspendLayout();
             this.commandGrpBox.SuspendLayout();
             this.selectionGrpBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.drawingPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // shapesGrpBox
             // 
+            this.shapesGrpBox.Controls.Add(this.drawableListView);
             this.shapesGrpBox.Location = new System.Drawing.Point(12, 12);
             this.shapesGrpBox.Name = "shapesGrpBox";
             this.shapesGrpBox.Size = new System.Drawing.Size(137, 537);
             this.shapesGrpBox.TabIndex = 0;
             this.shapesGrpBox.TabStop = false;
-            this.shapesGrpBox.Text = "Shapes";
+            this.shapesGrpBox.Text = "Drawables";
             // 
             // commandGrpBox
             // 
@@ -106,15 +113,7 @@
             this.newButton.TabIndex = 0;
             this.newButton.Text = "New";
             this.newButton.UseVisualStyleBackColor = true;
-            // 
-            // drawingGrpBox
-            // 
-            this.drawingGrpBox.Location = new System.Drawing.Point(155, 71);
-            this.drawingGrpBox.Name = "drawingGrpBox";
-            this.drawingGrpBox.Size = new System.Drawing.Size(617, 478);
-            this.drawingGrpBox.TabIndex = 2;
-            this.drawingGrpBox.TabStop = false;
-            this.drawingGrpBox.Text = "Drawing";
+            this.newButton.Click += new System.EventHandler(this.newButton_Click);
             // 
             // selectionGrpBox
             // 
@@ -179,21 +178,54 @@
             this.duplButton.Text = "Duplicate";
             this.duplButton.UseVisualStyleBackColor = true;
             // 
+            // refreshTimer
+            // 
+            this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
+            // 
+            // drawingPanel
+            // 
+            this.drawingPanel.Controls.Add(this.noPictureLabel);
+            this.drawingPanel.Location = new System.Drawing.Point(155, 72);
+            this.drawingPanel.Name = "drawingPanel";
+            this.drawingPanel.Size = new System.Drawing.Size(617, 477);
+            this.drawingPanel.TabIndex = 5;
+            // 
+            // noPictureLabel
+            // 
+            this.noPictureLabel.AutoSize = true;
+            this.noPictureLabel.Location = new System.Drawing.Point(4, 4);
+            this.noPictureLabel.Name = "noPictureLabel";
+            this.noPictureLabel.Size = new System.Drawing.Size(247, 13);
+            this.noPictureLabel.TabIndex = 0;
+            this.noPictureLabel.Text = "Please start a new drawing or open an existing one";
+            this.noPictureLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // drawableListView
+            // 
+            this.drawableListView.Location = new System.Drawing.Point(7, 22);
+            this.drawableListView.Name = "drawableListView";
+            this.drawableListView.Size = new System.Drawing.Size(121, 509);
+            this.drawableListView.TabIndex = 0;
+            this.drawableListView.UseCompatibleStateImageBehavior = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.drawingPanel);
             this.Controls.Add(this.selectionGrpBox);
-            this.Controls.Add(this.drawingGrpBox);
             this.Controls.Add(this.commandGrpBox);
             this.Controls.Add(this.shapesGrpBox);
             this.Name = "MainForm";
             this.Text = "MeowDraw";
+            this.shapesGrpBox.ResumeLayout(false);
             this.commandGrpBox.ResumeLayout(false);
             this.selectionGrpBox.ResumeLayout(false);
             this.selectionGrpBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.drawingPanel.ResumeLayout(false);
+            this.drawingPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -205,7 +237,6 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.Button newButton;
-        private System.Windows.Forms.GroupBox drawingGrpBox;
         private System.Windows.Forms.Button undoButton;
         private System.Windows.Forms.GroupBox selectionGrpBox;
         private System.Windows.Forms.Button removeButton;
@@ -214,6 +245,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button colorPickerButton;
         private System.Windows.Forms.ColorDialog colorPicker;
+        private System.Windows.Forms.Timer refreshTimer;
+        private System.Windows.Forms.Panel drawingPanel;
+        private System.Windows.Forms.Label noPictureLabel;
+        private System.Windows.Forms.ListView drawableListView;
     }
 }
 

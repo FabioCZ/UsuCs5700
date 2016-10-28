@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cs5700Hw3.Drawables
 {
-    public class Cat1Drawable : IDrawable
+    public class ImageBackground
     {
     }
 }

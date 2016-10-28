@@ -30,13 +30,13 @@ namespace Cs5700Hw3.DB
             Debug.WriteLine(res.Key);
         }
 
-        public async Task<List<string>> AvailablePictures()
+        public async Task<List<PictureInfo>> AvailablePictures()
         {
-            var list = new List<string>();
+            var list = new List<PictureInfo>();
             var res = await client.Child("pictures").OrderByKey().OnceAsync<PictureInfo>();
             foreach (var r in res)
             {
-                list.Add(r.Object.PictureName);
+                list.Add(r.Object);
                 Debug.WriteLine(r.Object.PictureName);
             }
             return list;
