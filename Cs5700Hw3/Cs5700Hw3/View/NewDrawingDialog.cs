@@ -35,7 +35,7 @@ namespace Cs5700Hw3.View
             var r = openFileDialog1.ShowDialog();
             if (r == DialogResult.OK)
             {
-                FileName = openFileDialog1.SafeFileName;
+                FileName = openFileDialog1.FileName;
                 this.Close();
             }
             DialogResult = DialogResult.OK;

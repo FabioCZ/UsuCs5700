@@ -56,14 +56,15 @@ namespace Cs5700Hw3.View
             if (DialogResult.OK == dialog.ShowDialog())
             {
                 Debug.WriteLine(dialog.SelectedColor);
-                picture = new PictureInfo();
                 if (dialog.SelectedColor != null)
                 {
+                    picture = new PictureInfo();
                     picture.Background = new SolidBackground(dialog.SelectedColor.Value);
                 }
                 else
                 {
-                    //TODO image
+                    picture = new PictureInfo();
+                    picture.Background = new ImageBackground(dialog.FileName);
                 }
                 noPictureLabel.Text = string.Empty;
                 refreshTimer.Start();

@@ -15,7 +15,8 @@ namespace Cs5700Hw3.DB
 
         public DateTime Created { get; set; }
 
-        public SolidBackground Background { get; set; }
+        [JsonConverter(typeof(BackgroundJsonConverter))]
+        public IBackground Background { get; set; }
 
         public override string ToString()
         {

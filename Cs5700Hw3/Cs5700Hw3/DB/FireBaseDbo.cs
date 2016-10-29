@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Threading.Tasks;
 using Firebase.Database;
 using Firebase.Database.Query;
+using Newtonsoft.Json;
 
 namespace Cs5700Hw3.DB
 {
@@ -32,6 +34,7 @@ namespace Cs5700Hw3.DB
 
         public async Task<List<PictureInfo>> AvailablePictures()
         {
+            
             var list = new List<PictureInfo>();
             var res = await client.Child("pictures").OrderByKey().OnceAsync<PictureInfo>();
             foreach (var r in res)
