@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Cs5700Hw3.DB;
+using Cs5700Hw3.Drawables;
 
 namespace Cs5700Hw3.View
 {

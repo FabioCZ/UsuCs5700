@@ -11,6 +11,7 @@ namespace Cs5700Hw3.Drawables
     {
         public string FileName { get; }
         public string ReadableName { get; }
+        public bool IsSelected { get; set; }
 
         public SimpleDrawable(string filename, string readableName)
         {

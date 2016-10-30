@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.shapesGrpBox = new System.Windows.Forms.GroupBox();
+            this.drawableListView = new System.Windows.Forms.ListView();
             this.commandGrpBox = new System.Windows.Forms.GroupBox();
             this.undoButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
@@ -45,7 +46,6 @@
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.drawingPanel = new System.Windows.Forms.Panel();
             this.noPictureLabel = new System.Windows.Forms.Label();
-            this.drawableListView = new System.Windows.Forms.ListView();
             this.shapesGrpBox.SuspendLayout();
             this.commandGrpBox.SuspendLayout();
             this.selectionGrpBox.SuspendLayout();
@@ -62,6 +62,14 @@
             this.shapesGrpBox.TabIndex = 0;
             this.shapesGrpBox.TabStop = false;
             this.shapesGrpBox.Text = "Drawables";
+            // 
+            // drawableListView
+            // 
+            this.drawableListView.Location = new System.Drawing.Point(7, 25);
+            this.drawableListView.Name = "drawableListView";
+            this.drawableListView.Size = new System.Drawing.Size(121, 506);
+            this.drawableListView.TabIndex = 0;
+            this.drawableListView.UseCompatibleStateImageBehavior = false;
             // 
             // commandGrpBox
             // 
@@ -189,6 +197,7 @@
             this.drawingPanel.Name = "drawingPanel";
             this.drawingPanel.Size = new System.Drawing.Size(617, 477);
             this.drawingPanel.TabIndex = 5;
+            this.drawingPanel.Click += new System.EventHandler(this.drawingPanel_Click);
             // 
             // noPictureLabel
             // 
@@ -199,14 +208,6 @@
             this.noPictureLabel.TabIndex = 0;
             this.noPictureLabel.Text = "Please start a new drawing or open an existing one";
             this.noPictureLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // drawableListView
-            // 
-            this.drawableListView.Location = new System.Drawing.Point(7, 22);
-            this.drawableListView.Name = "drawableListView";
-            this.drawableListView.Size = new System.Drawing.Size(121, 509);
-            this.drawableListView.TabIndex = 0;
-            this.drawableListView.UseCompatibleStateImageBehavior = false;
             // 
             // MainForm
             // 
