@@ -101,7 +101,7 @@ namespace Cs5700Hw3.View
         }
         private void newButton_Click(object sender, EventArgs e)
         {
-            var command = CommandFactory.CreateCommand(typeof(NewPicCommand));
+            var command = CommandFactory.CreateCommand(typeof(NewPicCommand), picture);
             ExecuteCommand(command);
             picture = command.TargetPicture;
             noPictureLabel.Text = string.Empty;
@@ -111,7 +111,7 @@ namespace Cs5700Hw3.View
 
         private void openButton_Click(object sender, EventArgs e)
         {
-            var command = CommandFactory.CreateCommand(typeof(OpenPicCommand));
+            var command = CommandFactory.CreateCommand(typeof(OpenPicCommand), picture);
             ExecuteCommand(command);
             picture = command.TargetPicture;
             noPictureLabel.Text = string.Empty;
@@ -120,9 +120,8 @@ namespace Cs5700Hw3.View
         }
         private void saveButton_Click(object sender, EventArgs e)
         {
-            var command = CommandFactory.CreateCommand(typeof(SavePicCommand));
-            command.TargetPicture = picture;
-            ExecuteCommand(command);
+            var cmd = CommandFactory.CreateCommand(typeof(SavePicCommand), picture);
+            ExecuteCommand(cmd);
         }
 
 
@@ -132,7 +131,13 @@ namespace Cs5700Hw3.View
             var selectedIndex = drawableListView.SelectedIndices[0];
             if (selectedIndex == SelectToolIndex)
             {
-                //TODO selection
+                var args = new CommandArgs()
+                {
+                    TargetLocation = ((MouseEventArgs) e).Location
+                };
+                var cmd = CommandFactory.CreateCommand(typeof(SelectCommand), picture);
+                ExecuteCommand(cmd,args);
+                selectionGrpBox.Enabled = picture.SelectedDrawable != null;
             }
             else
             {
@@ -141,9 +146,9 @@ namespace Cs5700Hw3.View
                     Drawable = DrawableFactory.GetDrawable((CatDrawable) selectedIndex-1),
                     TargetLocation = ((MouseEventArgs) e).Location
                 };
-                var cmd = CommandFactory.CreateCommand(typeof(AddCommand));
-                cmd.TargetPicture = picture;
+                var cmd = CommandFactory.CreateCommand(typeof(AddCommand), picture);
                 ExecuteCommand(cmd,args);
+                selectionGrpBox.Enabled = false;
             }
         }
 
@@ -159,8 +164,25 @@ namespace Cs5700Hw3.View
                 }
             }
         }
+
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            var cmd = CommandFactory.CreateCommand(typeof(ResizeCommand), picture);
+            var args = new CommandArgs()
+            {
+                Scale = Convert.ToSingle(((NumericUpDown) sender).Value/100)
+            };
+            ExecuteCommand(cmd,args);
+
+        }
         #endregion
 
-
+        private void removeButton_Click(object sender, EventArgs e)
+        {
+            var cmd = CommandFactory.CreateCommand(typeof(RemoveCommand), picture);
+            ExecuteCommand(cmd);
+            selectionGrpBox.Enabled = false;
+        }
     }
 }

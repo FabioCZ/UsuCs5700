@@ -31,6 +31,10 @@ namespace Cs5700Hw3.Drawables
 
         public static List<IDrawable> GetAllDrawables => drawables.Values.ToList();
 
+        public static IDrawable FromReadableName(string name)
+        {
+            return (from kv in drawables where kv.Value.ReadableName == name select kv.Value).FirstOrDefault();
+        }
         public static IDrawable GetDrawable(CatDrawable cd)
         {
             return drawables.ContainsKey(cd) ? drawables[cd] : null;

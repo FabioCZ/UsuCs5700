@@ -87,7 +87,11 @@
     <Compile Include="Commands\RemoveCommand.cs" />
     <Compile Include="Commands\ResizeCommand.cs" />
     <Compile Include="Commands\SavePicCommand.cs" />
+    <Compile Include="Commands\SelectCommand.cs" />
+    <Compile Include="Commands\TintCommand.cs" />
+    <Compile Include="DB\DrawableJsonConverter.cs" />
     <Compile Include="DB\FireBaseDbo.cs" />
+    <Compile Include="Drawables\BitmapHelpers.cs" />
     <Compile Include="Drawables\DrawableWithState.cs" />
     <Compile Include="Drawables\PictureInfo.cs" />
     <Compile Include="DB\BackgroundJsonConverter.cs" />

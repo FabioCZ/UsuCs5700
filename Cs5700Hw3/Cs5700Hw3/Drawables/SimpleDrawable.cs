@@ -17,9 +17,11 @@ namespace Cs5700Hw3.Drawables
             set { throw new InvalidOperationException("no set for selected on simple drawable"); }
         }
 
+        public Image Image { get; set; }
         public SimpleDrawable(string filename, string readableName)
         {
             FileName = filename;
+            Image = System.Drawing.Image.FromFile(filename);
             ReadableName = readableName;
         }
 

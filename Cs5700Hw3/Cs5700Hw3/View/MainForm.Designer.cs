@@ -46,6 +46,10 @@
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.drawingPanel = new System.Windows.Forms.Panel();
             this.noPictureLabel = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.shapesGrpBox.SuspendLayout();
             this.commandGrpBox.SuspendLayout();
             this.selectionGrpBox.SuspendLayout();
@@ -127,11 +131,16 @@
             // 
             // selectionGrpBox
             // 
+            this.selectionGrpBox.Controls.Add(this.button4);
+            this.selectionGrpBox.Controls.Add(this.button3);
+            this.selectionGrpBox.Controls.Add(this.button2);
+            this.selectionGrpBox.Controls.Add(this.button1);
             this.selectionGrpBox.Controls.Add(this.colorPickerButton);
             this.selectionGrpBox.Controls.Add(this.numericUpDown1);
             this.selectionGrpBox.Controls.Add(this.label1);
             this.selectionGrpBox.Controls.Add(this.removeButton);
             this.selectionGrpBox.Controls.Add(this.duplButton);
+            this.selectionGrpBox.Enabled = false;
             this.selectionGrpBox.Location = new System.Drawing.Point(370, 12);
             this.selectionGrpBox.Name = "selectionGrpBox";
             this.selectionGrpBox.Size = new System.Drawing.Size(402, 53);
@@ -143,15 +152,20 @@
             // 
             this.colorPickerButton.Location = new System.Drawing.Point(233, 20);
             this.colorPickerButton.Name = "colorPickerButton";
-            this.colorPickerButton.Size = new System.Drawing.Size(62, 23);
+            this.colorPickerButton.Size = new System.Drawing.Size(53, 23);
             this.colorPickerButton.TabIndex = 4;
-            this.colorPickerButton.Text = "Color";
+            this.colorPickerButton.Text = "Recolor";
             this.colorPickerButton.UseVisualStyleBackColor = true;
             this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
             // 
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(186, 22);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(41, 20);
             this.numericUpDown1.TabIndex = 3;
@@ -160,6 +174,7 @@
             0,
             0,
             0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // label1
             // 
@@ -178,6 +193,7 @@
             this.removeButton.TabIndex = 1;
             this.removeButton.Text = "Remove";
             this.removeButton.UseVisualStyleBackColor = true;
+            this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
             // 
             // duplButton
             // 
@@ -210,6 +226,42 @@
             this.noPictureLabel.TabIndex = 0;
             this.noPictureLabel.Text = "Please start a new drawing or open an existing one";
             this.noPictureLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(292, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(22, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "<";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(374, 19);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(22, 23);
+            this.button2.TabIndex = 6;
+            this.button2.Text = ">";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(318, 19);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(22, 23);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "˄";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(346, 19);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(22, 23);
+            this.button4.TabIndex = 8;
+            this.button4.Text = "˅";
+            this.button4.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -252,6 +304,10 @@
         private System.Windows.Forms.Panel drawingPanel;
         private System.Windows.Forms.Label noPictureLabel;
         private System.Windows.Forms.ListView drawableListView;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }
 

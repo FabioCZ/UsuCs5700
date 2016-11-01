@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Newtonsoft.Json;
 
 namespace Cs5700Hw3.Drawables
 {
@@ -18,6 +19,8 @@ namespace Cs5700Hw3.Drawables
         private Size originalSize;
         public string FileName => backingdrawable.FileName;
         public string ReadableName => backingdrawable.ReadableName;
+        [JsonIgnore]
+        public Image Image { get { return backingdrawable.Image; } set { backingdrawable.Image = value; } }
         public bool IsSelected { get; set; }
 
         public Point Location { get; set; }
@@ -33,7 +36,12 @@ namespace Cs5700Hw3.Drawables
                     throw  new ArgumentException("bad scale");
                 }
                 scale = value;
-
+                var newSize = new Size(Convert.ToInt32(originalSize.Width*scale), Convert.ToInt32(originalSize.Height*scale));
+                if (Size != newSize)
+                {
+                    Size = newSize;
+                    map = new Bitmap(backingdrawable.Image,Size);
+                }
             }
         }
 
@@ -44,19 +52,24 @@ namespace Cs5700Hw3.Drawables
                 throw new ArgumentException("Add command parameter should be a simple drawable");
             }
             backingdrawable = bd as SimpleDrawable;
-            var img = System.Drawing.Image.FromFile(FileName);
-            map = new Bitmap(img);
-            Size = img.Size;
-            originalSize = img.Size;
+            scale = 1.0f;
+            map = new Bitmap(backingdrawable.Image);
+            Size = backingdrawable.Image.Size;
+            originalSize = backingdrawable.Image.Size;
         }
+
         public void Draw(Graphics graphics)
         {
-            //var x = graphics.VisibleClipBounds.Width;
-            //var y = graphics.VisibleClipBounds.Height;
-            //graphics.ScaleTransform(scale, scale);
-            //graphics.TranslateTransform(-1*(x-graphics.VisibleClipBounds.Width),-1*(y - graphics.VisibleClipBounds.Height));
-            graphics.DrawImage(map, Location);
-            graphics.ResetTransform();
+            if (IsSelected)
+            {
+                var tintedMap = map.ColorTint(0, 200, 200);
+                graphics.DrawImage(tintedMap,Location);
+            }
+            else
+            {
+                graphics.DrawImage(map, Location);
+
+            }
         }
     }
 }

@@ -12,5 +12,7 @@ namespace Cs5700Hw3.Commands
     {
         public IDrawable Drawable { get; set; }
         public Point TargetLocation { get; set; }
+        public Color TintColor { get; set; }
+        public float? Scale { get; set; }
     }
 }
