@@ -19,12 +19,15 @@ namespace Cs5700Hw3.View
         public readonly int SelectToolIndex = 0;
         private PictureInfo picture;
         private Graphics graphics;
+        private Stack<ICommand> commandHistory;
+        private bool isDirty = true;
 
         public MainForm()
         {
             InitializeComponent();
             InitDrawableList();
             TogglePictureControls(false);
+            commandHistory = new Stack<ICommand>();
 
         }
 
@@ -54,6 +57,40 @@ namespace Cs5700Hw3.View
             }
         }
 
+        private void ExecuteCommand(ICommand command, CommandArgs args = null)
+        {
+            isDirty = true;
+            undoButton.Enabled = command.Undoable;
+            if (command.Undoable)
+            {
+                commandHistory.Push(command);
+            }
+            else
+            {
+                commandHistory.Clear();
+            }
+            command.Execute(args);
+
+        }
+
+
+        private void TogglePictureControls(bool areEnabled)
+        {
+            shapesGrpBox.Enabled = areEnabled;
+        }
+
+        private void refreshTimer_Tick(object sender, EventArgs e)
+        {
+            if (picture == null || !isDirty) return;
+            if (graphics == null)
+            {
+                graphics = drawingPanel.CreateGraphics();
+            }
+            picture.Draw(graphics);
+            isDirty = false;
+        }
+
+        #region ClickListeners
 
         private void colorPickerButton_Click(object sender, EventArgs e)
         {
@@ -65,7 +102,7 @@ namespace Cs5700Hw3.View
         private void newButton_Click(object sender, EventArgs e)
         {
             var command = CommandFactory.CreateCommand(typeof(NewPicCommand));
-            command.Execute();
+            ExecuteCommand(command);
             picture = command.TargetPicture;
             noPictureLabel.Text = string.Empty;
             refreshTimer.Start();
@@ -75,6 +112,7 @@ namespace Cs5700Hw3.View
         private void openButton_Click(object sender, EventArgs e)
         {
             var command = CommandFactory.CreateCommand(typeof(OpenPicCommand));
+            ExecuteCommand(command);
             picture = command.TargetPicture;
             noPictureLabel.Text = string.Empty;
             TogglePictureControls(true);
@@ -84,28 +122,9 @@ namespace Cs5700Hw3.View
         {
             var command = CommandFactory.CreateCommand(typeof(SavePicCommand));
             command.TargetPicture = picture;
-            command.Execute();
-
+            ExecuteCommand(command);
         }
 
-        private void TogglePictureControls(bool areEnabled)
-        {
-            selectionGrpBox.Enabled = areEnabled;
-            undoButton.Enabled = areEnabled;
-            shapesGrpBox.Enabled = areEnabled;
-        }
-
-
-
-        private void refreshTimer_Tick(object sender, EventArgs e)
-        {
-            if (picture == null) return;
-            if (graphics == null)
-            {
-                graphics = drawingPanel.CreateGraphics();
-            }
-            picture.Background.Draw(graphics);
-        }
 
         private void drawingPanel_Click(object sender, EventArgs e)
         {
@@ -113,17 +132,35 @@ namespace Cs5700Hw3.View
             var selectedIndex = drawableListView.SelectedIndices[0];
             if (selectedIndex == SelectToolIndex)
             {
-                
+                //TODO selection
             }
             else
             {
                 var args = new CommandArgs()
                 {
-                    Drawable = DrawableFactory.GetDrawable((CatDrawable) selectedIndex),
-                    TargetPoint = ((MouseEventArgs) e).Location
+                    Drawable = DrawableFactory.GetDrawable((CatDrawable) selectedIndex-1),
+                    TargetLocation = ((MouseEventArgs) e).Location
                 };
-                CommandFactory.CreateCommand(typeof(AddCommand)).Execute(args);
+                var cmd = CommandFactory.CreateCommand(typeof(AddCommand));
+                cmd.TargetPicture = picture;
+                ExecuteCommand(cmd,args);
             }
         }
+
+        private void undoButton_Click(object sender, EventArgs e)
+        {
+            if (commandHistory.Any())
+            {
+                var command = commandHistory.Pop();
+                command.Undo();
+                if (commandHistory.Any())
+                {
+                    undoButton.Enabled = commandHistory.Peek().Undoable;
+                }
+            }
+        }
+        #endregion
+
+
     }
 }

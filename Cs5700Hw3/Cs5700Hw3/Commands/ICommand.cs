@@ -13,6 +13,8 @@ namespace Cs5700Hw3.Commands
     {
         PictureInfo TargetPicture { get; set; }
 
+        bool Undoable { get; }
+
         void Execute(CommandArgs commandArgs = null);
 
         void Undo();

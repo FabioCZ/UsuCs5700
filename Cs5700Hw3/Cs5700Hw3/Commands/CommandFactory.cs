@@ -10,9 +10,9 @@ namespace Cs5700Hw3.Commands
     {
         public static ICommand CreateCommand(Type commandType)
         {
-            if (commandType == typeof(AddCommand))
+            if (commandType.GetInterfaces().Contains(typeof(ICommand)))
             {
-                return new AddCommand();
+                return (ICommand) Activator.CreateInstance(commandType);
             }
             else
             {

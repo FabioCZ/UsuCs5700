@@ -11,6 +11,9 @@ namespace Cs5700Hw3.Commands
     public class SavePicCommand : ICommand
     {
         public PictureInfo TargetPicture { get; set; }
+
+        public bool Undoable => false;
+
         public void Execute(CommandArgs commandArgs = null)
         {
             var name = Microsoft.VisualBasic.Interaction.InputBox("Enter name:");

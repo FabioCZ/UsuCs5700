@@ -11,6 +11,6 @@ namespace Cs5700Hw3.Commands
     public class CommandArgs
     {
         public IDrawable Drawable { get; set; }
-        public Point TargetPoint { get; set; }
+        public Point TargetLocation { get; set; }
     }
 }

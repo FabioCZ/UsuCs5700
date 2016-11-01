@@ -19,8 +19,21 @@ namespace Cs5700Hw3.Drawables
         [JsonConverter(typeof(BackgroundJsonConverter))]
         public IBackground Background { get; set; }
 
-        public List<SimpleDrawable> Drawables { get; set; } 
+        public List<DrawableWithState> Drawables { get; set; }
 
+        public PictureInfo()
+        {
+            Drawables = new List<DrawableWithState>();
+        }
+
+        public void Draw(Graphics graphics)
+        {
+            Background.Draw(graphics);
+            foreach (var drawable in Drawables)
+            {
+                drawable.Draw(graphics);
+            }
+        }
         public override string ToString()
         {
             return PictureName + ", " + Created.ToString("g");

@@ -11,7 +11,11 @@ namespace Cs5700Hw3.Drawables
     {
         public string FileName { get; }
         public string ReadableName { get; }
-        public bool IsSelected { get; set; }
+        public bool IsSelected
+        {
+            get { return false;}
+            set { throw new InvalidOperationException("no set for selected on simple drawable"); }
+        }
 
         public SimpleDrawable(string filename, string readableName)
         {
@@ -21,7 +25,7 @@ namespace Cs5700Hw3.Drawables
 
         public void Draw(Graphics graphics)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException("no set for selected on simple drawable");
         }
     }
 }

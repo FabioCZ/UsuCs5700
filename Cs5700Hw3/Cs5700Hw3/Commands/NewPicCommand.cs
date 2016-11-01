@@ -14,6 +14,8 @@ namespace Cs5700Hw3.Commands
     public class NewPicCommand : ICommand 
     {
         public PictureInfo TargetPicture { get; set; }
+        public bool Undoable => false;
+
         public void Execute(CommandArgs commandArgs = null)
         {
             var dialog = new NewDrawingDialog();

@@ -86,12 +86,14 @@
             // 
             // undoButton
             // 
+            this.undoButton.Enabled = false;
             this.undoButton.Location = new System.Drawing.Point(154, 20);
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(43, 23);
             this.undoButton.TabIndex = 3;
             this.undoButton.Text = "Undo";
             this.undoButton.UseVisualStyleBackColor = true;
+            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
             // 
             // saveButton
             // 
