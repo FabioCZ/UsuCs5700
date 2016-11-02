@@ -28,6 +28,7 @@ namespace Cs5700Hw3.View
             InitDrawableList();
             TogglePictureControls(false);
             commandHistory = new Stack<ICommand>();
+            KeyPreview = true;
 
         }
 
@@ -55,6 +56,7 @@ namespace Cs5700Hw3.View
                 };
                 drawableListView.Items.Add(lvi);
             }
+            drawableListView.Select();
         }
 
         private void ExecuteCommand(ICommand command, CommandArgs args = null)
@@ -166,8 +168,16 @@ namespace Cs5700Hw3.View
         }
 
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        private void scaleUpDown_ValueChanged(object sender, EventArgs e)
         {
+            if (((NumericUpDown) sender).Value <= 0)
+            {
+                ((NumericUpDown) sender).Value = 1;
+            }
+            if (((NumericUpDown) sender).Value > 1000)
+            {
+                ((NumericUpDown) sender).Value = 1000;
+            }
             var cmd = CommandFactory.CreateCommand(typeof(ResizeCommand), picture);
             var args = new CommandArgs()
             {
@@ -176,13 +186,76 @@ namespace Cs5700Hw3.View
             ExecuteCommand(cmd,args);
 
         }
-        #endregion
-
         private void removeButton_Click(object sender, EventArgs e)
         {
             var cmd = CommandFactory.CreateCommand(typeof(RemoveCommand), picture);
             ExecuteCommand(cmd);
             selectionGrpBox.Enabled = false;
         }
+        private void helpButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(@"Help:
+Key shortcuts:
+arrow keys - move selected drawable
+-/+ - scale selected drawable
+delete - remove selected drawable");
+        }
+        #endregion
+
+
+
+#region Direction Command handlers/Key event handlers
+        private void leftButton_Click(object sender, EventArgs e) => ProcessMoveCommand(MoveDirection.Left);
+
+        private void upButton_Click(object sender, EventArgs e) => ProcessMoveCommand(MoveDirection.Up);
+
+        private void downButton_Click(object sender, EventArgs e) => ProcessMoveCommand(MoveDirection.Down);
+
+        private void rightButton_Click(object sender, EventArgs e) => ProcessMoveCommand(MoveDirection.Right);
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            drawingPanel.Focus();
+            if (picture?.SelectedDrawable == null) return;
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                    ProcessMoveCommand(MoveDirection.Up);
+                    break;
+                case Keys.Right:
+                    ProcessMoveCommand(MoveDirection.Right);
+                    break;
+                case Keys.Down:
+                    ProcessMoveCommand(MoveDirection.Down);
+                    break;
+                case Keys.Left:
+                    ProcessMoveCommand(MoveDirection.Left);
+                    break;
+                case Keys.OemMinus:
+                    scaleUpDown.Value = scaleUpDown.Value - 1;
+                    break;
+                case Keys.Oemplus:
+                    scaleUpDown.Value = scaleUpDown.Value + 1;
+                    break;
+                case Keys.Delete:
+                    removeButton_Click(sender, e);
+                    break;
+            }
+            e.Handled = true;
+        }
+
+        private void ProcessMoveCommand(MoveDirection direction)
+        {
+            if (picture?.SelectedDrawable == null) return;
+            var cmd = CommandFactory.CreateCommand(typeof(MoveCommand), picture);
+            var args = new CommandArgs()
+            {
+                Direction = direction
+            };
+            ExecuteCommand(cmd, args);
+        }
+
+
+        #endregion
     }
 }

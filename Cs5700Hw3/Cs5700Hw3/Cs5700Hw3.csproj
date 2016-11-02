@@ -82,6 +82,8 @@
     <Compile Include="Commands\CommandFactory.cs" />
     <Compile Include="Commands\DuplicateCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\MoveCommand.cs" />
+    <Compile Include="Commands\MoveDirection.cs" />
     <Compile Include="Commands\NewPicCommand.cs" />
     <Compile Include="Commands\OpenPicCommand.cs" />
     <Compile Include="Commands\RemoveCommand.cs" />

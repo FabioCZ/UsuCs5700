@@ -31,10 +31,7 @@ namespace Cs5700Hw3.Drawables
             get { return scale; }
             set
             {
-                if (scale < 0 || scale > 10)
-                {
-                    throw  new ArgumentException("bad scale");
-                }
+                if (value <= 0 || value > 10) return;
                 scale = value;
                 var newSize = new Size(Convert.ToInt32(originalSize.Width*scale), Convert.ToInt32(originalSize.Height*scale));
                 if (Size != newSize)
