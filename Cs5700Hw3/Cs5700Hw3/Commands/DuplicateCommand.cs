@@ -11,7 +11,7 @@ namespace Cs5700Hw3.Commands
     public class DuplicateCommand : ICommand
     {
         private DrawableWithState cloned;
-        public PictureInfo TargetPicture { get; set; }
+        public PictureState TargetPicture { get; set; }
         public bool Undoable => true;
 
         public void Execute(CommandArgs commandArgs = null)

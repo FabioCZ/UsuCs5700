@@ -13,7 +13,7 @@ namespace Cs5700Hw3.Commands
 {
     public class OpenPicCommand : ICommand
     {
-        public PictureInfo TargetPicture { get; set; }
+        public PictureState TargetPicture { get; set; }
         public bool Undoable => false;
 
         public void Execute(CommandArgs commandArgs = null)

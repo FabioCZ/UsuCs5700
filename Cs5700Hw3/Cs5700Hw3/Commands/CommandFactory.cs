@@ -9,12 +9,11 @@ namespace Cs5700Hw3.Commands
 {
     public static class CommandFactory
     {
-        public static ICommand CreateCommand(Type commandType, PictureInfo targetPicture)
+        public static ICommand CreateCommand(Type commandType)
         {
             if (commandType.GetInterfaces().Contains(typeof(ICommand)))
             {
                 var cmd =  (ICommand) Activator.CreateInstance(commandType);
-                cmd.TargetPicture = targetPicture;
                 return cmd;
             }
             else

@@ -10,9 +10,8 @@ namespace Cs5700Hw3.Commands
 {
     public class ResizeCommand : ICommand
     {
-        private DrawableWithState drawable;
         private float oldScale;
-        public PictureInfo TargetPicture { get; set; }
+        public PictureState TargetPicture { get; set; }
         public bool Undoable => true;
 
 

@@ -4,13 +4,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cs5700Hw3.Commands;
 using Cs5700Hw3.DB;
 using Cs5700Hw3.Drawables;
 using Newtonsoft.Json;
 
 namespace Cs5700Hw3.Drawables
 {
-    public class PictureInfo
+    public class PictureState
     {
         public string PictureName { get; set; }
 
@@ -25,9 +26,13 @@ namespace Cs5700Hw3.Drawables
         [JsonIgnore]
         public DrawableWithState SelectedDrawable { get; set; }
 
-        public PictureInfo()
+        [JsonIgnore]
+        public Stack<ICommand> CommandHistory { get; set; }
+
+        public PictureState()
         {
             Drawables = new List<DrawableWithState>();
+            CommandHistory = new Stack<ICommand>();
         }
 
         public void Draw(Graphics graphics)
@@ -38,11 +43,43 @@ namespace Cs5700Hw3.Drawables
                 drawable.Draw(graphics);
             }
         }
+
+        /// <summary>
+        /// Returns tru if there is a next undo available
+        /// </summary>
+        /// <returns></returns>
+        public bool Undo()
+        {
+            if (CommandHistory.Any())
+            {
+                var command = CommandHistory.Pop();
+                command.Undo();
+            }
+            return CommandHistory.Any() && CommandHistory.Peek().Undoable;
+        }
+
+        public void ExecuteCommand(ICommand command, CommandArgs args)
+        {
+            command.TargetPicture = this;
+            if (command.Undoable)
+            {
+                CommandHistory.Push(command);
+            }
+            else
+            {
+                CommandHistory.Clear();
+            }
+            command.Execute(args);
+            if (command is OpenPicCommand || command is NewPicCommand)
+            {
+                CommandHistory.Clear();
+            }
+        }
+
         public override string ToString()
         {
             return PictureName + ", " + Created.ToString("g");
         }
-
 
         public DrawableWithState FindDrawableAtPoint(Point location) => Drawables.FindLast(d => location.X >= d.Location.X &&
                                               location.X < d.Location.X + d.Size.Width &&

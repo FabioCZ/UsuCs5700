@@ -95,7 +95,7 @@
     <Compile Include="DB\FireBaseDbo.cs" />
     <Compile Include="Drawables\BitmapHelpers.cs" />
     <Compile Include="Drawables\DrawableWithState.cs" />
-    <Compile Include="Drawables\PictureInfo.cs" />
+    <Compile Include="Drawables\PictureState.cs" />
     <Compile Include="DB\BackgroundJsonConverter.cs" />
     <Compile Include="Drawables\IBackground.cs" />
     <Compile Include="Drawables\ImageBackground.cs" />

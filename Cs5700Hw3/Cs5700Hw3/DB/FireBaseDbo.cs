@@ -27,17 +27,17 @@ namespace Cs5700Hw3.DB
             client = new FirebaseClient("https://cs5700hw3.firebaseio.com/");
         }
 
-        public async void Save(PictureInfo picture)
+        public async void Save(PictureState picture)
         {
             var res = await client.Child("pictures").PostAsync(picture);
             Debug.WriteLine(res.Key);
         }
 
-        public async Task<List<PictureInfo>> AvailablePictures()
+        public async Task<List<PictureState>> AvailablePictures()
         {
             
-            var list = new List<PictureInfo>();
-            var res = await client.Child("pictures").OrderByKey().OnceAsync<PictureInfo>();
+            var list = new List<PictureState>();
+            var res = await client.Child("pictures").OrderByKey().OnceAsync<PictureState>();
             foreach (var r in res)
             {
                 list.Add(r.Object);

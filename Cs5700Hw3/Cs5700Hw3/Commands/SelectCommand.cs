@@ -12,7 +12,7 @@ namespace Cs5700Hw3.Commands
     {
         private DrawableWithState selection;
         private DrawableWithState previousSelection;
-        public PictureInfo TargetPicture { get; set; }
+        public PictureState TargetPicture { get; set; }
         public bool Undoable => true;
         public void Execute(CommandArgs commandArgs = null)
         {

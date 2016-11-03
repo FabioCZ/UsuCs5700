@@ -13,7 +13,7 @@ namespace Cs5700Hw3.Commands
 {
     public class NewPicCommand : ICommand 
     {
-        public PictureInfo TargetPicture { get; set; }
+        public PictureState TargetPicture { get; set; }
         public bool Undoable => false;
             
         public void Execute(CommandArgs commandArgs = null)
@@ -24,11 +24,11 @@ namespace Cs5700Hw3.Commands
                 Debug.WriteLine(dialog.SelectedColor);
                 if (dialog.SelectedColor != null)
                 {
-                    TargetPicture = new PictureInfo { Background = new SolidBackground(dialog.SelectedColor.Value) };
+                    TargetPicture = new PictureState { Background = new SolidBackground(dialog.SelectedColor.Value) };
                 }
                 else
                 {
-                    TargetPicture = new PictureInfo { Background = new ImageBackground(dialog.FileName) };
+                    TargetPicture = new PictureState { Background = new ImageBackground(dialog.FileName) };
                 }
             }
         }
