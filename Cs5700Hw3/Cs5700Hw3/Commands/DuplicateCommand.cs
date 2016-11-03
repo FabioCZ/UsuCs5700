@@ -10,17 +10,22 @@ namespace Cs5700Hw3.Commands
 {
     public class DuplicateCommand : ICommand
     {
+        private DrawableWithState cloned;
         public PictureInfo TargetPicture { get; set; }
         public bool Undoable => true;
 
         public void Execute(CommandArgs commandArgs = null)
         {
-            throw new NotImplementedException();
+            if (TargetPicture.SelectedDrawable != null)
+            {
+                cloned = TargetPicture.SelectedDrawable.Clone();
+                TargetPicture.Drawables.Add(cloned);
+            }
         }
 
         public void Undo()
         {
-            throw new NotImplementedException();
+            TargetPicture.Drawables.Remove(cloned);
         }
     }
 }

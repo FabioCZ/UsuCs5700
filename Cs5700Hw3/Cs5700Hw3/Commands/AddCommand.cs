@@ -11,6 +11,7 @@ namespace Cs5700Hw3.Commands
 {
     public class AddCommand : ICommand
     {
+        private DrawableWithState addedDrawable;
         public PictureInfo TargetPicture { get; set; }
         public bool Undoable => true;
 
@@ -18,14 +19,14 @@ namespace Cs5700Hw3.Commands
         {
             if (commandArgs?.Drawable != null && commandArgs?.TargetLocation != default(Point))
             {
-
-                TargetPicture.Drawables.Add(new DrawableWithState(commandArgs.Drawable) {Location = commandArgs.TargetLocation});
+                addedDrawable = new DrawableWithState(commandArgs.Drawable) {Location = commandArgs.TargetLocation};
+                TargetPicture.Drawables.Add(addedDrawable);
             }
         }
 
         public void Undo()
         {
-            throw new NotImplementedException();
+            TargetPicture.Drawables.Remove(addedDrawable);
         }
     }
 }

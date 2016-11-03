@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
+using Pen = System.Drawing.Pen;
 
 namespace Cs5700Hw3.Drawables
 {
@@ -15,11 +16,13 @@ namespace Cs5700Hw3.Drawables
     {
         private SimpleDrawable backingdrawable;
         private float scale;
-        private Bitmap map;
+        private Pen selectionPen = new Pen(System.Drawing.Color.DarkGray,2.0f);
         private Size originalSize;
         public string FileName => backingdrawable.FileName;
         public string ReadableName => backingdrawable.ReadableName;
         [JsonIgnore]
+        public Bitmap Map { get; set; }
+        [JsonIgnore] 
         public Image Image { get { return backingdrawable.Image; } set { backingdrawable.Image = value; } }
         public bool IsSelected { get; set; }
 
@@ -37,7 +40,7 @@ namespace Cs5700Hw3.Drawables
                 if (Size != newSize)
                 {
                     Size = newSize;
-                    map = new Bitmap(backingdrawable.Image,Size);
+                    Map = new Bitmap(backingdrawable.Image,Size);
                 }
             }
         }
@@ -50,7 +53,7 @@ namespace Cs5700Hw3.Drawables
             }
             backingdrawable = bd as SimpleDrawable;
             scale = 1.0f;
-            map = new Bitmap(backingdrawable.Image);
+            Map = new Bitmap(backingdrawable.Image);
             Size = backingdrawable.Image.Size;
             originalSize = backingdrawable.Image.Size;
         }
@@ -59,14 +62,20 @@ namespace Cs5700Hw3.Drawables
         {
             if (IsSelected)
             {
-                var tintedMap = map.ColorTint(0, 200, 200);
-                graphics.DrawImage(tintedMap,Location);
+                graphics.DrawRectangle(selectionPen,Location.X,Location.Y,Map.Width,Map.Height);
             }
-            else
-            {
-                graphics.DrawImage(map, Location);
+            graphics.DrawImage(Map, Location);
 
-            }
         }
+
+        public DrawableWithState Clone()
+        {
+            var drw = new DrawableWithState(backingdrawable);
+            drw.Scale = scale;
+            drw.Location = new Point(10,10);
+            drw.Map = Map;
+            return drw;
+        }
+
     }
 }

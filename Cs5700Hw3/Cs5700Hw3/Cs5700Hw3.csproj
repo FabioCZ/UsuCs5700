@@ -123,6 +123,12 @@
     <Compile Include="View\OpenDrawingDialog.Designer.cs">
       <DependentUpon>OpenDrawingDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\TintForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\TintForm.Designer.cs">
+      <DependentUpon>TintForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -140,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\OpenDrawingDialog.resx">
       <DependentUpon>OpenDrawingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TintForm.resx">
+      <DependentUpon>TintForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

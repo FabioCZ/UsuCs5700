@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,14 @@ namespace Cs5700Hw3.DB
             foreach (var obj in arr)
             {
                 var name = obj["ReadableName"].Value<string>();
-                drawables.Add(new DrawableWithState(DrawableFactory.FromReadableName(name)));
+                var drw = new DrawableWithState(DrawableFactory.FromReadableName(name));
+                drw.Scale = obj["Scale"].Value<float>();
+                var location = obj["Location"].Value<string>().Split(',');
+                drw.Location = new Point(Convert.ToInt32(location[0]),Convert.ToInt32(location[1]));
+                drw.IsSelected = false;
+                
+                drawables.Add(drw);
+
               }
 
             return drawables;

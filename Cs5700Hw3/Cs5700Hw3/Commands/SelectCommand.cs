@@ -21,7 +21,7 @@ namespace Cs5700Hw3.Commands
                 selection = TargetPicture.FindDrawableAtPoint(commandArgs.TargetLocation);
                 if (selection != null)
                 {
-                    previousSelection = TargetPicture.Drawables.FirstOrDefault(d => d.IsSelected);
+                    previousSelection = TargetPicture.SelectedDrawable;
                     if (previousSelection != null)
                     {
                         previousSelection.IsSelected = false;
@@ -31,16 +31,24 @@ namespace Cs5700Hw3.Commands
                 }
                 else
                 {
-                    TargetPicture.SelectedDrawable.IsSelected = false;
+                    previousSelection = TargetPicture.SelectedDrawable;
+                    if (TargetPicture.SelectedDrawable != null)
+                    {
+                        TargetPicture.SelectedDrawable.IsSelected = false;
+                    }
                     TargetPicture.SelectedDrawable = null;
                 }
             }
-            
+
         }
 
         public void Undo()
         {
-            selection.IsSelected = false;
+            if (selection != null)
+            {
+                selection.IsSelected = false;
+                TargetPicture.SelectedDrawable = null;
+            }
             if (previousSelection != null)
             {
                 previousSelection.IsSelected = true;

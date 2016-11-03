@@ -21,6 +21,7 @@ namespace Cs5700Hw3.View
         private Graphics graphics;
         private Stack<ICommand> commandHistory;
         private bool isDirty = true;
+        private bool isProgramaticScaleChange = false;
 
         public MainForm()
         {
@@ -29,16 +30,17 @@ namespace Cs5700Hw3.View
             TogglePictureControls(false);
             commandHistory = new Stack<ICommand>();
             KeyPreview = true;
-
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
         }
 
         private void InitDrawableList()
         {
             var list = new ImageList();
             list.Images.Add(Image.FromFile("Assets/pointer.png"));
-            DrawableFactory.GetAllDrawables.ForEach(d => list.Images.Add(d.FileName,Image.FromFile(d.FileName)));
+            DrawableFactory.GetAllDrawables.ForEach(d => list.Images.Add(d.FileName, Image.FromFile(d.FileName)));
             drawableListView.View = System.Windows.Forms.View.LargeIcon;
-            list.ImageSize = new Size(50,50);
+            list.ImageSize = new Size(50, 50);
             drawableListView.LargeImageList = list;
 
             var selectLvi = new ListViewItem
@@ -52,7 +54,7 @@ namespace Cs5700Hw3.View
                 var lvi = new ListViewItem
                 {
                     ImageIndex = i,
-                    Text = DrawableFactory.GetAllDrawables[i-1].ReadableName
+                    Text = DrawableFactory.GetAllDrawables[i - 1].ReadableName
                 };
                 drawableListView.Items.Add(lvi);
             }
@@ -96,29 +98,32 @@ namespace Cs5700Hw3.View
 
         private void colorPickerButton_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK == colorPicker.ShowDialog())
-            {
-                
-            }
+            var cmd = CommandFactory.CreateCommand(typeof(TintCommand), picture);
+            ExecuteCommand(cmd);
         }
         private void newButton_Click(object sender, EventArgs e)
         {
-            var command = CommandFactory.CreateCommand(typeof(NewPicCommand), picture);
-            ExecuteCommand(command);
-            picture = command.TargetPicture;
+            refreshTimer.Stop();
+            var cmd = CommandFactory.CreateCommand(typeof(NewPicCommand), picture);
+            ExecuteCommand(cmd);
+            picture = cmd.TargetPicture;
             noPictureLabel.Text = string.Empty;
             refreshTimer.Start();
             TogglePictureControls(true);
+            commandHistory.Clear();
         }
 
         private void openButton_Click(object sender, EventArgs e)
         {
+            refreshTimer.Stop();
             var command = CommandFactory.CreateCommand(typeof(OpenPicCommand), picture);
             ExecuteCommand(command);
             picture = command.TargetPicture;
             noPictureLabel.Text = string.Empty;
             TogglePictureControls(true);
             refreshTimer.Start();
+            commandHistory.Clear();
+
         }
         private void saveButton_Click(object sender, EventArgs e)
         {
@@ -135,21 +140,21 @@ namespace Cs5700Hw3.View
             {
                 var args = new CommandArgs()
                 {
-                    TargetLocation = ((MouseEventArgs) e).Location
+                    TargetLocation = ((MouseEventArgs)e).Location
                 };
                 var cmd = CommandFactory.CreateCommand(typeof(SelectCommand), picture);
-                ExecuteCommand(cmd,args);
-                selectionGrpBox.Enabled = picture.SelectedDrawable != null;
+                ExecuteCommand(cmd, args);
+                HandleSelectionChange();
             }
             else
             {
                 var args = new CommandArgs()
                 {
-                    Drawable = DrawableFactory.GetDrawable((CatDrawable) selectedIndex-1),
-                    TargetLocation = ((MouseEventArgs) e).Location
+                    Drawable = DrawableFactory.GetDrawable((CatDrawable)selectedIndex - 1),
+                    TargetLocation = ((MouseEventArgs)e).Location
                 };
                 var cmd = CommandFactory.CreateCommand(typeof(AddCommand), picture);
-                ExecuteCommand(cmd,args);
+                ExecuteCommand(cmd, args);
                 selectionGrpBox.Enabled = false;
             }
         }
@@ -164,34 +169,72 @@ namespace Cs5700Hw3.View
                 {
                     undoButton.Enabled = commandHistory.Peek().Undoable;
                 }
+                else
+                {
+                    undoButton.Enabled = false;
+                }
+                isDirty = true;
+                HandleSelectionChange();
+            }
+            else
+            {
+                // This is the obligatory "This should never" happen comment
+                undoButton.Enabled = false;
             }
         }
 
+        private void HandleSelectionChange()
+        {
+            selectionGrpBox.Enabled = picture.SelectedDrawable != null;
+            if (selectionGrpBox.Enabled)
+            {
+                isProgramaticScaleChange = true;
+                scaleUpDown.Value = Convert.ToDecimal(picture.SelectedDrawable.Scale * 100);
+            }
+        }
+
+        private void scaleUpDown_Click(object sender, EventArgs e)
+        {
+            isProgramaticScaleChange = false;
+        }
 
         private void scaleUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (((NumericUpDown) sender).Value <= 0)
+            if (((NumericUpDown)sender).Value <= 0)
             {
-                ((NumericUpDown) sender).Value = 1;
+                ((NumericUpDown)sender).Value = 1;
             }
-            if (((NumericUpDown) sender).Value > 1000)
+            if (((NumericUpDown)sender).Value > 1000)
             {
-                ((NumericUpDown) sender).Value = 1000;
+                ((NumericUpDown)sender).Value = 1000;
             }
+            if (isProgramaticScaleChange)
+            {
+                isProgramaticScaleChange = false;
+                return;
+            }
+
             var cmd = CommandFactory.CreateCommand(typeof(ResizeCommand), picture);
             var args = new CommandArgs()
             {
-                Scale = Convert.ToSingle(((NumericUpDown) sender).Value/100)
+                Scale = Convert.ToSingle(((NumericUpDown)sender).Value / 100)
             };
-            ExecuteCommand(cmd,args);
-
+            ExecuteCommand(cmd, args);
         }
+
         private void removeButton_Click(object sender, EventArgs e)
         {
             var cmd = CommandFactory.CreateCommand(typeof(RemoveCommand), picture);
             ExecuteCommand(cmd);
             selectionGrpBox.Enabled = false;
         }
+
+        private void duplButton_Click(object sender, EventArgs e)
+        {
+            var cmd = CommandFactory.CreateCommand(typeof(DuplicateCommand), picture);
+            ExecuteCommand(cmd);
+        }
+
         private void helpButton_Click(object sender, EventArgs e)
         {
             MessageBox.Show(@"Help:
@@ -204,7 +247,7 @@ delete - remove selected drawable");
 
 
 
-#region Direction Command handlers/Key event handlers
+        #region Direction Command handlers/Key event handlers
         private void leftButton_Click(object sender, EventArgs e) => ProcessMoveCommand(MoveDirection.Left);
 
         private void upButton_Click(object sender, EventArgs e) => ProcessMoveCommand(MoveDirection.Up);
@@ -232,9 +275,11 @@ delete - remove selected drawable");
                     ProcessMoveCommand(MoveDirection.Left);
                     break;
                 case Keys.OemMinus:
+                    isProgramaticScaleChange = false;
                     scaleUpDown.Value = scaleUpDown.Value - 1;
                     break;
                 case Keys.Oemplus:
+                    isProgramaticScaleChange = false;
                     scaleUpDown.Value = scaleUpDown.Value + 1;
                     break;
                 case Keys.Delete:
@@ -255,7 +300,11 @@ delete - remove selected drawable");
             ExecuteCommand(cmd, args);
         }
 
-
         #endregion
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            isDirty = true;
+        }
     }
 }

@@ -32,6 +32,7 @@
             this.shapesGrpBox = new System.Windows.Forms.GroupBox();
             this.drawableListView = new System.Windows.Forms.ListView();
             this.commandGrpBox = new System.Windows.Forms.GroupBox();
+            this.helpButton = new System.Windows.Forms.Button();
             this.undoButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.openButton = new System.Windows.Forms.Button();
@@ -46,11 +47,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.removeButton = new System.Windows.Forms.Button();
             this.duplButton = new System.Windows.Forms.Button();
-            this.colorPicker = new System.Windows.Forms.ColorDialog();
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.drawingPanel = new System.Windows.Forms.Panel();
             this.noPictureLabel = new System.Windows.Forms.Label();
-            this.helpButton = new System.Windows.Forms.Button();
             this.shapesGrpBox.SuspendLayout();
             this.commandGrpBox.SuspendLayout();
             this.selectionGrpBox.SuspendLayout();
@@ -89,6 +88,17 @@
             this.commandGrpBox.TabIndex = 1;
             this.commandGrpBox.TabStop = false;
             this.commandGrpBox.Text = "Commands";
+            // 
+            // helpButton
+            // 
+            this.helpButton.Enabled = false;
+            this.helpButton.Location = new System.Drawing.Point(201, 20);
+            this.helpButton.Name = "helpButton";
+            this.helpButton.Size = new System.Drawing.Size(43, 23);
+            this.helpButton.TabIndex = 4;
+            this.helpButton.Text = "Help";
+            this.helpButton.UseVisualStyleBackColor = true;
+            this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
             // 
             // undoButton
             // 
@@ -196,7 +206,7 @@
             this.colorPickerButton.Name = "colorPickerButton";
             this.colorPickerButton.Size = new System.Drawing.Size(53, 23);
             this.colorPickerButton.TabIndex = 4;
-            this.colorPickerButton.Text = "Recolor";
+            this.colorPickerButton.Text = "Tint";
             this.colorPickerButton.UseVisualStyleBackColor = true;
             this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
             // 
@@ -217,6 +227,7 @@
             0,
             0});
             this.scaleUpDown.ValueChanged += new System.EventHandler(this.scaleUpDown_ValueChanged);
+            this.scaleUpDown.Click += new System.EventHandler(this.scaleUpDown_Click);
             // 
             // label1
             // 
@@ -245,6 +256,7 @@
             this.duplButton.TabIndex = 0;
             this.duplButton.Text = "Duplicate";
             this.duplButton.UseVisualStyleBackColor = true;
+            this.duplButton.Click += new System.EventHandler(this.duplButton_Click);
             // 
             // refreshTimer
             // 
@@ -269,17 +281,6 @@
             this.noPictureLabel.Text = "Please start a new drawing or open an existing one";
             this.noPictureLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // helpButton
-            // 
-            this.helpButton.Enabled = false;
-            this.helpButton.Location = new System.Drawing.Point(201, 20);
-            this.helpButton.Name = "helpButton";
-            this.helpButton.Size = new System.Drawing.Size(43, 23);
-            this.helpButton.TabIndex = 4;
-            this.helpButton.Text = "Help";
-            this.helpButton.UseVisualStyleBackColor = true;
-            this.helpButton.Click += new System.EventHandler(this.helpButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,6 +293,7 @@
             this.Name = "MainForm";
             this.Text = "MeowDraw";
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.shapesGrpBox.ResumeLayout(false);
             this.commandGrpBox.ResumeLayout(false);
             this.selectionGrpBox.ResumeLayout(false);
@@ -317,7 +319,6 @@
         private System.Windows.Forms.NumericUpDown scaleUpDown;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button colorPickerButton;
-        private System.Windows.Forms.ColorDialog colorPicker;
         private System.Windows.Forms.Timer refreshTimer;
         private System.Windows.Forms.Panel drawingPanel;
         private System.Windows.Forms.Label noPictureLabel;
