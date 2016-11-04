@@ -60,10 +60,9 @@ namespace Cs5700Hw3.View
             drawableListView.Select();
         }
 
-        private void ExecuteCommand(ICommand command, CommandArgs args = null)
+        private void ExecuteCommand(Type commandType, CommandArgs args = null)
         {
-            undoButton.Enabled = command.Undoable;
-            picture.ExecuteCommand(command,args);
+            undoButton.Enabled = picture.ExecuteCommand(commandType,args);
             isDirty = true;
         }
 
@@ -86,17 +85,13 @@ namespace Cs5700Hw3.View
 
         #region ClickListeners
 
-        private void colorPickerButton_Click(object sender, EventArgs e)
-        {
-            var cmd = CommandFactory.CreateCommand(typeof(TintCommand));
-            ExecuteCommand(cmd);
-        }
+        private void colorPickerButton_Click(object sender, EventArgs e) =>  ExecuteCommand(typeof(TintCommand));
+
         private void newButton_Click(object sender, EventArgs e)
         {
             refreshTimer.Stop();
-            var cmd = CommandFactory.CreateCommand(typeof(NewPicCommand));
-            ExecuteCommand(cmd);
-            picture = cmd.TargetPicture;
+            ExecuteCommand(typeof(NewPicCommand));
+            picture = picture.LatestCommand.TargetPicture;
             noPictureLabel.Text = string.Empty;
             refreshTimer.Start();
             TogglePictureControls(true);
@@ -105,19 +100,15 @@ namespace Cs5700Hw3.View
         private void openButton_Click(object sender, EventArgs e)
         {
             refreshTimer.Stop();
-            var command = CommandFactory.CreateCommand(typeof(OpenPicCommand));
-            ExecuteCommand(command);
-            picture = command.TargetPicture;
+            ExecuteCommand(typeof(OpenPicCommand));
+            picture = picture.LatestCommand.TargetPicture;
             noPictureLabel.Text = string.Empty;
             TogglePictureControls(true);
             refreshTimer.Start();
 
         }
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            var cmd = CommandFactory.CreateCommand(typeof(SavePicCommand));
-            ExecuteCommand(cmd);
-        }
+
+        private void saveButton_Click(object sender, EventArgs e) => ExecuteCommand(typeof(SavePicCommand));
 
 
         private void drawingPanel_Click(object sender, EventArgs e)
@@ -130,8 +121,7 @@ namespace Cs5700Hw3.View
                 {
                     TargetLocation = ((MouseEventArgs)e).Location
                 };
-                var cmd = CommandFactory.CreateCommand(typeof(SelectCommand));
-                ExecuteCommand(cmd, args);
+                ExecuteCommand(typeof(SelectCommand), args);
                 HandleSelectionChange();
             }
             else
@@ -141,8 +131,7 @@ namespace Cs5700Hw3.View
                     Drawable = DrawableFactory.GetDrawable((CatDrawable)selectedIndex - 1),
                     TargetLocation = ((MouseEventArgs)e).Location
                 };
-                var cmd = CommandFactory.CreateCommand(typeof(AddCommand));
-                ExecuteCommand(cmd, args);
+                ExecuteCommand(typeof(AddCommand), args);
                 selectionGrpBox.Enabled = false;
             }
         }
@@ -183,27 +172,21 @@ namespace Cs5700Hw3.View
                 isProgramaticScaleChange = false;
                 return;
             }
-
-            var cmd = CommandFactory.CreateCommand(typeof(ResizeCommand));
+            
             var args = new CommandArgs()
             {
                 Scale = Convert.ToSingle(((NumericUpDown)sender).Value / 100)
             };
-            ExecuteCommand(cmd, args);
+            ExecuteCommand(typeof(ResizeCommand), args);
         }
 
         private void removeButton_Click(object sender, EventArgs e)
         {
-            var cmd = CommandFactory.CreateCommand(typeof(RemoveCommand));
-            ExecuteCommand(cmd);
+            ExecuteCommand(typeof(RemoveCommand));
             selectionGrpBox.Enabled = false;
         }
 
-        private void duplButton_Click(object sender, EventArgs e)
-        {
-            var cmd = CommandFactory.CreateCommand(typeof(DuplicateCommand));
-            ExecuteCommand(cmd);
-        }
+        private void duplButton_Click(object sender, EventArgs e) => ExecuteCommand(typeof(DuplicateCommand));
 
         private void helpButton_Click(object sender, EventArgs e)
         {
@@ -262,12 +245,11 @@ delete - remove selected drawable");
         private void ProcessMoveCommand(MoveDirection direction)
         {
             if (picture?.SelectedDrawable == null) return;
-            var cmd = CommandFactory.CreateCommand(typeof(MoveCommand));
             var args = new CommandArgs()
             {
                 Direction = direction
             };
-            ExecuteCommand(cmd, args);
+            ExecuteCommand(typeof(MoveCommand), args);
         }
 
         #endregion

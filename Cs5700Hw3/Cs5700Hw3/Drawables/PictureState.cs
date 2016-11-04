@@ -29,6 +29,9 @@ namespace Cs5700Hw3.Drawables
         [JsonIgnore]
         public Stack<ICommand> CommandHistory { get; set; }
 
+        [JsonIgnore]
+        public ICommand LatestCommand { get; private set; }
+
         public PictureState()
         {
             Drawables = new List<DrawableWithState>();
@@ -58,22 +61,25 @@ namespace Cs5700Hw3.Drawables
             return CommandHistory.Any() && CommandHistory.Peek().Undoable;
         }
 
-        public void ExecuteCommand(ICommand command, CommandArgs args)
+        public bool ExecuteCommand(Type commandType, CommandArgs args = null)
         {
-            command.TargetPicture = this;
-            if (command.Undoable)
+            var cmd = CommandFactory.CreateCommand(commandType);
+            cmd.TargetPicture = this;
+            LatestCommand = cmd;
+            if (cmd.Undoable)
             {
-                CommandHistory.Push(command);
+                CommandHistory.Push(cmd);
             }
             else
             {
                 CommandHistory.Clear();
             }
-            command.Execute(args);
-            if (command is OpenPicCommand || command is NewPicCommand)
+            cmd.Execute(args);
+            if (cmd is OpenPicCommand || cmd is NewPicCommand)
             {
                 CommandHistory.Clear();
             }
+            return cmd.Undoable;
         }
 
         public override string ToString()
