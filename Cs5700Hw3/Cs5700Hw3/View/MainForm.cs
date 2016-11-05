@@ -139,7 +139,7 @@ namespace Cs5700Hw3.View
         private void undoButton_Click(object sender, EventArgs e)
         {
             undoButton.Enabled = picture.Undo();
-            
+            isDirty = true;
         }
 
         private void HandleSelectionChange()

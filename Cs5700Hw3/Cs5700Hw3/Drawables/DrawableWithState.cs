@@ -24,6 +24,7 @@ namespace Cs5700Hw3.Drawables
         public Bitmap Map { get; set; }
         [JsonIgnore] 
         public Image Image { get { return backingdrawable.Image; } set { backingdrawable.Image = value; } }
+        [JsonIgnore]
         public bool IsSelected { get; set; }
 
         public Point Location { get; set; }

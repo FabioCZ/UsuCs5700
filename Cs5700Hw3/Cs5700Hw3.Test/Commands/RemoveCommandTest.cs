@@ -14,14 +14,12 @@ namespace Cs5700Hw3.Test.Commands
         public void TestRemoveCommand()
         {
             var picture = new PictureState();
-            var addCmd = CommandFactory.CreateCommand(typeof(AddCommand));
-            picture.ExecuteCommand(addCmd, new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
+            picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
 
             picture.SelectedDrawable = picture.Drawables.First();
             picture.SelectedDrawable.IsSelected = true;
             Assert.AreEqual(1, picture.Drawables.Count);
-            var remCmd = CommandFactory.CreateCommand(typeof(RemoveCommand));
-            picture.ExecuteCommand(remCmd);
+            picture.ExecuteCommand(typeof(RemoveCommand));
             Assert.AreEqual(0, picture.Drawables.Count);
         }
 
@@ -29,14 +27,12 @@ namespace Cs5700Hw3.Test.Commands
         public void TestRemoveCommand_Undo()
         {
             var picture = new PictureState();
-            var addCmd = CommandFactory.CreateCommand(typeof(AddCommand));
-            picture.ExecuteCommand(addCmd, new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
+            picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
 
             picture.SelectedDrawable = picture.Drawables.First();
             picture.SelectedDrawable.IsSelected = true;
             Assert.AreEqual(1, picture.Drawables.Count);
-            var remCmd = CommandFactory.CreateCommand(typeof(RemoveCommand));
-            picture.ExecuteCommand(remCmd);
+            picture.ExecuteCommand(typeof(RemoveCommand));
             Assert.AreEqual(0, picture.Drawables.Count);
             picture.Undo();
             Assert.AreEqual(1, picture.Drawables.Count);

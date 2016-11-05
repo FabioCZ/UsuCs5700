@@ -12,8 +12,7 @@ namespace Cs5700Hw3.Drawables
     public static class BitmapHelpers
     {
         //from https://softwarebydefault.com/2013/04/12/bitmap-color-tint/
-        public static Bitmap ColorTint(this Bitmap sourceBitmap, float blueTint,
-                                float greenTint, float redTint)
+        public static Bitmap ColorTint(this Bitmap sourceBitmap, float redTint, float greenTint, float blueTint)
         {
             BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0,
                                     sourceBitmap.Width, sourceBitmap.Height),

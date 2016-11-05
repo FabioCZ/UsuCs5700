@@ -24,7 +24,7 @@ namespace Cs5700Hw3.Commands
                 if (res == DialogResult.OK)
                 {
                     oldMap = TargetPicture.SelectedDrawable.Map;
-                    TargetPicture.SelectedDrawable.Map = oldMap.ColorTint(form.Red, form.Green, form.Blue);
+                    TargetPicture.SelectedDrawable.Map = oldMap.ColorTint(form.Blue, form.Green, form.Red);
                 }
             }
         }

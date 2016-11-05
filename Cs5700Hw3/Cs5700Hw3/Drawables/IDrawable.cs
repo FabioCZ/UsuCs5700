@@ -13,7 +13,6 @@ namespace Cs5700Hw3.Drawables
         string ReadableName { get; }
 
         Image Image { get; set; }
-        bool IsSelected { get; set; }
 
         void Draw(Graphics graphics);
 

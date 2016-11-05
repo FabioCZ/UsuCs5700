@@ -8,34 +8,36 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Cs5700Hw3.Test.Commands
 {
     [TestClass]
-    public class DuplicateCommandTest
+    public class ResizeCommandTest
     {
         [TestMethod]
-        public void TestDuplicateCommand()
+        public void TestResizeCommand()
         {
             var picture = new PictureState();
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
             Assert.AreEqual(1, picture.Drawables.Count);
             picture.SelectedDrawable = picture.Drawables.First();
             picture.SelectedDrawable.IsSelected = true;
-            picture.ExecuteCommand(typeof(DuplicateCommand));
-            Assert.AreEqual(2, picture.Drawables.Count);
-
+            var oldSize = picture.SelectedDrawable.Size;
+            picture.ExecuteCommand(typeof(ResizeCommand), new CommandArgs() {Scale = 0.5f});
+            Assert.AreEqual(oldSize.Height * 0.5,picture.SelectedDrawable.Size.Height,1.0d);
+            Assert.AreEqual(oldSize.Width * 0.5, picture.SelectedDrawable.Size.Width, 1.0d);
         }
 
         [TestMethod]
-        public void TestDuplicateCommand_Undo()
+        public void TestResizeCommand_Undo()
         {
             var picture = new PictureState();
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
             Assert.AreEqual(1, picture.Drawables.Count);
             picture.SelectedDrawable = picture.Drawables.First();
             picture.SelectedDrawable.IsSelected = true;
-            picture.ExecuteCommand(typeof(DuplicateCommand));
-            Assert.AreEqual(2, picture.Drawables.Count);
+            var oldSize = picture.SelectedDrawable.Size;
+            picture.ExecuteCommand(typeof(ResizeCommand), new CommandArgs() { Scale = 0.5f });
+            Assert.AreEqual(oldSize.Height * 0.5, picture.SelectedDrawable.Size.Height, 1.0d);
+            Assert.AreEqual(oldSize.Width * 0.5, picture.SelectedDrawable.Size.Width, 1.0d);
             picture.Undo();
-            Assert.AreEqual(1,picture.Drawables.Count);
-
+            Assert.AreEqual(oldSize,picture.SelectedDrawable.Size);
         }
     }
 }

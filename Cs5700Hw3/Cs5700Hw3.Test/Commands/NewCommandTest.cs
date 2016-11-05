@@ -13,8 +13,17 @@ namespace Cs5700Hw3.Test.Commands
         {
             var picture = new PictureState();
             var cmd = CommandFactory.CreateCommand(typeof(NewPicCommand));
-            //picture.ExecuteCommand(cmd);
             Assert.IsNotNull(cmd);
+        }
+
+        [TestMethod]
+        public void TestNewCommand_Undo()
+        {
+            var picture = new PictureState();
+            var cmd = CommandFactory.CreateCommand(typeof(NewPicCommand));
+            Assert.IsNotNull(cmd);
+            picture.CommandHistory.Push(cmd);   //don't execute, but push it on the history stack
+            Assert.AreEqual(false,picture.Undo());
         }
     }
 }

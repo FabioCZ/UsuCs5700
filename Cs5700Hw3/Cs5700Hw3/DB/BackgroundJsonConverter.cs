@@ -27,7 +27,16 @@ namespace Cs5700Hw3.DB
             var jsonObject = JObject.Load(reader);
             if (jsonObject["Color"] != null)
             {
-                return new SolidBackground(Color.FromName(jsonObject["Color"].ToString()));
+                var color = jsonObject["Color"].ToString();
+                if (color.Contains(","))
+                {
+                    var s = color.Split(',');
+                    return new SolidBackground(Color.FromArgb(Convert.ToInt32(s[0]), Convert.ToInt32(s[1]), Convert.ToInt32(s[2])));
+                }
+                else
+                {
+                    return new SolidBackground(Color.FromName(color));
+                }
             }
             else if (jsonObject["ImageFileName"] != null)
             {
