@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cs5700Hw4.Runner", "Cs5700Hw4.Runner\Cs5700Hw4.Runner.csproj", "{15893DA9-2046-4B89-9ED4-1298B18B8801}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cs5700Hw4.Lib", "Cs5700Hw4.Lib\Cs5700Hw4.Lib.csproj", "{B810B052-C0AE-4644-B041-CFF500DFD44B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15893DA9-2046-4B89-9ED4-1298B18B8801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15893DA9-2046-4B89-9ED4-1298B18B8801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15893DA9-2046-4B89-9ED4-1298B18B8801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15893DA9-2046-4B89-9ED4-1298B18B8801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B810B052-C0AE-4644-B041-CFF500DFD44B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B810B052-C0AE-4644-B041-CFF500DFD44B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B810B052-C0AE-4644-B041-CFF500DFD44B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B810B052-C0AE-4644-B041-CFF500DFD44B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
