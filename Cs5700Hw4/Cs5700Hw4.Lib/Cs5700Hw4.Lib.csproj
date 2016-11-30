@@ -40,11 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="IO\IFileReader.cs" />
-    <Compile Include="IO\PlainTextFileReader.cs" />
+    <Compile Include="Debugging\DebugPrint.cs" />
+    <Compile Include="IO\IPuzzleConverter.cs" />
+    <Compile Include="IO\PlainTextPuzzleConverter.cs" />
+    <Compile Include="IO\PuzzleFileReaderWriter.cs" />
+    <Compile Include="Model\Cell.cs" />
     <Compile Include="Model\Puzzle.cs" />
+    <Compile Include="Model\PuzzleSolution.cs" />
+    <Compile Include="Model\PuzzleSolutionMerger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Solver\IPuzzleSolver.cs" />
+    <Compile Include="Solver\TemplatedPuzzleSolver.cs" />
+    <Compile Include="Solver\BackTrackingPuzzleSolver.cs" />
+    <Compile Include="Solver\BruteForcePuzzleSolver.cs" />
+    <Compile Include="Solver\MultipleSolverRunner.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
