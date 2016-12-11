@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Cs5700Hw3.Drawables;
+
+namespace Cs5700Hw3.Commands
+{
+    public class CommandArgs
+    {
+        public IDrawable Drawable { get; set; }
+        public Point TargetLocation { get; set; }
+        public Color TintColor { get; set; }
+        public float? Scale { get; set; }
+        public MoveDirection? Direction { get; set; }
+
+        public string BackgroundFileName { get; set; }
+
+        public Color? BackgroundColor { get; set; }
+
+        public PictureState PictureToOpen { get; set; }
+
+        public string SavePictureName { get; set; }
+    }
+}
