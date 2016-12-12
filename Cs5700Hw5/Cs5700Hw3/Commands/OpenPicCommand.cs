@@ -20,7 +20,7 @@ namespace Cs5700Hw3.Commands
         {
             if (commandArgs.PictureToOpen == null)
             {
-                throw new ArgumentNullException("Internal Error openning picture: no picture specified (null)");
+                throw new ArgumentNullException("Internal Error openning PictureState: no PictureState specified (null)");
             }
             TargetPicture = commandArgs.PictureToOpen;
         }

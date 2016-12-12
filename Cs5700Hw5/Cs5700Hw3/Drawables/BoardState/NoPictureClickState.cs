@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using Cs5700Hw3.View;
 
 namespace Cs5700Hw3.Drawables.BoardState
 {
-    class NoPictureClickState : IPictureClickState
+    class NoPictureClickState : PictureClickState
     {
-        //This will never get called since the drawables selection pane should be disabled with no picture selected
-        public IPictureClickState HandleDrawableListClick()
+        public NoPictureClickState(MainForm form) : base(form)
         {
-            return this;
         }
 
-        public IPictureClickState HandlePictureBoardClick()
+        public override void HandleDrawingPanelClick(MouseEventArgs e)
         {
-            return this;
+            //nothing here
         }
+
+
     }
 }

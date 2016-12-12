@@ -17,13 +17,28 @@ namespace Cs5700Hw3.View
 {
     public partial class MainForm : Form
     {
-        public readonly int SelectToolIndex = 0;
-        private PictureState picture;
-        private CommandDispatcher dispatcher;
+        private CommandInvoker commandInvoker;
         private Graphics graphics;
         private bool isDirty = true;
         private bool isProgramaticScaleChange = false;
-        private IPictureClickState pictureClickState;
+
+        private PictureClickState currentPictureClickState;
+        private PictureClickState noPictureClickState;
+        private PictureClickState selectPictureClickState;
+        private PictureClickState addPictureClickState;
+
+
+        public readonly int SelectToolIndex = 0;
+        public readonly int DrawavblesToolOffset = 1;
+        public PictureState PictureState { get; private set; }
+        public int SelectedDrawableIndex => drawableListView.SelectedIndices[0];
+
+        public bool SelectionButtonsEnabled
+        {
+            get { return selectionGrpBox.Enabled; }
+            set { selectionGrpBox.Enabled = value; }
+        }
+
 
         public MainForm()
         {
@@ -33,9 +48,13 @@ namespace Cs5700Hw3.View
             KeyPreview = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            picture = new PictureState(); //just a dummy picture until we open/new
-            dispatcher = new CommandDispatcher(picture);
-            pictureClickState = new NoPictureClickState();
+            PictureState = new PictureState(); //just a dummy PictureState until we open/new
+            commandInvoker = new CommandInvoker(PictureState);
+
+            noPictureClickState = new NoPictureClickState(this);
+            selectPictureClickState = new SelectPictureClickState(this);
+            addPictureClickState = new AddPictureClickState(this);
+            currentPictureClickState = noPictureClickState;
         }
 
         private void InitDrawableList()
@@ -68,12 +87,16 @@ namespace Cs5700Hw3.View
 
         private void SelectedDrawableChanged(object sender, EventArgs e)
         {
-            
+            if (drawableListView.SelectedIndices.Count != 1) return; //no tool selected or error state
+            if (drawableListView.SelectedIndices[0] == SelectToolIndex)
+            {
+                
+            }
         }
 
-        private void ExecuteCommand(Type commandType, CommandArgs args = null)
+        public void ExecuteCommand(Type commandType, CommandArgs args = null)
         {
-            undoButton.Enabled = dispatcher.ExecuteCommand(commandType, args);
+            undoButton.Enabled = commandInvoker.ExecuteCommand(commandType, args);
             isDirty = true;
         }
 
@@ -85,12 +108,12 @@ namespace Cs5700Hw3.View
 
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
-            if (picture == null || !isDirty) return;
+            if (PictureState == null || !isDirty) return;
             if (graphics == null)
             {
                 graphics = drawingPanel.CreateGraphics();
             }
-            picture.Draw(graphics);
+            PictureState.Draw(graphics);
             isDirty = false;
         }
 
@@ -116,10 +139,10 @@ namespace Cs5700Hw3.View
                 }
                 catch (ArgumentNullException ex)
                 {
-                    MessageBox.Show($"Error creating a new picture: {Environment.NewLine}{ex.Message}");
+                    MessageBox.Show($"Error creating a new PictureState: {Environment.NewLine}{ex.Message}");
 
                 }
-                picture = dispatcher.LatestCommand.TargetPicture;
+                PictureState = commandInvoker.LatestCommand.TargetPicture;
                 noPictureLabel.Text = string.Empty;
                 refreshTimer.Start();
                 TogglePictureControls(true);
@@ -143,9 +166,9 @@ namespace Cs5700Hw3.View
                 }
                 catch (ArgumentNullException ex)
                 {
-                    MessageBox.Show($"Error opening picture: {Environment.NewLine}{ex.Message}");
+                    MessageBox.Show($"Error opening PictureState: {Environment.NewLine}{ex.Message}");
                 }
-                picture = dispatcher.LatestCommand.TargetPicture;
+                PictureState = commandInvoker.LatestCommand.TargetPicture;
                 noPictureLabel.Text = string.Empty;
                 TogglePictureControls(true);
                 refreshTimer.Start();
@@ -167,7 +190,7 @@ namespace Cs5700Hw3.View
             }
             catch (ArgumentNullException ex)
             {
-                MessageBox.Show($"Error saving picture: {Environment.NewLine}{ex.Message}");
+                MessageBox.Show($"Error saving PictureState: {Environment.NewLine}{ex.Message}");
             }
         }
 
@@ -179,42 +202,22 @@ namespace Cs5700Hw3.View
 
         private void drawingPanel_Click(object sender, EventArgs e)
         {
-            if (drawableListView.SelectedIndices.Count != 1 || picture == null) return;
-            var selectedIndex = drawableListView.SelectedIndices[0];
-            if (selectedIndex == SelectToolIndex)
-            {
-                var args = new CommandArgs()
-                {
-                    TargetLocation = ((MouseEventArgs)e).Location
-                };
-                ExecuteCommand(typeof(SelectCommand), args);
-                HandleSelectionChange();
-            }
-            else
-            {
-                var args = new CommandArgs()
-                {
-                    Drawable = DrawableFactory.GetDrawable((CatDrawable)selectedIndex - 1),
-                    TargetLocation = ((MouseEventArgs)e).Location
-                };
-                ExecuteCommand(typeof(AddCommand), args);
-                selectionGrpBox.Enabled = false;
-            }
+            currentPictureClickState?.HandleDrawingPanelClick((MouseEventArgs)e);
         }
 
         private void undoButton_Click(object sender, EventArgs e)
         {
-            undoButton.Enabled = dispatcher.Undo();
+            undoButton.Enabled = commandInvoker.Undo();
             isDirty = true;
         }
 
-        private void HandleSelectionChange()
+        public void HandleSelectionChange()
         {
-            selectionGrpBox.Enabled = picture.SelectedDrawable != null;
+            selectionGrpBox.Enabled = PictureState.SelectedDrawable != null;
             if (selectionGrpBox.Enabled)
             {
                 isProgramaticScaleChange = true;
-                scaleUpDown.Value = Convert.ToDecimal(picture.SelectedDrawable.Scale * 100);
+                scaleUpDown.Value = Convert.ToDecimal(PictureState.SelectedDrawable.Scale * 100);
             }
         }
 
@@ -278,7 +281,7 @@ delete - remove selected drawable");
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
             drawingPanel.Focus();
-            if (picture?.SelectedDrawable == null) return;
+            if (PictureState?.SelectedDrawable == null) return;
             switch (e.KeyCode)
             {
                 case Keys.Up:
@@ -310,7 +313,7 @@ delete - remove selected drawable");
 
         private void ProcessMoveCommand(MoveDirection direction)
         {
-            if (picture?.SelectedDrawable == null) return;
+            if (PictureState?.SelectedDrawable == null) return;
             var args = new CommandArgs()
             {
                 Direction = direction

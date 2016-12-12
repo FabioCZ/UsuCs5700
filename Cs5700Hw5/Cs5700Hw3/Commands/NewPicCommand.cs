@@ -29,7 +29,7 @@ namespace Cs5700Hw3.Commands
                 }
                 else
                 {
-                    throw new ArgumentNullException("Either color or background filename must be specified when creating a new picture");
+                    throw new ArgumentNullException("Either color or background filename must be specified when creating a new PictureState");
                 }
         }
 

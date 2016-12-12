@@ -46,3 +46,6 @@ Bugfixes
 -------------------------------------
 New Features
 -------------------------------------
+- State pattern now used to handle clicks on the drawing panel
+- Command pattern improved - the Invoker and Receiver are not separated
+- The UI layer for New/Save/Open commands is now separated from the Command

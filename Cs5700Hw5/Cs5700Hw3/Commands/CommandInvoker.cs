@@ -8,16 +8,14 @@ using Newtonsoft.Json;
 
 namespace Cs5700Hw3.Commands
 {
-    public class CommandDispatcher
+    public class CommandInvoker
     {
         private PictureState pictureState;
-        [JsonIgnore]
         public Stack<ICommand> CommandHistory { get; set; }
 
-        [JsonIgnore]
         public ICommand LatestCommand { get; private set; }
 
-        public CommandDispatcher(PictureState pictureState)
+        public CommandInvoker(PictureState pictureState)
         {
             CommandHistory = new Stack<ICommand>();
             this.pictureState = pictureState;

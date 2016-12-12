@@ -23,7 +23,7 @@ namespace Cs5700Hw3.Test.Commands
             picture.SelectedDrawable.IsSelected = true;
             var size = picture.SelectedDrawable.Size;
             var pixelBefore = picture.SelectedDrawable.Map.GetPixel(size.Width/2, size.Height/2);
-            //picture.ExecuteCommand(typeof(TintCommand), new CommandArgs() {TintColor = Color.Red});
+            //PictureState.ExecuteCommand(typeof(TintCommand), new CommandArgs() {TintColor = Color.Red});
             picture.SelectedDrawable.Map = picture.SelectedDrawable.Map.ColorTint(0.5f, 0.5f, 0.5f);
             var pixelAfter = picture.SelectedDrawable.Map.GetPixel(size.Width / 2, size.Height / 2);
             Assert.AreNotEqual(pixelBefore,pixelAfter);

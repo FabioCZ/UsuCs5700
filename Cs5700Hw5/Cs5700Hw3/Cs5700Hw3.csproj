@@ -79,7 +79,7 @@
   <ItemGroup>
     <Compile Include="Commands\AddCommand.cs" />
     <Compile Include="Commands\CommandArgs.cs" />
-    <Compile Include="Commands\CommandDispatcher.cs" />
+    <Compile Include="Commands\CommandInvoker.cs" />
     <Compile Include="Commands\CommandFactory.cs" />
     <Compile Include="Commands\DuplicateCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
@@ -95,8 +95,9 @@
     <Compile Include="DB\DrawableJsonConverter.cs" />
     <Compile Include="DB\FireBaseDbo.cs" />
     <Compile Include="Drawables\BitmapHelpers.cs" />
+    <Compile Include="Drawables\BoardState\AddPictureClickState.cs" />
     <Compile Include="Drawables\BoardState\NoPictureClickState.cs" />
-    <Compile Include="Drawables\BoardState\IPictureClickState.cs" />
+    <Compile Include="Drawables\BoardState\PictureClickState.cs" />
     <Compile Include="Drawables\BoardState\SelectPictureClickState.cs" />
     <Compile Include="Drawables\DrawableWithState.cs" />
     <Compile Include="Drawables\PictureState.cs" />
