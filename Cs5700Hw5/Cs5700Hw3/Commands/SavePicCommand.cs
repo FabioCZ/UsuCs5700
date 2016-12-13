@@ -10,7 +10,7 @@ namespace Cs5700Hw3.Commands
 {
     public class SavePicCommand : ICommand
     {
-        public PictureState TargetPicture { get; set; }
+        public PictureInfo TargetPicture { get; set; }
 
         public bool Undoable => false;
 

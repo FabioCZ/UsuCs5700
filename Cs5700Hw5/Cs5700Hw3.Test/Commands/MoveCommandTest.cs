@@ -13,7 +13,7 @@ namespace Cs5700Hw3.Test.Commands
         [TestMethod]
         public void TestMoveCommand()
         {
-            var picture = new PictureState();
+            var picture = new PictureInfo();
             var initPoint = new Point(1, 1);
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = initPoint });
             picture.SelectedDrawable = picture.Drawables.Last();
@@ -27,7 +27,7 @@ namespace Cs5700Hw3.Test.Commands
         [TestMethod]
         public void TestMoveCommand_Undo()
         {
-            var picture = new PictureState();
+            var picture = new PictureInfo();
             var initPoint = new Point(1, 1);
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = initPoint });
             picture.SelectedDrawable = picture.Drawables.Last();

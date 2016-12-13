@@ -32,6 +32,7 @@
             this.shapesGrpBox = new System.Windows.Forms.GroupBox();
             this.drawableListView = new System.Windows.Forms.ListView();
             this.commandGrpBox = new System.Windows.Forms.GroupBox();
+            this.closeButton = new System.Windows.Forms.Button();
             this.helpButton = new System.Windows.Forms.Button();
             this.undoButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
@@ -50,7 +51,6 @@
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.drawingPanel = new System.Windows.Forms.Panel();
             this.noPictureLabel = new System.Windows.Forms.Label();
-            this.closeButton = new System.Windows.Forms.Button();
             this.shapesGrpBox.SuspendLayout();
             this.commandGrpBox.SuspendLayout();
             this.selectionGrpBox.SuspendLayout();
@@ -66,7 +66,7 @@
             this.shapesGrpBox.Size = new System.Drawing.Size(137, 537);
             this.shapesGrpBox.TabIndex = 0;
             this.shapesGrpBox.TabStop = false;
-            this.shapesGrpBox.Text = "Drawables";
+            this.shapesGrpBox.Text = "Drawing Tools";
             // 
             // drawableListView
             // 
@@ -90,6 +90,16 @@
             this.commandGrpBox.TabIndex = 1;
             this.commandGrpBox.TabStop = false;
             this.commandGrpBox.Text = "Commands";
+            // 
+            // closeButton
+            // 
+            this.closeButton.Location = new System.Drawing.Point(154, 20);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(43, 23);
+            this.closeButton.TabIndex = 5;
+            this.closeButton.Text = "Close";
+            this.closeButton.UseVisualStyleBackColor = true;
+            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
             // helpButton
             // 
@@ -282,16 +292,6 @@
             this.noPictureLabel.TabIndex = 0;
             this.noPictureLabel.Text = "Please start a new drawing or open an existing one";
             this.noPictureLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // closeButton
-            // 
-            this.closeButton.Location = new System.Drawing.Point(154, 20);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(43, 23);
-            this.closeButton.TabIndex = 5;
-            this.closeButton.Text = "Close";
-            this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
             // MainForm
             // 

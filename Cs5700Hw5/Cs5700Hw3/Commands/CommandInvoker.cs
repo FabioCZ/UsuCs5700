@@ -10,15 +10,15 @@ namespace Cs5700Hw3.Commands
 {
     public class CommandInvoker
     {
-        private PictureState pictureState;
+        private PictureInfo pictureInfo;
         public Stack<ICommand> CommandHistory { get; set; }
 
         public ICommand LatestCommand { get; private set; }
 
-        public CommandInvoker(PictureState pictureState)
+        public CommandInvoker(PictureInfo pictureInfo)
         {
             CommandHistory = new Stack<ICommand>();
-            this.pictureState = pictureState;
+            this.pictureInfo = pictureInfo;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Cs5700Hw3.Commands
         public bool ExecuteCommand(Type commandType, CommandArgs args = null)
         {
             var cmd = CommandFactory.CreateCommand(commandType);
-            cmd.TargetPicture = pictureState;
+            cmd.TargetPicture = pictureInfo;
             LatestCommand = cmd;
             if (cmd.Undoable)
             {
@@ -52,7 +52,7 @@ namespace Cs5700Hw3.Commands
             if (cmd is OpenPicCommand || cmd is NewPicCommand)
             {
                 CommandHistory.Clear();
-                pictureState = cmd.TargetPicture;
+                pictureInfo = cmd.TargetPicture;
             }
             return cmd.Undoable;
         }

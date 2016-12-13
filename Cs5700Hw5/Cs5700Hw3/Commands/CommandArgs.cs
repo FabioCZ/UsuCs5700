@@ -20,7 +20,7 @@ namespace Cs5700Hw3.Commands
 
         public Color? BackgroundColor { get; set; }
 
-        public PictureState PictureToOpen { get; set; }
+        public PictureInfo PictureToOpen { get; set; }
 
         public string SavePictureName { get; set; }
     }

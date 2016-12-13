@@ -11,7 +11,7 @@ namespace Cs5700Hw3.Test.Commands
         [TestMethod]
         public void TestNewCommand()
         {
-            var picture = new PictureState();
+            var picture = new PictureInfo();
             var cmd = CommandFactory.CreateCommand(typeof(NewPicCommand));
             Assert.IsNotNull(cmd);
         }
@@ -19,7 +19,7 @@ namespace Cs5700Hw3.Test.Commands
         [TestMethod]
         public void TestNewCommand_Undo()
         {
-            var picture = new PictureState();
+            var picture = new PictureInfo();
             var cmd = CommandFactory.CreateCommand(typeof(NewPicCommand));
             Assert.IsNotNull(cmd);
             picture.CommandHistory.Push(cmd);   //don't execute, but push it on the history stack

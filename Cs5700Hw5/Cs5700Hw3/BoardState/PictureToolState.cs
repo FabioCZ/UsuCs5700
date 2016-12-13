@@ -7,12 +7,12 @@ using System.Windows.Forms;
 using Cs5700Hw3.Commands;
 using Cs5700Hw3.View;
 
-namespace Cs5700Hw3.Drawables.BoardState
+namespace Cs5700Hw3.BoardState
 {
-    public abstract class PictureClickState
+    public abstract class PictureToolState
     {
         protected MainForm form;
-        public PictureClickState(MainForm form)
+        protected PictureToolState(MainForm form)
         {
             this.form = form;
         }

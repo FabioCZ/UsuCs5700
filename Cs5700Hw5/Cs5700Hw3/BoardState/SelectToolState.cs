@@ -7,11 +7,11 @@ using System.Windows.Forms;
 using Cs5700Hw3.Commands;
 using Cs5700Hw3.View;
 
-namespace Cs5700Hw3.Drawables.BoardState
+namespace Cs5700Hw3.BoardState
 {
-    public class SelectPictureClickState : PictureClickState
+    public class SelectToolState : PictureToolState
     {
-        public SelectPictureClickState(MainForm form) : base(form)
+        public SelectToolState(MainForm form) : base(form)
         {
         }
 

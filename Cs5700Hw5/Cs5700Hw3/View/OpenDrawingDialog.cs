@@ -15,7 +15,7 @@ namespace Cs5700Hw3.View
 {
     public partial class OpenDrawingDialog : Form
     {
-        public  PictureState SelectedPicture { get; private set; }
+        public  PictureInfo SelectedPicture { get; private set; }
         public OpenDrawingDialog()
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace Cs5700Hw3.View
 
         private void openButton_Click(object sender, EventArgs e)
         {
-            SelectedPicture = (PictureState)listBox1?.SelectedItems[0];
+            SelectedPicture = (PictureInfo)listBox1?.SelectedItems[0];
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -45,7 +45,7 @@ namespace Cs5700Hw3.View
 
     public class PictureCollection : CollectionBase
     {
-        public void AddPicture(PictureState pi)
+        public void AddPicture(PictureInfo pi)
         {
             this.List.Add(pi);
         }

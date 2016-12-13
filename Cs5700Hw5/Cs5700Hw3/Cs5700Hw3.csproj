@@ -77,12 +77,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoardState\LineToolState.cs" />
     <Compile Include="Commands\AddCommand.cs" />
     <Compile Include="Commands\CommandArgs.cs" />
     <Compile Include="Commands\CommandInvoker.cs" />
     <Compile Include="Commands\CommandFactory.cs" />
     <Compile Include="Commands\DuplicateCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\LineBeginCommand.cs" />
+    <Compile Include="Commands\LineEndCommand.cs" />
     <Compile Include="Commands\MoveCommand.cs" />
     <Compile Include="Commands\MoveDirection.cs" />
     <Compile Include="Commands\NewPicCommand.cs" />
@@ -95,12 +98,13 @@
     <Compile Include="DB\DrawableJsonConverter.cs" />
     <Compile Include="DB\FireBaseDbo.cs" />
     <Compile Include="Drawables\BitmapHelpers.cs" />
-    <Compile Include="Drawables\BoardState\AddPictureClickState.cs" />
-    <Compile Include="Drawables\BoardState\NoPictureClickState.cs" />
-    <Compile Include="Drawables\BoardState\PictureClickState.cs" />
-    <Compile Include="Drawables\BoardState\SelectPictureClickState.cs" />
+    <Compile Include="BoardState\AddDrawableToolState.cs" />
+    <Compile Include="BoardState\NoToolState.cs" />
+    <Compile Include="BoardState\PictureToolState.cs" />
+    <Compile Include="BoardState\SelectToolState.cs" />
     <Compile Include="Drawables\DrawableWithState.cs" />
-    <Compile Include="Drawables\PictureState.cs" />
+    <Compile Include="Drawables\Line.cs" />
+    <Compile Include="Drawables\PictureInfo.cs" />
     <Compile Include="DB\BackgroundJsonConverter.cs" />
     <Compile Include="Drawables\IBackground.cs" />
     <Compile Include="Drawables\ImageBackground.cs" />
@@ -187,6 +191,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\catYarn.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\line.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\pointer.png">

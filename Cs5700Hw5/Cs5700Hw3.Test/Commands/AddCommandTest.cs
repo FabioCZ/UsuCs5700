@@ -13,7 +13,7 @@ namespace Cs5700Hw3.Test.Commands
         [TestMethod]
         public void TestAddCommand()
         {
-            var picture = new PictureState();
+            var picture = new PictureInfo();
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() {Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1,1)});
             Assert.AreEqual(1,picture.Drawables.Count);
             Assert.AreEqual(DrawableFactory.GetDrawable(CatDrawable.Cat1).ReadableName,picture.Drawables.Last().ReadableName);
@@ -26,7 +26,7 @@ namespace Cs5700Hw3.Test.Commands
         [TestMethod]
         public void TestAddCommand_Undo()
         {
-            var picture = new PictureState();
+            var picture = new PictureInfo();
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
             Assert.AreEqual(1, picture.Drawables.Count);
             picture.Undo();

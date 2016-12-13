@@ -12,7 +12,7 @@ namespace Cs5700Hw3.Test.Commands
         [TestMethod]
         public void TestSelectCommand_Valid()
         {
-            var picture = new PictureState();
+            var picture = new PictureInfo();
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
             picture.ExecuteCommand(typeof(SelectCommand), new CommandArgs() {TargetLocation = new Point(2, 2)});
             Assert.IsNotNull(picture.SelectedDrawable);
@@ -23,7 +23,7 @@ namespace Cs5700Hw3.Test.Commands
         [TestMethod]
         public void TestSelectCommand_NoSelection()
         {
-            var picture = new PictureState();
+            var picture = new PictureInfo();
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(10, 10) });
             picture.ExecuteCommand(typeof(SelectCommand), new CommandArgs() { TargetLocation = new Point(2, 2) });
             Assert.IsNull(picture.SelectedDrawable);
@@ -32,7 +32,7 @@ namespace Cs5700Hw3.Test.Commands
         [TestMethod]
         public void TestSelectCommand_Undo()
         {
-            var picture = new PictureState();
+            var picture = new PictureInfo();
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
             picture.ExecuteCommand(typeof(SelectCommand), new CommandArgs() { TargetLocation = new Point(2, 2) });
             Assert.IsNotNull(picture.SelectedDrawable);
@@ -45,7 +45,7 @@ namespace Cs5700Hw3.Test.Commands
         [TestMethod]
         public void TestSelectCommand_TwoSelectionUndo()
         {
-            var picture = new PictureState();
+            var picture = new PictureInfo();
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat2), TargetLocation = new Point(400,400) });
 

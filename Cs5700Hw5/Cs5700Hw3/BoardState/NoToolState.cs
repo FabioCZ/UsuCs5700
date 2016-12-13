@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Cs5700Hw3.View;
 
-namespace Cs5700Hw3.Drawables.BoardState
+namespace Cs5700Hw3.BoardState
 {
-    class NoPictureClickState : PictureClickState
+    class NoToolState : PictureToolState
     {
-        public NoPictureClickState(MainForm form) : base(form)
+        public NoToolState(MainForm form) : base(form)
         {
         }
 

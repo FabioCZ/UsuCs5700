@@ -16,14 +16,14 @@ namespace Cs5700Hw3.Test.Commands
         [TestMethod]
         public void TestTintCommand()
         {
-            var picture = new PictureState();
+            var picture = new PictureInfo();
             picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
             Assert.AreEqual(1, picture.Drawables.Count);
             picture.SelectedDrawable = picture.Drawables.First();
             picture.SelectedDrawable.IsSelected = true;
             var size = picture.SelectedDrawable.Size;
             var pixelBefore = picture.SelectedDrawable.Map.GetPixel(size.Width/2, size.Height/2);
-            //PictureState.ExecuteCommand(typeof(TintCommand), new CommandArgs() {TintColor = Color.Red});
+            //PictureInfo.ExecuteCommand(typeof(TintCommand), new CommandArgs() {TintColor = Color.Red});
             picture.SelectedDrawable.Map = picture.SelectedDrawable.Map.ColorTint(0.5f, 0.5f, 0.5f);
             var pixelAfter = picture.SelectedDrawable.Map.GetPixel(size.Width / 2, size.Height / 2);
             Assert.AreNotEqual(pixelBefore,pixelAfter);

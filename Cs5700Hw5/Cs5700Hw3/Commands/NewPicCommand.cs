@@ -13,7 +13,7 @@ namespace Cs5700Hw3.Commands
 {
     public class NewPicCommand : ICommand 
     {
-        public PictureState TargetPicture { get; set; }
+        public PictureInfo TargetPicture { get; set; }
         public bool Undoable => false;
             
         public void Execute(CommandArgs commandArgs = null)
@@ -21,15 +21,15 @@ namespace Cs5700Hw3.Commands
             
                 if (commandArgs.BackgroundColor != null)
                 {
-                    TargetPicture = new PictureState { Background = new SolidBackground(commandArgs.BackgroundColor.Value) };
+                    TargetPicture = new PictureInfo { Background = new SolidBackground(commandArgs.BackgroundColor.Value) };
                 }
                 else if (string.IsNullOrEmpty(commandArgs.BackgroundFileName))
                 {
-                    TargetPicture = new PictureState { Background = new ImageBackground(commandArgs.BackgroundFileName) };
+                    TargetPicture = new PictureInfo { Background = new ImageBackground(commandArgs.BackgroundFileName) };
                 }
                 else
                 {
-                    throw new ArgumentNullException("Either color or background filename must be specified when creating a new PictureState");
+                    throw new ArgumentNullException("Either color or background filename must be specified when creating a new PictureInfo");
                 }
         }
 

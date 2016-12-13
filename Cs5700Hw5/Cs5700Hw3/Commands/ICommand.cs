@@ -11,7 +11,7 @@ namespace Cs5700Hw3.Commands
 {
     public interface ICommand
     {
-        PictureState TargetPicture { get; set; }
+        PictureInfo TargetPicture { get; set; }
 
         bool Undoable { get; }
 

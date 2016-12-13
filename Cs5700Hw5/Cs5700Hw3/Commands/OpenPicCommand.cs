@@ -13,14 +13,14 @@ namespace Cs5700Hw3.Commands
 {
     public class OpenPicCommand : ICommand
     {
-        public PictureState TargetPicture { get; set; }
+        public PictureInfo TargetPicture { get; set; }
         public bool Undoable => false;
 
         public void Execute(CommandArgs commandArgs = null)
         {
             if (commandArgs.PictureToOpen == null)
             {
-                throw new ArgumentNullException("Internal Error openning PictureState: no PictureState specified (null)");
+                throw new ArgumentNullException("Internal Error openning PictureInfo: no PictureInfo specified (null)");
             }
             TargetPicture = commandArgs.PictureToOpen;
         }

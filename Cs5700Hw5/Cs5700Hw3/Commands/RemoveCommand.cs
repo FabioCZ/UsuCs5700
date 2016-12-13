@@ -12,7 +12,7 @@ namespace Cs5700Hw3.Commands
     public class RemoveCommand : ICommand
     {
         private DrawableWithState deleted;
-        public PictureState TargetPicture { get; set; }
+        public PictureInfo TargetPicture { get; set; }
         public bool Undoable => true;
 
         public void Execute(CommandArgs commandArgs = null)

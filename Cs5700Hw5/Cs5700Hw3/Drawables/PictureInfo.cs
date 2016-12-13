@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Cs5700Hw3.Drawables
 {
-    public class PictureState
+    public class PictureInfo
     {
         public string PictureName { get; set; }
 
@@ -23,12 +23,21 @@ namespace Cs5700Hw3.Drawables
         [JsonConverter(typeof(DrawableJsonConverter))]
         public List<DrawableWithState> Drawables { get; set; }
 
+        public List<Line> Lines { get; set; }
+
         [JsonIgnore]
         public DrawableWithState SelectedDrawable { get; set; }
 
-        public PictureState()
+        [JsonIgnore]
+        public bool IsDrawingLine => !Lines.LastOrDefault()?.IsFinished ?? false;
+
+
+
+
+        public PictureInfo()
         {
             Drawables = new List<DrawableWithState>();
+            Lines = new List<Line>();
         }
 
         public void Draw(Graphics graphics)
@@ -37,6 +46,11 @@ namespace Cs5700Hw3.Drawables
             foreach (var drawable in Drawables)
             {
                 drawable.Draw(graphics);
+            }
+            //draw lines
+            foreach (var line in Lines)
+            {
+                line.Draw(graphics);
             }
         }
 
