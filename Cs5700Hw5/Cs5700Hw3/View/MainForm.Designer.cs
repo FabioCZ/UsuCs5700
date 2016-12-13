@@ -286,7 +286,7 @@
             // noPictureLabel
             // 
             this.noPictureLabel.AutoSize = true;
-            this.noPictureLabel.Location = new System.Drawing.Point(4, 4);
+            this.noPictureLabel.Location = new System.Drawing.Point(0, 0);
             this.noPictureLabel.Name = "noPictureLabel";
             this.noPictureLabel.Size = new System.Drawing.Size(247, 13);
             this.noPictureLabel.TabIndex = 0;
@@ -333,7 +333,6 @@
         private System.Windows.Forms.Button colorPickerButton;
         private System.Windows.Forms.Timer refreshTimer;
         private System.Windows.Forms.Panel drawingPanel;
-        private System.Windows.Forms.Label noPictureLabel;
         private System.Windows.Forms.ListView drawableListView;
         private System.Windows.Forms.Button downButton;
         private System.Windows.Forms.Button upButton;
@@ -341,6 +340,7 @@
         private System.Windows.Forms.Button leftButton;
         private System.Windows.Forms.Button helpButton;
         private System.Windows.Forms.Button closeButton;
+        public System.Windows.Forms.Label noPictureLabel;
     }
 }
 

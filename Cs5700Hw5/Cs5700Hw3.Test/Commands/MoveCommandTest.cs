@@ -15,11 +15,12 @@ namespace Cs5700Hw3.Test.Commands
         {
             var picture = new PictureInfo();
             var initPoint = new Point(1, 1);
-            picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = initPoint });
+            var invoker = new CommandInvoker(picture);
+            invoker.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = initPoint });
             picture.SelectedDrawable = picture.Drawables.Last();
             picture.SelectedDrawable.IsSelected = true;
             Assert.AreEqual(initPoint, picture.Drawables.Last().Location);
-            picture.ExecuteCommand(typeof(MoveCommand), new CommandArgs() {Direction = MoveDirection.Down});
+            invoker.ExecuteCommand(typeof(MoveCommand), new CommandArgs() {Direction = MoveDirection.Down});
             initPoint.Offset(0, 5);
             Assert.AreEqual(initPoint,picture.Drawables.Last().Location);
         }
@@ -29,14 +30,15 @@ namespace Cs5700Hw3.Test.Commands
         {
             var picture = new PictureInfo();
             var initPoint = new Point(1, 1);
-            picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = initPoint });
+            var invoker = new CommandInvoker(picture);
+            invoker.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = initPoint });
             picture.SelectedDrawable = picture.Drawables.Last();
             picture.SelectedDrawable.IsSelected = true;
             Assert.AreEqual(initPoint, picture.Drawables.Last().Location);
-            picture.ExecuteCommand(typeof(MoveCommand), new CommandArgs() { Direction = MoveDirection.Down });
+            invoker.ExecuteCommand(typeof(MoveCommand), new CommandArgs() { Direction = MoveDirection.Down });
             initPoint.Offset(0, 5);
             Assert.AreEqual(initPoint, picture.Drawables.Last().Location);
-            picture.Undo();
+            invoker.Undo();
             initPoint.Offset(0, -5);
             Assert.AreEqual(initPoint,picture.Drawables.Last().Location);
         }

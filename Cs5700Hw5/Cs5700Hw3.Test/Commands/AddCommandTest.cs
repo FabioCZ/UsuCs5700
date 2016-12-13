@@ -14,10 +14,11 @@ namespace Cs5700Hw3.Test.Commands
         public void TestAddCommand()
         {
             var picture = new PictureInfo();
-            picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() {Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1,1)});
+            var invoker = new CommandInvoker(picture);
+            invoker.ExecuteCommand(typeof(AddCommand), new CommandArgs() {Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1,1)});
             Assert.AreEqual(1,picture.Drawables.Count);
             Assert.AreEqual(DrawableFactory.GetDrawable(CatDrawable.Cat1).ReadableName,picture.Drawables.Last().ReadableName);
-            picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat2), TargetLocation = new Point(2, 2) });
+            invoker.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat2), TargetLocation = new Point(2, 2) });
             Assert.AreEqual(2,picture.Drawables.Count);
             Assert.AreEqual(DrawableFactory.GetDrawable(CatDrawable.Cat2).ReadableName,picture.Drawables.Last().ReadableName);
 
@@ -27,9 +28,10 @@ namespace Cs5700Hw3.Test.Commands
         public void TestAddCommand_Undo()
         {
             var picture = new PictureInfo();
-            picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
+            var invoker = new CommandInvoker(picture);
+            invoker.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
             Assert.AreEqual(1, picture.Drawables.Count);
-            picture.Undo();
+            invoker.Undo();
             Assert.AreEqual(0, picture.Drawables.Count);
 
 

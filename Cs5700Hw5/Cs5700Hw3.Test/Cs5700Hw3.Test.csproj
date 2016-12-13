@@ -85,17 +85,21 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Commands\AddCommandTest.cs" />
+    <Compile Include="Commands\CommandInvokerTest.cs" />
     <Compile Include="Commands\DuplicateCommandTest.cs" />
+    <Compile Include="Commands\LineBeginCommandTest.cs" />
+    <Compile Include="Commands\LineEndCommandTest.cs" />
     <Compile Include="Commands\MoveCommandTest.cs" />
-    <Compile Include="Commands\NewCommandTest.cs" />
+    <Compile Include="Commands\NewPicCommandTest.cs" />
     <Compile Include="Commands\RemoveCommandTest.cs" />
-    <Compile Include="Commands\ResizeCommandtest.cs" />
+    <Compile Include="Commands\ResizeCommandTest.cs" />
     <Compile Include="Commands\SelectCommandTest.cs" />
     <Compile Include="Commands\TintCommandTest.cs" />
     <Compile Include="DB\BackgroundJsonConverterTest.cs" />
     <Compile Include="DB\DrawableJsonConverterTest.cs" />
     <Compile Include="Drawables\DrawableFactoryTest.cs" />
     <Compile Include="Drawables\DrawableWithStateTest.cs" />
+    <Compile Include="Drawables\PictureInfoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

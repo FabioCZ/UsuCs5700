@@ -16,7 +16,10 @@ namespace Cs5700Hw3.BoardState
 
         public override void HandleDrawingPanelClick(MouseEventArgs e)
         {
-            //nothing here
+            if (form.PictureInfo.Background == null)
+            {
+                form.noPictureLabel.Text += " click click click ";
+            }
         }
 
 

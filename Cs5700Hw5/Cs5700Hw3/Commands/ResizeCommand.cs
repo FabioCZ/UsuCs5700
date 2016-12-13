@@ -19,6 +19,7 @@ namespace Cs5700Hw3.Commands
         {
             if (commandArgs?.Scale != null && TargetPicture.SelectedDrawable != null)
             {
+                if (commandArgs.Scale < 0) return;
                 oldScale = TargetPicture.SelectedDrawable.Scale;
                 TargetPicture.SelectedDrawable.Scale = commandArgs.Scale.Value;
             }

@@ -14,11 +14,12 @@ namespace Cs5700Hw3.Test.Commands
         public void TestDuplicateCommand()
         {
             var picture = new PictureInfo();
-            picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
+            var invoker = new CommandInvoker(picture);
+            invoker.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
             Assert.AreEqual(1, picture.Drawables.Count);
             picture.SelectedDrawable = picture.Drawables.First();
             picture.SelectedDrawable.IsSelected = true;
-            picture.ExecuteCommand(typeof(DuplicateCommand));
+            invoker.ExecuteCommand(typeof(DuplicateCommand));
             Assert.AreEqual(2, picture.Drawables.Count);
 
         }
@@ -27,13 +28,14 @@ namespace Cs5700Hw3.Test.Commands
         public void TestDuplicateCommand_Undo()
         {
             var picture = new PictureInfo();
-            picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
+            var invoker = new CommandInvoker(picture);
+            invoker.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
             Assert.AreEqual(1, picture.Drawables.Count);
             picture.SelectedDrawable = picture.Drawables.First();
             picture.SelectedDrawable.IsSelected = true;
-            picture.ExecuteCommand(typeof(DuplicateCommand));
+            invoker.ExecuteCommand(typeof(DuplicateCommand));
             Assert.AreEqual(2, picture.Drawables.Count);
-            picture.Undo();
+            invoker.Undo();
             Assert.AreEqual(1,picture.Drawables.Count);
 
         }

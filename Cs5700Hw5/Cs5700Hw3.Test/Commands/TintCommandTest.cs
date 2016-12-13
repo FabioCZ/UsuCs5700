@@ -17,7 +17,8 @@ namespace Cs5700Hw3.Test.Commands
         public void TestTintCommand()
         {
             var picture = new PictureInfo();
-            picture.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
+            var invoker = new CommandInvoker(picture);
+            invoker.ExecuteCommand(typeof(AddCommand), new CommandArgs() { Drawable = DrawableFactory.GetDrawable(CatDrawable.Cat1), TargetLocation = new Point(1, 1) });
             Assert.AreEqual(1, picture.Drawables.Count);
             picture.SelectedDrawable = picture.Drawables.First();
             picture.SelectedDrawable.IsSelected = true;

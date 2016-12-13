@@ -21,10 +21,7 @@ namespace Cs5700Hw3.Commands
                 throw new ArgumentNullException("Picture name cannnot be empty");
             }
             TargetPicture.PictureName = commandArgs.SavePictureName;
-            if (TargetPicture.Created == default(DateTime))
-            {
-                TargetPicture.Created = DateTime.Now;
-            }
+            TargetPicture.Created = DateTime.Now;
             FireBaseDbo.Instance.Save(TargetPicture);
         }
 
